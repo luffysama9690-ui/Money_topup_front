@@ -30,6 +30,16 @@ export const api = {
   getMessages: (telegramId) => request(`/messages/${telegramId}`),
   getUnreadCount: (telegramId) => request(`/messages/${telegramId}/unread-count`),
   markMessagesRead: (telegramId) => request(`/messages/${telegramId}/mark-read`, { method: "POST" }),
+
+  // Admin-only. The backend re-checks the telegramId against
+  // ADMIN_TELEGRAM_ID on every one of these calls — nothing here is trusted
+  // just because the frontend calls it.
+  checkAdmin: (telegramId) => request(`/admin/check?telegramId=${telegramId}`),
+  getPendingItems: (telegramId) => request(`/admin/pending?telegramId=${telegramId}`),
+  updateDepositStatus: (telegramId, id, status) =>
+    request(`/admin/deposits/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
+  updateOrderStatus: (telegramId, id, status) =>
+    request(`/admin/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
 };
 
 // Reads the current Telegram user's numeric ID from the Mini App SDK.
