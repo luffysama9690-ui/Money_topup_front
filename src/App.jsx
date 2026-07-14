@@ -177,15 +177,19 @@ function TopBar({ title, onBack }) {
   );
 }
 
-function BottomNav({ active, onNavigate, unreadCount = 0 }) {
+function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendingCount = 0 }) {
   const items = [
     { key: "shop", label: "Home", icon: "🏠" },
     { key: "message", label: "MESSAGE", icon: "📄" },
     { key: "spin", label: "SPIN", icon: "🎡" },
     { key: "profile", label: "PROFILE", icon: "👤" },
+    ...(isAdmin ? [{ key: "admin", label: "ADMIN", icon: "🛠️" }] : []),
   ];
   return (
-    <div className="sticky bottom-0 z-20 bg-slate-950 grid grid-cols-4 text-[11px] text-slate-400 border-t border-slate-800">
+    <div
+      className="sticky bottom-0 z-20 bg-slate-950 grid text-[11px] text-slate-400 border-t border-slate-800"
+      style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
+    >
       {items.map((it) => (
         <button
           key={it.key}
@@ -197,6 +201,11 @@ function BottomNav({ active, onNavigate, unreadCount = 0 }) {
             {it.key === "message" && unreadCount > 0 && (
               <span className="absolute -top-1.5 -right-2.5 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[15px] h-[15px] px-1 flex items-center justify-center">
                 {unreadCount}
+              </span>
+            )}
+            {it.key === "admin" && pendingCount > 0 && (
+              <span className="absolute -top-1.5 -right-2.5 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[15px] h-[15px] px-1 flex items-center justify-center">
+                {pendingCount}
               </span>
             )}
           </span>
@@ -321,6 +330,13 @@ export default function MonkeyTopup() {
   const [messages, setMessages] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [pendingDeposits, setPendingDeposits] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]);
+  const [adminLoading, setAdminLoading] = useState(false);
+  const [adminActingId, setAdminActingId] = useState(null);
+  const pendingCount = pendingDeposits.length + pendingOrders.length;
+
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   const price = (pkg) => (pkg ? pkg[currency][0] : 0);
   const total = selectedPkg ? price(selectedPkg) * qty : 0;
@@ -364,6 +380,13 @@ export default function MonkeyTopup() {
         setMessages(messageRows.map(mapMessage));
         setUnreadCount(unread.count);
         setLoadError("");
+
+        // Admin check is best-effort and separate from the main load — if it
+        // fails, the person is just treated as a normal (non-admin) user.
+        api
+          .checkAdmin(telegramId)
+          .then((r) => { if (!cancelled) setIsAdmin(!!r.isAdmin); })
+          .catch(() => { if (!cancelled) setIsAdmin(false); });
       } catch (err) {
         if (!cancelled) setLoadError(err.message || "ချိတ်ဆက်မှု မအောင်မြင်ပါ");
       } finally {
@@ -397,6 +420,10 @@ export default function MonkeyTopup() {
       setView("message");
       setUnreadCount(0);
       api.markMessagesRead(telegramId).catch(() => {});
+    }
+    if (key === "admin") {
+      setView("admin");
+      loadPendingItems();
     }
   }
 
@@ -555,6 +582,48 @@ export default function MonkeyTopup() {
     showToast({ type: "error", msg: "Wave ဖြင့် ငွေဖြည့်ခြင်းကို လက်ရှိအချိန်တွင် မရရှိသေးပါ" });
   }
 
+  // ---------- Admin Panel ----------
+  async function loadPendingItems() {
+    setAdminLoading(true);
+    try {
+      const data = await api.getPendingItems(telegramId);
+      setPendingDeposits(data.deposits || []);
+      setPendingOrders(data.orders || []);
+    } catch (err) {
+      showToast({ type: "error", msg: "Pending items များ ရယူခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setAdminLoading(false);
+    }
+  }
+
+  async function handleDepositDecision(id, status) {
+    if (adminActingId) return;
+    setAdminActingId(`d${id}`);
+    try {
+      await api.updateDepositStatus(telegramId, id, status);
+      setPendingDeposits((list) => list.filter((d) => d.id !== id));
+      showToast({ type: "ok", msg: status === "success" ? "Deposit ကို confirm လုပ်ပြီးပါပြီ" : "Deposit ကို ငြင်းပယ်လိုက်ပါပြီ" });
+    } catch (err) {
+      showToast({ type: "error", msg: "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
+    } finally {
+      setAdminActingId(null);
+    }
+  }
+
+  async function handleOrderDecision(id, status) {
+    if (adminActingId) return;
+    setAdminActingId(`o${id}`);
+    try {
+      await api.updateOrderStatus(telegramId, id, status);
+      setPendingOrders((list) => list.filter((o) => o.id !== id));
+      showToast({ type: "ok", msg: status === "success" ? "Order ကို confirm လုပ်ပြီးပါပြီ" : "Order ကို ငြင်းပယ်လိုက်ပါပြီ" });
+    } catch (err) {
+      showToast({ type: "error", msg: "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
+    } finally {
+      setAdminActingId(null);
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
@@ -653,7 +722,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
             </div>
-            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -763,7 +832,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
             </div>
-            <BottomNav active="message" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="message" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -789,12 +858,16 @@ export default function MonkeyTopup() {
                   >
                     <div className="text-violet-600 font-semibold">{o.id}</div>
                     <div className="font-bold">{o.item}</div>
-                    <div><Pill tone="green">success</Pill></div>
+                    <div>
+                      {o.status === "success" && <Pill tone="green">success</Pill>}
+                      {o.status === "pending" && <Pill tone="amber">pending</Pill>}
+                      {o.status === "failed" && <Pill tone="red">failed</Pill>}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -819,11 +892,141 @@ export default function MonkeyTopup() {
                 ))
               )}
             </div>
-            <BottomNav active="message" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="message" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
-        {/* ---------------- MOBILE LEGENDS DETAIL ---------------- */}
+        {/* ---------------- ADMIN PANEL ---------------- */}
+        {view === "admin" && isAdmin && (
+          <>
+            <TopBar title="Admin Panel" onBack={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-5">
+              {adminLoading ? (
+                <div className="text-white/80 text-center mt-16 text-sm">⏳<br />Pending items များ ရယူနေသည်...</div>
+              ) : pendingCount === 0 ? (
+                <div className="text-white/80 text-center mt-16 text-sm">
+                  ✅<br />Pending item များ မရှိတော့ပါ
+                </div>
+              ) : (
+                <>
+                  {pendingDeposits.length > 0 && (
+                    <div>
+                      <h2 className="text-white font-bold mb-2 drop-shadow">
+                        ငွေဖြည့်သွင်းမှုများ ({pendingDeposits.length})
+                      </h2>
+                      <div className="space-y-3">
+                        {pendingDeposits.map((d) => (
+                          <div key={d.id} className="bg-white rounded-xl p-3 shadow space-y-2">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <div className="font-bold text-slate-800">Deposit #{d.id}</div>
+                                <div className="text-sm text-slate-500">Telegram ID: {d.telegram_id}</div>
+                                <div className="text-sm font-semibold text-violet-600">
+                                  {fmt(Number(d.amount))} {d.currency === "mmk" ? "ကျပ်" : "ဘတ်"}
+                                </div>
+                              </div>
+                              <Pill tone="amber">pending</Pill>
+                            </div>
+                            {d.screenshot_url && (
+                              <a
+                                href={d.screenshot_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="block"
+                              >
+                                <img
+                                  src={d.screenshot_url}
+                                  alt="Payment screenshot"
+                                  className="w-full max-h-64 object-cover rounded-lg border"
+                                />
+                              </a>
+                            )}
+                            <div className="flex gap-2 pt-1">
+                              <button
+                                onClick={() => handleDepositDecision(d.id, "rejected")}
+                                disabled={adminActingId === `d${d.id}`}
+                                className="flex-1 border-2 border-rose-400 text-rose-500 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                              >
+                                Reject
+                              </button>
+                              <button
+                                onClick={() => handleDepositDecision(d.id, "success")}
+                                disabled={adminActingId === `d${d.id}`}
+                                className="flex-1 bg-emerald-500 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                              >
+                                {adminActingId === `d${d.id}` ? "..." : "Approve"}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {pendingOrders.length > 0 && (
+                    <div>
+                      <h2 className="text-white font-bold mb-2 drop-shadow">
+                        အော်ဒါများ ({pendingOrders.length})
+                      </h2>
+                      <div className="space-y-3">
+                        {pendingOrders.map((o) => (
+                          <div key={o.id} className="bg-white rounded-xl p-3 shadow space-y-2">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <div className="font-bold text-slate-800">Order #{o.id}</div>
+                                <div className="text-sm text-slate-500">Telegram ID: {o.telegram_id}</div>
+                                <div className="text-sm text-slate-600">
+                                  {o.item} {o.game_id ? `(${o.game_id}${o.server_id ? ` / ${o.server_id}` : ""})` : ""}
+                                </div>
+                                <div className="text-sm font-semibold text-violet-600">
+                                  {fmt(Number(o.price))} {o.currency === "mmk" ? "ကျပ်" : "ဘတ်"}
+                                </div>
+                              </div>
+                              <Pill tone="amber">pending</Pill>
+                            </div>
+                            {o.screenshot_url && (
+                              <a
+                                href={o.screenshot_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="block"
+                              >
+                                <img
+                                  src={o.screenshot_url}
+                                  alt="Payment screenshot"
+                                  className="w-full max-h-64 object-cover rounded-lg border"
+                                />
+                              </a>
+                            )}
+                            <div className="flex gap-2 pt-1">
+                              <button
+                                onClick={() => handleOrderDecision(o.id, "failed")}
+                                disabled={adminActingId === `o${o.id}`}
+                                className="flex-1 border-2 border-rose-400 text-rose-500 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                              >
+                                Reject
+                              </button>
+                              <button
+                                onClick={() => handleOrderDecision(o.id, "success")}
+                                disabled={adminActingId === `o${o.id}`}
+                                className="flex-1 bg-emerald-500 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                              >
+                                {adminActingId === `o${o.id}` ? "..." : "Approve"}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <BottomNav active="admin" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+
         {view === "mlDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
@@ -874,7 +1077,7 @@ export default function MonkeyTopup() {
               <PkgSection num="2" title="2x Diamonds" items={ML_2X} currency={currency} onPick={openPurchase} />
               <PkgSection num="3" title="Other Diamonds" items={ML_DIAMONDS} currency={currency} onPick={openPurchase} />
             </div>
-            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -904,7 +1107,7 @@ export default function MonkeyTopup() {
               <PkgSection num="2" title="2x Diamonds" items={MC_2X} currency={currency} onPick={openPurchase} />
               <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS} currency={currency} onPick={openPurchase} />
             </div>
-            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -934,7 +1137,7 @@ export default function MonkeyTopup() {
               <PkgSection num="2" title="Special Packs" items={PUBG_SPECIAL} currency={currency} onPick={openPurchase} />
               <PkgSection num="3" title="Prime" items={PUBG_PRIME} currency={currency} onPick={openPurchase} />
             </div>
-            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} />
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
@@ -1115,7 +1318,9 @@ export default function MonkeyTopup() {
                 <DetailRow label="Date" value={selectedOrder.date || "-"} />
                 <div className="flex justify-between items-center px-4 py-3">
                   <span className="font-semibold text-slate-700">အခြေအနေ</span>
-                  <Pill tone="green">အောင်မြင်သည်</Pill>
+                  {selectedOrder.status === "success" && <Pill tone="green">အောင်မြင်သည်</Pill>}
+                  {selectedOrder.status === "pending" && <Pill tone="amber">admin မှ စစ်ဆေးနေဆဲ</Pill>}
+                  {selectedOrder.status === "failed" && <Pill tone="red">ငြင်းပယ်ခံရသည်</Pill>}
                 </div>
               </div>
             </div>
