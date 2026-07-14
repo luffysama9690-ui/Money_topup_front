@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { api, getTelegramId } from "./api.js";
+import { uploadImage } from "./upload.js";
 
 const APP_NAME = "Monkey Topup";
 
@@ -242,7 +243,7 @@ function GameIcon({ icon, grad, image, name }) {
   );
 }
 
-function UploadBox({ file, onPick, label = "ငွေလွှဲပုံထည့်ရန်နှိပ်ပါ" }) {
+function UploadBox({ file, uploading, uploaded, onPick, label = "ငွေလွှဲပုံထည့်ရန်နှိပ်ပါ" }) {
   const inputRef = useRef(null);
   return (
     <div>
@@ -256,12 +257,21 @@ function UploadBox({ file, onPick, label = "ငွေလွှဲပုံထည
       <button
         type="button"
         onClick={() => inputRef.current && inputRef.current.click()}
-        className={`w-full border-2 border-dashed rounded-lg py-8 text-center text-sm transition ${
-          file ? "border-emerald-500 bg-emerald-50 text-emerald-700" : "border-emerald-400 text-emerald-600"
+        disabled={uploading}
+        className={`w-full border-2 border-dashed rounded-lg py-8 text-center text-sm transition disabled:opacity-70 ${
+          uploaded
+            ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+            : file
+            ? "border-amber-400 bg-amber-50 text-amber-700"
+            : "border-emerald-400 text-emerald-600"
         }`}
       >
-        {file ? (
-          <>✅<br />တင်ပြီးပါပြီ — {file.name}</>
+        {uploading ? (
+          <>⏳<br />ပုံတင်နေသည်...</>
+        ) : uploaded ? (
+          <>✅<br />ငွေလွှဲပြေစာ တင်ပြီးပါပြီ — {file?.name}</>
+        ) : file ? (
+          <>⚠️<br />ပုံတင်ခြင်း မအောင်မြင်ပါ — ပြန်နှိပ်ကြည့်ပါ</>
         ) : (
           <>☁️<br />{label}</>
         )}
@@ -292,12 +302,16 @@ export default function MonkeyTopup() {
   const [toast, setToast] = useState(null);
   const [successPopup, setSuccessPopup] = useState(false);
   const [modalFile, setModalFile] = useState(null);
+  const [modalUploading, setModalUploading] = useState(false);
+  const [modalScreenshotUrl, setModalScreenshotUrl] = useState(null);
   const [buying, setBuying] = useState(false);
 
   const [orders, setOrders] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   const [depositFile, setDepositFile] = useState(null);
+  const [depositUploading, setDepositUploading] = useState(false);
+  const [depositScreenshotUrl, setDepositScreenshotUrl] = useState(null);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderDetailOpen, setOrderDetailOpen] = useState(false);
@@ -398,7 +412,39 @@ export default function MonkeyTopup() {
     setAgree(false);
     setPayMethod("wallet");
     setModalFile(null);
+    setModalScreenshotUrl(null);
+    setModalUploading(false);
     setModalOpen(true);
+  }
+
+  async function handleModalFilePick(file) {
+    setModalFile(file);
+    setModalScreenshotUrl(null);
+    if (!file) return;
+    setModalUploading(true);
+    try {
+      const url = await uploadImage(file);
+      setModalScreenshotUrl(url);
+    } catch (err) {
+      showToast({ type: "error", msg: "ပုံတင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setModalUploading(false);
+    }
+  }
+
+  async function handleDepositFilePick(file) {
+    setDepositFile(file);
+    setDepositScreenshotUrl(null);
+    if (!file) return;
+    setDepositUploading(true);
+    try {
+      const url = await uploadImage(file);
+      setDepositScreenshotUrl(url);
+    } catch (err) {
+      showToast({ type: "error", msg: "ပုံတင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setDepositUploading(false);
+    }
   }
 
   async function handleVerify() {
@@ -414,7 +460,11 @@ export default function MonkeyTopup() {
   }
 
   async function handleBuy() {
-    if (!agree || verifyState !== "ok" || buying) return;
+    if (!agree || verifyState !== "ok" || buying || modalUploading) return;
+    if (payMethod === "transfer" && !modalScreenshotUrl) {
+      showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
+      return;
+    }
     setBuying(true);
     try {
       const order = await api.createOrder({
@@ -427,6 +477,7 @@ export default function MonkeyTopup() {
         price: total,
         currency,
         payMethod,
+        screenshotUrl: payMethod === "transfer" ? modalScreenshotUrl : null,
       });
 
       setOrders((o) => [mapOrder(order), ...o]);
@@ -461,7 +512,7 @@ export default function MonkeyTopup() {
   }
 
   async function handleDepositSubmit() {
-    if (depositing) return;
+    if (depositing || depositUploading) return;
     if (!depositAmount) {
       showToast({ type: "error", msg: "ဖြည့်မည့်ပမာဏ ထည့်ပါ" });
       return;
@@ -470,13 +521,17 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: "အနည်းဆုံး 100 ဘတ် ဖြည့်ရပါမည်" });
       return;
     }
+    if (!depositScreenshotUrl) {
+      showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
+      return;
+    }
     setDepositing(true);
     try {
       const rec = await api.createDeposit({
         telegramId,
         amount: Number(depositAmount),
         currency,
-        screenshotUrl: null, // file upload storage isn't wired up yet — see note in README
+        screenshotUrl: depositScreenshotUrl,
       });
       setDeposits((d) => [rec, ...d]);
       const [messageRows, unread] = await Promise.all([api.getMessages(telegramId), api.getUnreadCount(telegramId)]);
@@ -484,6 +539,7 @@ export default function MonkeyTopup() {
       setUnreadCount(unread.count);
       setDepositAmount("");
       setDepositFile(null);
+      setDepositScreenshotUrl(null);
       showToast({ type: "ok", msg: "ငွေဖြည့်သွင်းမှု တင်ပြီးပါပြီ၊ admin မှ စစ်ဆေးပေးပါမည်" });
     } catch (err) {
       showToast({ type: "error", msg: "ငွေဖြည့်သွင်းမှု တင်ခြင်း မအောင်မြင်ပါ" });
@@ -679,12 +735,17 @@ export default function MonkeyTopup() {
 
                   <div>
                     <div className="text-sm font-semibold mb-2">Payment Screenshot ( ငွေလွှဲ Id ပါတဲ့ပုံ )</div>
-                    <UploadBox file={depositFile} onPick={setDepositFile} />
+                    <UploadBox
+                      file={depositFile}
+                      onPick={handleDepositFilePick}
+                      uploading={depositUploading}
+                      uploaded={!!depositScreenshotUrl}
+                    />
                   </div>
 
                   <button
                     onClick={handleDepositSubmit}
-                    disabled={depositing}
+                    disabled={depositing || depositUploading}
                     className="w-full bg-emerald-500 text-white font-bold rounded-lg py-3 active:scale-[0.98] transition disabled:opacity-60"
                   >
                     {depositing ? "ပို့နေသည်..." : "ဝယ်ယူမည်"}
@@ -948,7 +1009,14 @@ export default function MonkeyTopup() {
                   </div>
                 </div>
 
-                {payMethod === "transfer" && <UploadBox file={modalFile} onPick={setModalFile} />}
+                {payMethod === "transfer" && (
+                  <UploadBox
+                    file={modalFile}
+                    onPick={handleModalFilePick}
+                    uploading={modalUploading}
+                    uploaded={!!modalScreenshotUrl}
+                  />
+                )}
 
                 <div className="bg-violet-50 text-violet-900 rounded-lg p-3 text-center text-sm space-y-1">
                   <div>လက်ကျန်ငွေ = {fmt(balance)} ကျပ်</div>
@@ -966,7 +1034,7 @@ export default function MonkeyTopup() {
                   </button>
                   <button
                     onClick={handleBuy}
-                    disabled={!agree || verifyState !== "ok" || buying}
+                    disabled={!agree || verifyState !== "ok" || buying || modalUploading}
                     className="flex-1 bg-emerald-500 text-white font-bold rounded-lg py-2 disabled:opacity-40 active:scale-[0.98] transition"
                   >
                     {buying ? "ဝယ်ယူနေသည်..." : "ဝယ်မည်"}
