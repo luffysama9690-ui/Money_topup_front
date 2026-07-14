@@ -38,5 +38,5 @@ export const api = {
 export function getTelegramId() {
   const tgUser = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   if (tgUser?.id) return String(tgUser.id);
-  return "demo-user"; // browser preview fallback
+  return "1000000001"; // numeric fallback so it fits the BIGINT column when testing outside Telegram
 }
