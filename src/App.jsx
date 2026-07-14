@@ -288,6 +288,7 @@ export default function MonkeyTopup() {
 
   const [view, setView] = useState("shop");
   const [balance, setBalance] = useState(0);
+  const [balanceThb, setBalanceThb] = useState(0);
   const [currency, setCurrency] = useState("mmk");
   const [server, setServer] = useState("Global");
   const [selectedPkg, setSelectedPkg] = useState(null);
@@ -357,6 +358,7 @@ export default function MonkeyTopup() {
         ]);
         if (cancelled) return;
         setBalance(Number(user.balance_mmk));
+        setBalanceThb(Number(user.balance_thb || 0));
         setOrders(orderRows.map(mapOrder));
         setDeposits(depositRows);
         setMessages(messageRows.map(mapMessage));
@@ -481,8 +483,9 @@ export default function MonkeyTopup() {
       });
 
       setOrders((o) => [mapOrder(order), ...o]);
-      if (payMethod === "wallet" && currency === "mmk") {
-        setBalance((b) => b - total);
+      if (payMethod === "wallet") {
+        if (currency === "mmk") setBalance((b) => b - total);
+        if (currency === "thb") setBalanceThb((b) => b - total);
       }
       const [messageRows, unread] = await Promise.all([api.getMessages(telegramId), api.getUnreadCount(telegramId)]);
       setMessages(messageRows.map(mapMessage));
@@ -607,8 +610,15 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <div className="bg-black text-white text-center rounded-lg py-3 font-bold tracking-wide">
-                လက်ကျန်ငွေ : {fmt(balance)} ကျပ်
+              <div className="bg-black text-white rounded-lg py-3 font-bold tracking-wide grid grid-cols-2 divide-x divide-white/20">
+                <div className="text-center">
+                  <div className="text-[10px] font-normal opacity-70">MMK</div>
+                  <div>{fmt(balance)} ကျပ်</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-[10px] font-normal opacity-70">THB</div>
+                  <div>{fmt(balanceThb)} ဘတ်</div>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -1019,7 +1029,7 @@ export default function MonkeyTopup() {
                 )}
 
                 <div className="bg-violet-50 text-violet-900 rounded-lg p-3 text-center text-sm space-y-1">
-                  <div>လက်ကျန်ငွေ = {fmt(balance)} ကျပ်</div>
+                  <div>လက်ကျန်ငွေ = {fmt(currency === "mmk" ? balance : balanceThb)} {currencyLabel}</div>
                   <div className="font-bold">ကျသင့်ငွေ = {fmt(total)} {currencyLabel}</div>
                 </div>
 
