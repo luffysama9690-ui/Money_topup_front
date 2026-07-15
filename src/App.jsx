@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { api, getTelegramId } from "./api.js";
+import { api, getTelegramId, getTelegramUser } from "./api.js";
 import { uploadImage } from "./upload.js";
 
 const APP_NAME = "Monkey Topup";
@@ -292,6 +292,8 @@ function UploadBox({ file, uploading, uploaded, onPick, label = "ငွေလွ
 // ---------- Main App ----------
 export default function MonkeyTopup() {
   const [telegramId] = useState(getTelegramId());
+  const [telegramUser] = useState(getTelegramUser());
+  const ADMIN_USERNAME = "coco279999";
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
 
@@ -424,6 +426,16 @@ export default function MonkeyTopup() {
     if (key === "admin") {
       setView("admin");
       loadPendingItems();
+    }
+    if (key === "profile") setView("profile");
+  }
+
+  function handleContactAdmin() {
+    const url = `https://t.me/${ADMIN_USERNAME}`;
+    if (window?.Telegram?.WebApp?.openTelegramLink) {
+      window.Telegram.WebApp.openTelegramLink(url);
+    } else {
+      window.open(url, "_blank");
     }
   }
 
@@ -1023,6 +1035,60 @@ export default function MonkeyTopup() {
               )}
             </div>
             <BottomNav active="admin" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {/* ---------------- PROFILE ---------------- */}
+        {view === "profile" && (
+          <>
+            <TopBar title={APP_NAME} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4">
+              <div className="bg-white rounded-xl shadow overflow-hidden">
+                <div className="bg-gradient-to-r from-indigo-950 to-violet-800 px-4 py-5 flex items-center gap-4">
+                  {telegramUser.photoUrl ? (
+                    <img
+                      src={telegramUser.photoUrl}
+                      alt="avatar"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-white/40"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-white/15 border-2 border-white/40 flex items-center justify-center text-2xl text-white">
+                      👤
+                    </div>
+                  )}
+                  <div>
+                    <div className="text-white font-bold text-lg">
+                      {telegramUser.firstName} {telegramUser.lastName}
+                    </div>
+                    {telegramUser.username && (
+                      <div className="text-violet-200 text-sm">@{telegramUser.username}</div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="p-4 grid grid-cols-2 divide-x">
+                  <div className="text-center">
+                    <div className="text-[11px] text-slate-400 font-semibold">MMK လက်ကျန်</div>
+                    <div className="font-bold text-slate-800">{fmt(balance)} ကျပ်</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[11px] text-slate-400 font-semibold">THB လက်ကျန်</div>
+                    <div className="font-bold text-slate-800">{fmt(balanceThb)} ဘတ်</div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleContactAdmin}
+                className="w-full bg-[#229ED9] active:bg-[#1c86ba] text-white font-bold rounded-xl py-3 flex items-center justify-center gap-2 shadow transition"
+              >
+                <span className="text-xl">✈️</span>
+                Admin ကို ဆက်သွယ်ရန်
+              </button>
+
+              <div className="text-center text-white/60 text-xs">@{ADMIN_USERNAME}</div>
+            </div>
+            <BottomNav active="profile" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
