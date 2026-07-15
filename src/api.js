@@ -50,3 +50,19 @@ export function getTelegramId() {
   if (tgUser?.id) return String(tgUser.id);
   return "1000000001"; // numeric fallback so it fits the BIGINT column when testing outside Telegram
 }
+
+// Reads display info (name, username, avatar) for the Profile page.
+// Falls back to demo values when opened outside Telegram, matching the
+// fallback numeric ID above.
+export function getTelegramUser() {
+  const tgUser = window?.Telegram?.WebApp?.initDataUnsafe?.user;
+  if (tgUser) {
+    return {
+      firstName: tgUser.first_name || "",
+      lastName: tgUser.last_name || "",
+      username: tgUser.username || "",
+      photoUrl: tgUser.photo_url || "",
+    };
+  }
+  return { firstName: "Demo User", lastName: "", username: "", photoUrl: "" };
+}
