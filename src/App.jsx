@@ -338,27 +338,6 @@ export default function MonkeyTopup() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
 
-  // Make sure the Telegram Mini App fits the visible screen instead of
-  // rendering taller than the viewport (which forces awkward scrolling).
-  useEffect(() => {
-    const tg = window?.Telegram?.WebApp;
-    if (!tg) return;
-    tg.ready();
-    tg.expand();
-    if (typeof tg.disableVerticalSwipes === "function") tg.disableVerticalSwipes();
-
-    const applyHeight = () => {
-      const h = tg.viewportStableHeight || tg.viewportHeight || window.innerHeight;
-      document.documentElement.style.height = `${h}px`;
-      document.body.style.height = `${h}px`;
-    };
-    applyHeight();
-    tg.onEvent && tg.onEvent("viewportChanged", applyHeight);
-    return () => {
-      tg.offEvent && tg.offEvent("viewportChanged", applyHeight);
-    };
-  }, []);
-
   const [view, setView] = useState("shop");
   const [balance, setBalance] = useState(0);
   const [balanceThb, setBalanceThb] = useState(0);
@@ -707,8 +686,8 @@ export default function MonkeyTopup() {
 
 
   return (
-    <div className="h-full w-full bg-slate-100 flex justify-center font-sans overflow-hidden">
-      <div className="w-full max-w-sm bg-gradient-to-b from-indigo-950 via-violet-900 to-slate-900 h-full flex flex-col relative overflow-hidden">
+    <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
+      <div className="w-full max-w-sm bg-gradient-to-b from-indigo-950 via-violet-900 to-slate-900 min-h-screen flex flex-col relative">
         {/* ---------------- SHOP HOME ---------------- */}
         {view === "shop" && (
           <>
