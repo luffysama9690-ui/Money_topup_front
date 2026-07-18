@@ -128,7 +128,9 @@ const GAMES = [
 ];
 
 // ---- Social Media: TikTok ----
-// mmk/thb each hold [originalPrice, discountedPrice].
+// mmk/thb each hold [price, unusedSecondValue] — only index 0 (the first
+// price) is shown to the customer and charged; the second value is unused
+// (kept so existing data doesn't need reshaping).
 const TIKTOK_PACKAGES = [
   { id: "tt-view-1k", label: "TikTok View 1k (အကျအန)", mmk: [510, 400], thb: [4, 3] },
   { id: "tt-view-3k", label: "TikTok Views 3k (အကျအန)", mmk: [1530, 1207], thb: [12, 10] },
@@ -772,7 +774,7 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
       return;
     }
-    const price = selectedSocialPkg[currency][1];
+    const price = selectedSocialPkg[currency][0];
     setBuying(true);
     try {
       const order = await api.createOrder({
@@ -1657,11 +1659,8 @@ export default function MonkeyTopup() {
                 </div>
 
                 <div className="bg-violet-50 rounded-lg p-3 text-center">
-                  <div className="text-xs text-slate-500 line-through">
-                    {fmt(selectedSocialPkg[currency][0])} {currency === "mmk" ? "ကျပ်" : "ဘတ်"}
-                  </div>
                   <div className="text-lg font-bold text-violet-900">
-                    {fmt(selectedSocialPkg[currency][1])} {currency === "mmk" ? "ကျပ်" : "ဘတ်"}
+                    {fmt(selectedSocialPkg[currency][0])} {currency === "mmk" ? "ကျပ်" : "ဘတ်"}
                   </div>
                 </div>
 
@@ -1954,19 +1953,19 @@ function PkgSection({ num, title, items, currency, onPick }) {
 }
 
 // TikTok / Facebook packages: shows the platform logo, the original price
-// struck through in red, and the discounted price below it.
+// TikTok / Facebook packages: shows the platform logo and a single plain
+// price (no strikethrough / no discount display).
 function SocialPkgGrid({ items, currency, logo, onPick }) {
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   return (
     <div className="grid grid-cols-3 gap-2">
       {items.map((it) => {
-        const [original, discounted] = it[currency];
+        const [price] = it[currency];
         return (
           <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition p-2">
             <img src={logo} alt="" className="w-9 h-9 object-contain mx-auto mb-1" />
             <div className="text-[11px] font-bold leading-tight mb-1 line-clamp-2">{it.label}</div>
-            <div className="text-xs text-rose-400 line-through">{fmt(original)} {currencyLabel}</div>
-            <div className="text-sm font-bold text-rose-600">{fmt(discounted)} {currencyLabel}</div>
+            <div className="text-sm font-bold text-slate-900">{fmt(price)} {currencyLabel}</div>
           </button>
         );
       })}
