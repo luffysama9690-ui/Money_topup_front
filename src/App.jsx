@@ -130,7 +130,7 @@ const GAMES = [
 // ---- Social Media: TikTok ----
 // mmk/thb each hold [originalPrice, discountedPrice].
 const TIKTOK_PACKAGES = [
-  { id: "tt-view-1k", label: "TikTok View 1k (ပြန်ကျတတ်)", mmk: [510], thb: [4] },
+  { id: "tt-view-1k", label: "TikTok View 1k (ပြန်ကျတတ်)", mmk: [510] , thb: [4] },
   { id: "tt-view-3k", label: "TikTok Views 3k (ပြန်ကျတတ်)", mmk: [1530], thb: [12] },
   { id: "tt-view-5k", label: "TikTok Views 5k (ပြန်ကျတတ်)", mmk: [2550], thb: [20] },
   { id: "tt-view-10k", label: "TikTok Views 10k (ပြန်ကျတတ်)", mmk: [5100], thb: [40] },
