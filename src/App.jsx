@@ -130,16 +130,16 @@ const GAMES = [
 // ---- Social Media: TikTok ----
 // mmk/thb each hold [originalPrice, discountedPrice].
 const TIKTOK_PACKAGES = [
-  { id: "tt-view-1k", label: "TikTok View 1k (ပြန်ကျတတ်)", mmk: [510] , thb: [4] },
-  { id: "tt-view-3k", label: "TikTok Views 3k (ပြန်ကျတတ်)", mmk: [1530], thb: [12] },
-  { id: "tt-view-5k", label: "TikTok Views 5k (ပြန်ကျတတ်)", mmk: [2550], thb: [20] },
-  { id: "tt-view-10k", label: "TikTok Views 10k (ပြန်ကျတတ်)", mmk: [5100], thb: [40] },
-  { id: "tt-follow-500", label: "Followers 500 (ပြန်ကျတတ်)", mmk: [3400], thb: [27] },
-  { id: "tt-follow-500-r", label: "Followers 500 (ပြန်ကျတတ်)", mmk: [8600], thb: [68] },
-  { id: "tt-follow-1k", label: "Followers 1k (ပြန်ကျတတ်)", mmk: [6750], thb: [53] },
-  { id: "tt-follow-1k-r", label: "Followers 1k (ပြန်ကျတတ်)", mmk: [17200], thb: [135] },
-  { id: "tt-share-1k", label: "TikTok Share 1k", mmk: [900], thb: [7] },
-  { id: "tt-share-2k", label: "TikTok Share 2k", mmk: [1700], thb: [13] },
+  { id: "tt-view-1k", label: "TikTok View 1k (အကျအန)", mmk: [510, 400], thb: [4, 3] },
+  { id: "tt-view-3k", label: "TikTok Views 3k (အကျအန)", mmk: [1530, 1207], thb: [12, 10] },
+  { id: "tt-view-5k", label: "TikTok Views 5k (အကျအန)", mmk: [2550, 2006], thb: [20, 16] },
+  { id: "tt-view-10k", label: "TikTok Views 10k (အကျအန)", mmk: [5100, 4012], thb: [40, 32] },
+  { id: "tt-follow-500", label: "Followers 500 (လူအစစ်)", mmk: [3400, 2678], thb: [27, 21] },
+  { id: "tt-follow-500-r", label: "Followers 500 (ပြန်ကျတတ်)", mmk: [8600, 6730], thb: [68, 53] },
+  { id: "tt-follow-1k", label: "Followers 1k (လူအစစ်)", mmk: [6750, 5305], thb: [53, 42] },
+  { id: "tt-follow-1k-r", label: "Followers 1k (ပြန်ကျတတ်)", mmk: [17200, 13545], thb: [135, 107] },
+  { id: "tt-share-1k", label: "TikTok Share 1k", mmk: [900, 688], thb: [7, 5] },
+  { id: "tt-share-2k", label: "TikTok Share 2k", mmk: [1700, 1318], thb: [13, 10] },
 ];
 
 // ---- Social Media: Facebook ----
@@ -1965,8 +1965,8 @@ function SocialPkgGrid({ items, currency, logo, onPick }) {
           <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition p-2">
             <img src={logo} alt="" className="w-9 h-9 object-contain mx-auto mb-1" />
             <div className="text-[11px] font-bold leading-tight mb-1 line-clamp-2">{it.label}</div>
-            <div className="text-xs text-rose-500 line-through">{fmt(original)} {currencyLabel}</div>
-            <div className="text-sm font-bold text-slate-900">{fmt(discounted)} {currencyLabel}</div>
+            <div className="text-xs text-rose-400 line-through">{fmt(original)} {currencyLabel}</div>
+            <div className="text-sm font-bold text-rose-600">{fmt(discounted)} {currencyLabel}</div>
           </button>
         );
       })}
