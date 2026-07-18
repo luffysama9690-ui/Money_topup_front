@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { api, getTelegramId, getTelegramUser } from "./api.js";
+import { api, getTelegramId, getTelegramUser, saveWebSession, logoutWeb, isTelegramContext } from "./api.js";
 import { uploadImage } from "./upload.js";
 
 const APP_NAME = "Monkey Topup";
@@ -335,10 +335,117 @@ function UploadBox({ file, uploading, uploaded, onPick, label = "ငွေလွ
   );
 }
 
+// ---------- Website login / register (Telegram Mini App skips this entirely) ----------
+function AuthScreen({ onAuthSuccess }) {
+  const [mode, setMode] = useState("login"); // "login" | "register"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (busy) return;
+    setError("");
+
+    if (!email.trim() || !password) {
+      setError("Email နှင့် Password ထည့်ပါ");
+      return;
+    }
+    if (mode === "register" && password.length < 6) {
+      setError("Password အနည်းဆုံး စာလုံး ၆ လုံး ရှိရပါမည်");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const result =
+        mode === "login"
+          ? await api.login(email.trim(), password)
+          : await api.register(email.trim(), password, username.trim());
+      onAuthSuccess(result.token, result.user);
+    } catch (err) {
+      setError(err.message || "မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="min-h-screen w-full bg-slate-100 flex justify-center items-center font-sans p-4">
+      <div className="w-full max-w-sm bg-gradient-to-b from-indigo-950 via-violet-900 to-slate-900 rounded-2xl shadow-xl p-6">
+        <div className="text-center mb-6">
+          <div className="text-2xl font-bold text-white">{APP_NAME}</div>
+          <div className="text-violet-300 text-sm mt-1">
+            {mode === "login" ? "အကောင့်ဝင်ပါ" : "အကောင့်အသစ် ဖွင့်ပါ"}
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          {mode === "register" && (
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="အမည် (optional)"
+              className="w-full rounded-lg px-3 py-2 text-sm bg-white/95"
+            />
+          )}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            autoComplete="email"
+            className="w-full rounded-lg px-3 py-2 text-sm bg-white/95"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            autoComplete={mode === "login" ? "current-password" : "new-password"}
+            className="w-full rounded-lg px-3 py-2 text-sm bg-white/95"
+          />
+
+          {error && <div className="text-rose-300 text-xs text-center">{error}</div>}
+
+          <button
+            type="submit"
+            disabled={busy}
+            className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-white font-bold rounded-lg py-2.5 text-sm transition"
+          >
+            {busy ? "..." : mode === "login" ? "ဝင်မည်" : "အကောင့်ဖွင့်မည်"}
+          </button>
+        </form>
+
+        <div className="text-center mt-4 text-xs text-violet-300">
+          {mode === "login" ? (
+            <>
+              အကောင့် မရှိသေးဘူးလား?{" "}
+              <button className="text-emerald-300 font-semibold underline" onClick={() => { setMode("register"); setError(""); }}>
+                အကောင့်အသစ် ဖွင့်ရန်
+              </button>
+            </>
+          ) : (
+            <>
+              အကောင့် ရှိပြီးသားလား?{" "}
+              <button className="text-emerald-300 font-semibold underline" onClick={() => { setMode("login"); setError(""); }}>
+                ဝင်ရန်
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---------- Main App ----------
 export default function MonkeyTopup() {
-  const [telegramId] = useState(getTelegramId());
-  const [telegramUser] = useState(getTelegramUser());
+  const [telegramId, setTelegramId] = useState(getTelegramId());
+  const [telegramUser, setTelegramUser] = useState(getTelegramUser());
   const ADMIN_USERNAME = "coco279999";
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -689,6 +796,20 @@ export default function MonkeyTopup() {
     }
   }
 
+
+  // Only reachable on the website (Telegram always supplies an id
+  // automatically) — show the login/register screen until the person signs in.
+  if (!telegramId) {
+    return (
+      <AuthScreen
+        onAuthSuccess={(token, user) => {
+          saveWebSession(token, user);
+          setTelegramId(String(user.telegramId));
+          setTelegramUser({ firstName: user.username || user.email.split("@")[0], lastName: "", username: user.email, photoUrl: "" });
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
@@ -1122,6 +1243,18 @@ export default function MonkeyTopup() {
                 <span className="text-xl">✈️</span>
                 Admin ကို ဆက်သွယ်ရန်
               </button>
+
+              {!isTelegramContext() && (
+                <button
+                  onClick={() => {
+                    logoutWeb();
+                    window.location.reload();
+                  }}
+                  className="w-full bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl py-3 flex items-center justify-center gap-2 transition"
+                >
+                  ထွက်မည် (Logout)
+                </button>
+              )}
 
               <div className="text-center text-white/60 text-xs">@{ADMIN_USERNAME}</div>
             </div>
