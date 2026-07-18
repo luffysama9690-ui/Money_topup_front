@@ -31,6 +31,13 @@ export const api = {
   getUnreadCount: (telegramId) => request(`/messages/${telegramId}/unread-count`),
   markMessagesRead: (telegramId) => request(`/messages/${telegramId}/mark-read`, { method: "POST" }),
 
+  // Website-only (email/password) accounts. Not used inside the Telegram
+  // Mini App, which authenticates automatically via Telegram's login data.
+  register: (email, password, username) =>
+    request(`/auth/register`, { method: "POST", body: JSON.stringify({ email, password, username }) }),
+  login: (email, password) =>
+    request(`/auth/login`, { method: "POST", body: JSON.stringify({ email, password }) }),
+
   // Admin-only. The backend re-checks the telegramId against
   // ADMIN_TELEGRAM_ID on every one of these calls — nothing here is trusted
   // just because the frontend calls it.
@@ -42,18 +49,58 @@ export const api = {
     request(`/admin/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
 };
 
-// Reads the current Telegram user's numeric ID from the Mini App SDK.
-// Falls back to a fixed demo ID when opened in a normal browser (so you can
-// still test the site outside of Telegram during development).
+// ---------------------------------------------------------------------
+// Identity: the app can be opened two ways —
+//   1. Inside the Telegram Mini App — Telegram supplies the user's id
+//      automatically, no login screen needed.
+//   2. As a plain website — the person logs in with email/password
+//      (see api.login / api.register above); their session (a JWT plus
+//      their synthetic negative telegram_id — see backend schema.sql) is
+//      kept in localStorage so they stay logged in across visits.
+// Every other part of the app (orders, deposits, messages, admin panel)
+// only ever deals with a "telegramId" string, so once we have one — from
+// either source — the rest of the app doesn't need to know which it was.
+// ---------------------------------------------------------------------
+
+const AUTH_STORAGE_KEY = "monkeyTopupWebAuth";
+
+function loadWebSession() {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Called after a successful api.login()/api.register() to remember the
+// session. `user` is the `{ telegramId, email, username }` object the
+// backend returns.
+export function saveWebSession(token, user) {
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ token, user }));
+}
+
+export function logoutWeb() {
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+}
+
+// True when the app is running inside the Telegram Mini App (as opposed to
+// a plain browser tab on the website).
+export function isTelegramContext() {
+  return !!window?.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+}
+
+// Returns the current user's id, or null if nobody is logged in yet (only
+// possible on the website — Telegram always supplies one).
 export function getTelegramId() {
   const tgUser = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   if (tgUser?.id) return String(tgUser.id);
-  return "1000000001"; // numeric fallback so it fits the BIGINT column when testing outside Telegram
+
+  const session = loadWebSession();
+  return session?.user?.telegramId != null ? String(session.user.telegramId) : null;
 }
 
 // Reads display info (name, username, avatar) for the Profile page.
-// Falls back to demo values when opened outside Telegram, matching the
-// fallback numeric ID above.
 export function getTelegramUser() {
   const tgUser = window?.Telegram?.WebApp?.initDataUnsafe?.user;
   if (tgUser) {
@@ -64,5 +111,15 @@ export function getTelegramUser() {
       photoUrl: tgUser.photo_url || "",
     };
   }
-  return { firstName: "Demo User", lastName: "", username: "", photoUrl: "" };
+
+  const session = loadWebSession();
+  if (session?.user) {
+    return {
+      firstName: session.user.username || session.user.email.split("@")[0],
+      lastName: "",
+      username: session.user.email || "",
+      photoUrl: "",
+    };
+  }
+  return null;
 }
