@@ -286,6 +286,7 @@ function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendi
     { key: "message", label: "MESSAGE", icon: "📄" },
     { key: "spin", label: "ကံစမ်းမဲ", icon: "🎡" },
     { key: "profile", label: "PROFILE", icon: "👤" },
+    ...(isAdmin ? [{ key: "approve", label: "အတည်ပြုရန်", icon: "✅" }] : []),
     ...(isAdmin ? [{ key: "admin", label: "ADMIN", icon: "🛠️" }] : []),
   ];
   return (
@@ -306,7 +307,7 @@ function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendi
                 {unreadCount}
               </span>
             )}
-            {it.key === "admin" && pendingCount > 0 && (
+            {it.key === "approve" && pendingCount > 0 && (
               <span className="absolute -top-1.5 -right-2.5 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[15px] h-[15px] px-1 flex items-center justify-center">
                 {pendingCount}
               </span>
@@ -669,9 +670,12 @@ export default function MonkeyTopup() {
       setUnreadCount(0);
       api.markMessagesRead(telegramId).catch(() => {});
     }
+    if (key === "approve") {
+      setView("approve");
+      loadPendingItems();
+    }
     if (key === "admin") {
       setView("admin");
-      loadPendingItems();
     }
     if (key === "profile") setView("profile");
     if (key === "spin") {
@@ -1339,112 +1343,10 @@ export default function MonkeyTopup() {
         )}
 
         {/* ---------------- ADMIN PANEL ---------------- */}
-        {view === "admin" && isAdmin && (
+        {view === "approve" && isAdmin && (
           <>
-            <TopBar title="Admin Panel" onBack={() => setView("shop")} />
+            <TopBar title="အတည်ပြုရန်" onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-5">
-              <div className="bg-white rounded-xl p-3 shadow space-y-2">
-                <h2 className="font-bold text-slate-800">📢 User များအားလုံးထံ စာပို့ရန်</h2>
-                <textarea
-                  value={broadcastText}
-                  onChange={(e) => setBroadcastText(e.target.value)}
-                  placeholder="ဥပမာ - ဒီနေ့ event အသစ်အကြောင်း..."
-                  rows={3}
-                  className="w-full border rounded-lg p-2 text-sm resize-none"
-                />
-                <UploadBox
-                  file={broadcastFile}
-                  uploading={broadcastUploading}
-                  uploaded={!!broadcastImageUrl}
-                  onPick={handleBroadcastFilePick}
-                  label="ပုံ ထည့်ရန် (မဖြစ်မနေ မလိုပါ)"
-                />
-                <button
-                  onClick={handleBroadcastSend}
-                  disabled={(!broadcastText.trim() && !broadcastImageUrl) || broadcastSending || broadcastUploading}
-                  className="w-full bg-violet-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
-                >
-                  {broadcastSending ? "ပို့နေသည်..." : "User အားလုံးထံ ပို့မည်"}
-                </button>
-              </div>
-
-              <div className="bg-white rounded-xl p-3 shadow space-y-2">
-                <h2 className="font-bold text-slate-800">🏷️ Reseller သတ်မှတ်ရန်</h2>
-                <p className="text-xs text-slate-500">
-                  Reseller ဖြစ်တဲ့ user က app ထဲက item အားလုံးအတွက် {RESELLER_DISCOUNT_PERCENT}% လျှော့စျေးနဲ့ ဝယ်ယူရမှာဖြစ်ပါတယ် — login ဝင်တာနဲ့ ချက်ချင်း မြင်ရပါမယ်။
-                </p>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={resellerTargetId}
-                  onChange={(e) => setResellerTargetId(e.target.value)}
-                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
-                  className="w-full border rounded-lg p-2 text-sm"
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleSetReseller(true)}
-                    disabled={!resellerTargetId.trim() || resellerSaving}
-                    className="flex-1 bg-emerald-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
-                  >
-                    {resellerSaving ? "..." : "Reseller ဖြစ်စေရန်"}
-                  </button>
-                  <button
-                    onClick={() => handleSetReseller(false)}
-                    disabled={!resellerTargetId.trim() || resellerSaving}
-                    className="flex-1 bg-slate-200 text-slate-700 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
-                  >
-                    {resellerSaving ? "..." : "Reseller ဖြုတ်ရန်"}
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-3 shadow space-y-2">
-                <h2 className="font-bold text-slate-800">🛠️ Balance ပြင်ဆင်ရန်</h2>
-                <p className="text-xs text-slate-500">
-                  Deposit approve မှားတာမျိုး ပြင်ချင်ရင် သုံးပါ — ပေါင်းချင်ရင် အပေါင်းကိန်း (ဥပမာ 5000)၊ နှုတ်ချင်ရင် အနုတ်ကိန်း (ဥပမာ -5000) ထည့်ပါ။
-                </p>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={adjustTargetId}
-                  onChange={(e) => setAdjustTargetId(e.target.value)}
-                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
-                  className="w-full border rounded-lg p-2 text-sm"
-                />
-                <div className="flex gap-2">
-                  <select
-                    value={adjustCurrency}
-                    onChange={(e) => setAdjustCurrency(e.target.value)}
-                    className="border rounded-lg p-2 text-sm"
-                  >
-                    <option value="mmk">MMK</option>
-                    <option value="thb">THB</option>
-                  </select>
-                  <input
-                    type="number"
-                    value={adjustAmount}
-                    onChange={(e) => setAdjustAmount(e.target.value)}
-                    placeholder="ပမာဏ (+/-)"
-                    className="flex-1 border rounded-lg p-2 text-sm"
-                  />
-                </div>
-                <input
-                  type="text"
-                  value={adjustReason}
-                  onChange={(e) => setAdjustReason(e.target.value)}
-                  placeholder="အကြောင်းပြချက် (မဖြစ်မနေ မလိုပါ)"
-                  className="w-full border rounded-lg p-2 text-sm"
-                />
-                <button
-                  onClick={handleAdjustBalance}
-                  disabled={!adjustTargetId.trim() || !adjustAmount || adjustSaving}
-                  className="w-full bg-amber-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
-                >
-                  {adjustSaving ? "..." : "Balance ပြင်မည်"}
-                </button>
-              </div>
-
               {adminLoading ? (
                 <div className="text-white/80 text-center mt-16 text-sm">⏳<br />Pending items များ ရယူနေသည်...</div>
               ) : pendingCount === 0 ? (
@@ -1566,7 +1468,117 @@ export default function MonkeyTopup() {
                 </>
               )}
             </div>
-            <BottomNav active="admin" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+            <BottomNav active="approve" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "admin" && isAdmin && (
+          <>
+            <TopBar title="Admin Panel" onBack={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-5">
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">📢 User များအားလုံးထံ စာပို့ရန်</h2>
+                <textarea
+                  value={broadcastText}
+                  onChange={(e) => setBroadcastText(e.target.value)}
+                  placeholder="ဥပမာ - ဒီနေ့ event အသစ်အကြောင်း..."
+                  rows={3}
+                  className="w-full border rounded-lg p-2 text-sm resize-none"
+                />
+                <UploadBox
+                  file={broadcastFile}
+                  uploading={broadcastUploading}
+                  uploaded={!!broadcastImageUrl}
+                  onPick={handleBroadcastFilePick}
+                  label="ပုံ ထည့်ရန် (မဖြစ်မနေ မလိုပါ)"
+                />
+                <button
+                  onClick={handleBroadcastSend}
+                  disabled={(!broadcastText.trim() && !broadcastImageUrl) || broadcastSending || broadcastUploading}
+                  className="w-full bg-violet-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {broadcastSending ? "ပို့နေသည်..." : "User အားလုံးထံ ပို့မည်"}
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🏷️ Reseller သတ်မှတ်ရန်</h2>
+                <p className="text-xs text-slate-500">
+                  Reseller ဖြစ်တဲ့ user က app ထဲက item အားလုံးအတွက် {RESELLER_DISCOUNT_PERCENT}% လျှော့စျေးနဲ့ ဝယ်ယူရမှာဖြစ်ပါတယ် — login ဝင်တာနဲ့ ချက်ချင်း မြင်ရပါမယ်။
+                </p>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={resellerTargetId}
+                  onChange={(e) => setResellerTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleSetReseller(true)}
+                    disabled={!resellerTargetId.trim() || resellerSaving}
+                    className="flex-1 bg-emerald-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {resellerSaving ? "..." : "Reseller ဖြစ်စေရန်"}
+                  </button>
+                  <button
+                    onClick={() => handleSetReseller(false)}
+                    disabled={!resellerTargetId.trim() || resellerSaving}
+                    className="flex-1 bg-slate-200 text-slate-700 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {resellerSaving ? "..." : "Reseller ဖြုတ်ရန်"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🛠️ Balance ပြင်ဆင်ရန်</h2>
+                <p className="text-xs text-slate-500">
+                  Deposit approve မှားတာမျိုး ပြင်ချင်ရင် သုံးပါ — ပေါင်းချင်ရင် အပေါင်းကိန်း (ဥပမာ 5000)၊ နှုတ်ချင်ရင် အနုတ်ကိန်း (ဥပမာ -5000) ထည့်ပါ။
+                </p>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={adjustTargetId}
+                  onChange={(e) => setAdjustTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <div className="flex gap-2">
+                  <select
+                    value={adjustCurrency}
+                    onChange={(e) => setAdjustCurrency(e.target.value)}
+                    className="border rounded-lg p-2 text-sm"
+                  >
+                    <option value="mmk">MMK</option>
+                    <option value="thb">THB</option>
+                  </select>
+                  <input
+                    type="number"
+                    value={adjustAmount}
+                    onChange={(e) => setAdjustAmount(e.target.value)}
+                    placeholder="ပမာဏ (+/-)"
+                    className="flex-1 border rounded-lg p-2 text-sm"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value={adjustReason}
+                  onChange={(e) => setAdjustReason(e.target.value)}
+                  placeholder="အကြောင်းပြချက် (မဖြစ်မနေ မလိုပါ)"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <button
+                  onClick={handleAdjustBalance}
+                  disabled={!adjustTargetId.trim() || !adjustAmount || adjustSaving}
+                  className="w-full bg-amber-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {adjustSaving ? "..." : "Balance ပြင်မည်"}
+                </button>
+              </div>
+            </div>
+            <BottomNav active="admin" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={0} />
           </>
         )}
 
