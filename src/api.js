@@ -47,10 +47,11 @@ export const api = {
     request(`/admin/deposits/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
   updateOrderStatus: (telegramId, id, status) =>
     request(`/admin/orders/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
-  // Sends `message` to every user, both as a Telegram DM (via the bot) and
-  // as an in-app inbox message. Returns { ok, totalRecipients, sent, failed }.
-  broadcastMessage: (telegramId, message) =>
-    request(`/admin/broadcast`, { method: "POST", body: JSON.stringify({ telegramId, message }) }),
+  // Sends `message` (and an optional photo) to every user, both as a
+  // Telegram DM (via the bot) and as an in-app inbox message. Returns
+  // { ok, totalRecipients, sent, failed }.
+  broadcastMessage: (telegramId, message, imageUrl) =>
+    request(`/admin/broadcast`, { method: "POST", body: JSON.stringify({ telegramId, message, imageUrl }) }),
 };
 
 // ---------------------------------------------------------------------

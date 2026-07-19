@@ -539,6 +539,9 @@ export default function MonkeyTopup() {
   const [adminActingId, setAdminActingId] = useState(null);
   const [broadcastText, setBroadcastText] = useState("");
   const [broadcastSending, setBroadcastSending] = useState(false);
+  const [broadcastFile, setBroadcastFile] = useState(null);
+  const [broadcastImageUrl, setBroadcastImageUrl] = useState(null);
+  const [broadcastUploading, setBroadcastUploading] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
@@ -908,14 +911,31 @@ export default function MonkeyTopup() {
     }
   }
 
+  async function handleBroadcastFilePick(file) {
+    setBroadcastFile(file);
+    setBroadcastImageUrl(null);
+    if (!file) return;
+    setBroadcastUploading(true);
+    try {
+      const url = await uploadImage(file);
+      setBroadcastImageUrl(url);
+    } catch (err) {
+      showToast({ type: "error", msg: "ပုံတင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setBroadcastUploading(false);
+    }
+  }
+
   async function handleBroadcastSend() {
     const text = broadcastText.trim();
-    if (!text || broadcastSending) return;
+    if ((!text && !broadcastImageUrl) || broadcastSending || broadcastUploading) return;
     setBroadcastSending(true);
     try {
-      const result = await api.broadcastMessage(telegramId, text);
+      const result = await api.broadcastMessage(telegramId, text, broadcastImageUrl);
       showToast({ type: "ok", msg: `User ${result.sent || 0} ဦးထံသို့ ပို့ပြီးပါပြီ` });
       setBroadcastText("");
+      setBroadcastFile(null);
+      setBroadcastImageUrl(null);
     } catch (err) {
       showToast({ type: "error", msg: "ပို့ခြင်း မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
     } finally {
@@ -1215,9 +1235,16 @@ export default function MonkeyTopup() {
                   rows={3}
                   className="w-full border rounded-lg p-2 text-sm resize-none"
                 />
+                <UploadBox
+                  file={broadcastFile}
+                  uploading={broadcastUploading}
+                  uploaded={!!broadcastImageUrl}
+                  onPick={handleBroadcastFilePick}
+                  label="ပုံ ထည့်ရန် (မဖြစ်မနေ မလိုပါ)"
+                />
                 <button
                   onClick={handleBroadcastSend}
-                  disabled={!broadcastText.trim() || broadcastSending}
+                  disabled={(!broadcastText.trim() && !broadcastImageUrl) || broadcastSending || broadcastUploading}
                   className="w-full bg-violet-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
                 >
                   {broadcastSending ? "ပို့နေသည်..." : "User အားလုံးထံ ပို့မည်"}
