@@ -8,6 +8,11 @@ import { uploadImage } from "./upload.js";
 // change or redeploy needed, just a rebuild.
 const RESELLER_DISCOUNT_PERCENT = Number(import.meta.env.VITE_RESELLER_DISCOUNT_PERCENT || 10);
 
+// Order here must match REWARDS in the backend's routes/spin.js — it's what
+// decides which wheel segment lights up for a given prize.
+const SPIN_REWARDS = [100, 200, 300, 500, 1000, 2000];
+const SPIN_COLORS = ["#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#ef4444"];
+
 const APP_NAME = "Monkey Topup";
 
 // Uploaded official game art, downsized to small square icons for the shop grid.
@@ -279,7 +284,7 @@ function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendi
   const items = [
     { key: "shop", label: "Home", icon: "🏠" },
     { key: "message", label: "MESSAGE", icon: "📄" },
-    { key: "spin", label: "SPIN", icon: "🎡" },
+    { key: "spin", label: "ကံစမ်းမဲ", icon: "🎡" },
     { key: "profile", label: "PROFILE", icon: "👤" },
     ...(isAdmin ? [{ key: "admin", label: "ADMIN", icon: "🛠️" }] : []),
   ];
@@ -505,6 +510,10 @@ export default function MonkeyTopup() {
   const [view, setView] = useState("shop");
   const [balance, setBalance] = useState(0);
   const [balanceThb, setBalanceThb] = useState(0);
+  const [spinStatus, setSpinStatus] = useState(null); // { canSpin, nextSpinAt } | null while loading
+  const [spinning, setSpinning] = useState(false);
+  const [spinResult, setSpinResult] = useState(null);
+  const [wheelRotation, setWheelRotation] = useState(0);
   const [currency, setCurrency] = useState("mmk");
   const [server, setServer] = useState("Global");
   const [newStateServer, setNewStateServer] = useState("New State");
@@ -665,6 +674,10 @@ export default function MonkeyTopup() {
       loadPendingItems();
     }
     if (key === "profile") setView("profile");
+    if (key === "spin") {
+      setView("spin");
+      loadSpinStatus();
+    }
   }
 
   function handleContactAdmin() {
@@ -1003,6 +1016,50 @@ export default function MonkeyTopup() {
     }
   }
 
+
+  async function loadSpinStatus() {
+    setSpinStatus(null);
+    setSpinResult(null);
+    try {
+      const status = await api.getSpinStatus(telegramId);
+      setSpinStatus(status);
+    } catch (err) {
+      setSpinStatus({ canSpin: false, nextSpinAt: null });
+    }
+  }
+
+  async function handleSpin() {
+    if (spinning || !spinStatus?.canSpin) return;
+    setSpinning(true);
+    setSpinResult(null);
+    try {
+      const result = await api.spin(telegramId);
+      const idx = SPIN_REWARDS.indexOf(result.reward);
+      const segmentCenter = idx * (360 / SPIN_REWARDS.length) + 360 / SPIN_REWARDS.length / 2;
+      const currentMod = ((wheelRotation % 360) + 360) % 360;
+      const targetMod = (360 - segmentCenter + 360) % 360;
+      let delta = targetMod - currentMod;
+      if (delta <= 0) delta += 360;
+      const newRotation = wheelRotation + delta + 360 * 5;
+      setWheelRotation(newRotation);
+
+      window.setTimeout(() => {
+        setSpinResult(result.reward);
+        setBalance(result.newBalance);
+        setSpinStatus({ canSpin: false, nextSpinAt: result.nextSpinAt });
+        setSpinning(false);
+        showToast({ type: "ok", msg: `🎉 ${result.reward} MMK ရရှိပါသည်!` });
+      }, 3600);
+    } catch (err) {
+      setSpinning(false);
+      if (err.message === "already_spun") {
+        showToast({ type: "error", msg: "ဒီနေ့ ကံစမ်းပြီးသားပါ" });
+        loadSpinStatus();
+      } else {
+        showToast({ type: "error", msg: "ကံစမ်းမဲ မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
+      }
+    }
+  }
 
   // Only reachable on the website (Telegram always supplies an id
   // automatically) — show the login/register screen until the person signs in.
@@ -1514,6 +1571,82 @@ export default function MonkeyTopup() {
         )}
 
         {/* ---------------- PROFILE ---------------- */}
+        {view === "spin" && (
+          <>
+            <TopBar title="ကံစမ်းမဲ" onBack={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto flex flex-col items-center gap-6">
+              <div className="text-white text-center text-sm">
+                တစ်နေ့ တစ်ကြိမ် အခမဲ့ ကံစမ်းပြီး MMK cashback ရယူပါ — balance ထဲ ချက်ချင်း ရောက်ပါမယ်။
+              </div>
+
+              <div className="relative w-64 h-64">
+                {/* Pointer */}
+                <div className="absolute left-1/2 -top-2 -translate-x-1/2 z-10 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[20px] border-t-yellow-400 rotate-180" />
+                <div
+                  className="w-64 h-64 rounded-full border-4 border-white shadow-xl relative overflow-hidden"
+                  style={{
+                    transform: `rotate(${wheelRotation}deg)`,
+                    transition: spinning ? "transform 3.5s cubic-bezier(0.17, 0.67, 0.16, 0.99)" : "none",
+                    background: `conic-gradient(${SPIN_REWARDS.map(
+                      (_, i) =>
+                        `${SPIN_COLORS[i]} ${(i * 360) / SPIN_REWARDS.length}deg ${((i + 1) * 360) / SPIN_REWARDS.length}deg`
+                    ).join(", ")})`,
+                  }}
+                >
+                  {SPIN_REWARDS.map((amount, i) => {
+                    const angle = (i * 360) / SPIN_REWARDS.length + 360 / SPIN_REWARDS.length / 2;
+                    return (
+                      <div
+                        key={amount}
+                        className="absolute left-1/2 top-1/2 text-white font-bold text-xs drop-shadow"
+                        style={{
+                          transform: `rotate(${angle}deg) translate(0, -90px) rotate(${-angle}deg)`,
+                          transformOrigin: "0 0",
+                        }}
+                      >
+                        {fmt(amount)}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white shadow flex items-center justify-center text-2xl">
+                  🎡
+                </div>
+              </div>
+
+              {spinResult != null && (
+                <div className="bg-white rounded-xl px-6 py-3 text-center shadow">
+                  <div className="text-xs text-slate-500">ဂုဏ်ယူပါတယ်!</div>
+                  <div className="text-xl font-bold text-emerald-600">+{fmt(spinResult)} MMK</div>
+                </div>
+              )}
+
+              {spinStatus === null ? (
+                <div className="text-white/80 text-sm">⏳ ရယူနေသည်...</div>
+              ) : spinStatus.canSpin ? (
+                <button
+                  onClick={handleSpin}
+                  disabled={spinning}
+                  className="bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-full px-10 py-3 shadow-lg active:scale-95 transition disabled:opacity-60"
+                >
+                  {spinning ? "လှည့်နေသည်..." : "ကံစမ်းမည်"}
+                </button>
+              ) : (
+                <div className="text-center">
+                  <div className="bg-white/10 text-white text-sm rounded-lg px-4 py-2">
+                    ဒီနေ့ ကံစမ်းပြီးသားပါ — နက်ဖြန် ပြန်လာပါ 🙏
+                  </div>
+                  {spinStatus.nextSpinAt && (
+                    <div className="text-white/60 text-xs mt-1">
+                      နောက်တစ်ကြိမ်: {new Date(spinStatus.nextSpinAt).toLocaleString()}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
         {view === "profile" && (
           <>
             <TopBar title={APP_NAME} />
