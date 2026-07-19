@@ -52,6 +52,12 @@ export const api = {
   // { ok, totalRecipients, sent, failed }.
   broadcastMessage: (telegramId, message, imageUrl) =>
     request(`/admin/broadcast`, { method: "POST", body: JSON.stringify({ telegramId, message, imageUrl }) }),
+  // Marks/unmarks targetTelegramId as a reseller (flat app-wide discount).
+  setReseller: (telegramId, targetTelegramId, isReseller) =>
+    request(`/admin/set-reseller`, {
+      method: "POST",
+      body: JSON.stringify({ telegramId, targetTelegramId, isReseller }),
+    }),
 };
 
 // ---------------------------------------------------------------------

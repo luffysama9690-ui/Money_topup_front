@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { api, getTelegramId, getTelegramUser, saveWebSession, logoutWeb, isTelegramContext } from "./api.js";
 import { uploadImage } from "./upload.js";
 
+// Flat app-wide discount % applied to every price for users marked as a
+// reseller (see the Admin Panel's "Reseller" box). Change it any time in
+// Vercel's project settings (VITE_RESELLER_DISCOUNT_PERCENT) — no code
+// change or redeploy needed, just a rebuild.
+const RESELLER_DISCOUNT_PERCENT = Number(import.meta.env.VITE_RESELLER_DISCOUNT_PERCENT || 10);
+
 const APP_NAME = "Monkey Topup";
 
 // Uploaded official game art, downsized to small square icons for the shop grid.
@@ -217,6 +223,14 @@ function verifyGameIdFormat(gameId) {
 
 function fmt(n) {
   return (n ?? 0).toLocaleString("en-US");
+}
+
+// Applies a reseller's flat discount to a price, rounding to the nearest
+// whole unit (MMK/THB don't use decimals here). `percent` is 0 for regular
+// users, so this is a no-op unless the logged-in user is a reseller.
+function applyResellerDiscount(price, percent) {
+  if (!percent) return price;
+  return Math.round(price * (1 - percent / 100));
 }
 
 // Clipboard helper with a manual-copy fallback for sandboxed environments
@@ -542,10 +556,13 @@ export default function MonkeyTopup() {
   const [broadcastFile, setBroadcastFile] = useState(null);
   const [broadcastImageUrl, setBroadcastImageUrl] = useState(null);
   const [broadcastUploading, setBroadcastUploading] = useState(false);
+  const [resellerDiscountPercent, setResellerDiscountPercent] = useState(0);
+  const [resellerTargetId, setResellerTargetId] = useState("");
+  const [resellerSaving, setResellerSaving] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
-  const price = (pkg) => (pkg ? pkg[currency][0] : 0);
+  const price = (pkg) => applyResellerDiscount(pkg ? pkg[currency][0] : 0, resellerDiscountPercent);
   const qtyMax = isWeeklyPass(selectedPkg) ? 10 : 999;
   const qtyNum = Math.min(qtyMax, Math.max(1, parseInt(qty, 10) || 1));
   const total = selectedPkg ? price(selectedPkg) * qtyNum : 0;
@@ -588,6 +605,7 @@ export default function MonkeyTopup() {
         if (cancelled) return;
         setBalance(Number(user.balance_mmk));
         setBalanceThb(Number(user.balance_thb || 0));
+        setResellerDiscountPercent(user.is_reseller ? RESELLER_DISCOUNT_PERCENT : 0);
         setOrders(orderRows.map(mapOrder));
         setDeposits(depositRows);
         setMessages(messageRows.map(mapMessage));
@@ -779,7 +797,7 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
       return;
     }
-    const price = selectedSocialPkg[currency][0];
+    const price = applyResellerDiscount(selectedSocialPkg[currency][0], resellerDiscountPercent);
     setBuying(true);
     try {
       const order = await api.createOrder({
@@ -940,6 +958,23 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: "ပို့ခြင်း မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
     } finally {
       setBroadcastSending(false);
+    }
+  }
+  async function handleSetReseller(isReseller) {
+    const targetId = resellerTargetId.trim();
+    if (!targetId || resellerSaving) return;
+    setResellerSaving(true);
+    try {
+      await api.setReseller(telegramId, targetId, isReseller);
+      showToast({
+        type: "ok",
+        msg: isReseller ? `Telegram ID ${targetId} ကို Reseller ဖြစ်စေပြီးပါပြီ` : `Telegram ID ${targetId} ရဲ့ Reseller status ကို ဖြုတ်လိုက်ပါပြီ`,
+      });
+      setResellerTargetId("");
+    } catch (err) {
+      showToast({ type: "error", msg: err.message === "User not found — they need to have opened the app at least once" ? "ဒီ Telegram ID က app ကို တစ်ခါမှ မဖွင့်ဖူးသေးပါ" : "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setResellerSaving(false);
     }
   }
 
@@ -1251,6 +1286,37 @@ export default function MonkeyTopup() {
                 </button>
               </div>
 
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🏷️ Reseller သတ်မှတ်ရန်</h2>
+                <p className="text-xs text-slate-500">
+                  Reseller ဖြစ်တဲ့ user က app ထဲက item အားလုံးအတွက် {RESELLER_DISCOUNT_PERCENT}% လျှော့စျေးနဲ့ ဝယ်ယူရမှာဖြစ်ပါတယ် — login ဝင်တာနဲ့ ချက်ချင်း မြင်ရပါမယ်။
+                </p>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={resellerTargetId}
+                  onChange={(e) => setResellerTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleSetReseller(true)}
+                    disabled={!resellerTargetId.trim() || resellerSaving}
+                    className="flex-1 bg-emerald-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {resellerSaving ? "..." : "Reseller ဖြစ်စေရန်"}
+                  </button>
+                  <button
+                    onClick={() => handleSetReseller(false)}
+                    disabled={!resellerTargetId.trim() || resellerSaving}
+                    className="flex-1 bg-slate-200 text-slate-700 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {resellerSaving ? "..." : "Reseller ဖြုတ်ရန်"}
+                  </button>
+                </div>
+              </div>
+
               {adminLoading ? (
                 <div className="text-white/80 text-center mt-16 text-sm">⏳<br />Pending items များ ရယူနေသည်...</div>
               ) : pendingCount === 0 ? (
@@ -1489,9 +1555,9 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES} currency={currency} onPick={openPurchase} />
-              <PkgSection num="2" title="2x Diamonds" items={ML_2X} currency={currency} onPick={openPurchase} />
-              <PkgSection num="3" title="Other Diamonds" items={ML_DIAMONDS} currency={currency} onPick={openPurchase} />
+              <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="2x Diamonds" items={ML_2X} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="3" title="Other Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -1519,9 +1585,9 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES} currency={currency} onPick={openPurchase} />
-              <PkgSection num="2" title="2x Diamonds" items={MC_2X} currency={currency} onPick={openPurchase} />
-              <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS} currency={currency} onPick={openPurchase} />
+              <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="2x Diamonds" items={MC_2X} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -1549,9 +1615,9 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} onPick={openPurchase} />
-              <PkgSection num="2" title="Special Packs" items={PUBG_SPECIAL} currency={currency} onPick={openPurchase} />
-              <PkgSection num="3" title="Prime" items={PUBG_PRIME} currency={currency} onPick={openPurchase} />
+              <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Special Packs" items={PUBG_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="3" title="Prime" items={PUBG_PRIME} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -1605,7 +1671,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="NC" items={NEWSTATE_NC} currency={currency} onPick={openPurchase} />
+              <PkgSection num="1" title="NC" items={NEWSTATE_NC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -1669,6 +1735,7 @@ export default function MonkeyTopup() {
                 items={TIKTOK_PACKAGES}
                 currency={currency}
                 logo={PKG_IMAGES.imgTiktokLogo}
+                discountPercent={resellerDiscountPercent}
                 onPick={(pkg) => openSocialPurchase(pkg, "TikTok")}
               />
             </div>
@@ -1702,6 +1769,7 @@ export default function MonkeyTopup() {
                 items={FACEBOOK_PACKAGES}
                 currency={currency}
                 logo={PKG_IMAGES.imgFacebookLogo}
+                discountPercent={resellerDiscountPercent}
                 onPick={(pkg) => openSocialPurchase(pkg, "Facebook")}
               />
             </div>
@@ -1991,7 +2059,7 @@ export default function MonkeyTopup() {
   );
 }
 
-function PkgSection({ num, title, items, currency, onPick }) {
+function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }) {
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   return (
     <div>
@@ -2001,7 +2069,8 @@ function PkgSection({ num, title, items, currency, onPick }) {
       </div>
       <div className="grid grid-cols-3 gap-2">
         {items.map((it) => {
-          const priceVal = it[currency][0];
+          const rawPrice = it[currency][0];
+          const priceVal = applyResellerDiscount(rawPrice, discountPercent);
           const label = it.label || it.name;
           return (
             <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
@@ -2025,12 +2094,13 @@ function PkgSection({ num, title, items, currency, onPick }) {
 // TikTok / Facebook packages: shows the platform logo, the original price
 // TikTok / Facebook packages: shows the platform logo and a single plain
 // price (no strikethrough / no discount display).
-function SocialPkgGrid({ items, currency, logo, onPick }) {
+function SocialPkgGrid({ items, currency, logo, discountPercent = 0, onPick }) {
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   return (
     <div className="grid grid-cols-3 gap-2">
       {items.map((it) => {
-        const [price] = it[currency];
+        const [rawPrice] = it[currency];
+        const price = applyResellerDiscount(rawPrice, discountPercent);
         return (
           <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition p-2">
             <img src={logo} alt="" className="w-9 h-9 object-contain mx-auto mb-1" />
