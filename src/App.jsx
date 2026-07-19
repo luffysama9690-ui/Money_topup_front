@@ -537,6 +537,8 @@ export default function MonkeyTopup() {
   const [pendingOrders, setPendingOrders] = useState([]);
   const [adminLoading, setAdminLoading] = useState(false);
   const [adminActingId, setAdminActingId] = useState(null);
+  const [broadcastText, setBroadcastText] = useState("");
+  const [broadcastSending, setBroadcastSending] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
@@ -906,6 +908,21 @@ export default function MonkeyTopup() {
     }
   }
 
+  async function handleBroadcastSend() {
+    const text = broadcastText.trim();
+    if (!text || broadcastSending) return;
+    setBroadcastSending(true);
+    try {
+      const result = await api.broadcastMessage(telegramId, text);
+      showToast({ type: "ok", msg: `User ${result.sent || 0} ဦးထံသို့ ပို့ပြီးပါပြီ` });
+      setBroadcastText("");
+    } catch (err) {
+      showToast({ type: "error", msg: "ပို့ခြင်း မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
+    } finally {
+      setBroadcastSending(false);
+    }
+  }
+
 
   // Only reachable on the website (Telegram always supplies an id
   // automatically) — show the login/register screen until the person signs in.
@@ -972,25 +989,33 @@ export default function MonkeyTopup() {
               <div>
                 <h2 className="text-white font-bold mb-2 drop-shadow">Games</h2>
                 <div className="grid grid-cols-3 gap-3">
-                  {GAMES.map((g) => (
-                    <button
-                      key={g.id}
-                      onClick={() => {
-                        if (g.id === "ml") setView("mlDetail");
-                        if (g.id === "mc") setView("mcDetail");
-                        if (g.id === "pubg") setView("pubgDetail");
-                        if (g.id === "newstate") setView("newstateDetail");
-                        if (g.id === "social") setView("socialDetail");
-                      }}
-                      className="rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left"
-                    >
-                      <GameIcon icon={g.icon} grad={g.grad} image={g.image} name={g.name} />
-                      <div className="p-2">
-                        <div className="text-white text-[11px] font-semibold leading-tight">{g.name}</div>
-                        <div className="text-emerald-400 text-[10px] font-bold">{g.tag}</div>
-                      </div>
-                    </button>
-                  ))}
+                  {GAMES.map((g) => {
+                    const isComingSoon = g.id === "coc";
+                    return (
+                      <button
+                        key={g.id}
+                        disabled={isComingSoon}
+                        onClick={() => {
+                          if (g.id === "ml") setView("mlDetail");
+                          if (g.id === "mc") setView("mcDetail");
+                          if (g.id === "pubg") setView("pubgDetail");
+                          if (g.id === "newstate") setView("newstateDetail");
+                          if (g.id === "social") setView("socialDetail");
+                        }}
+                        className={`rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left ${
+                          isComingSoon ? "opacity-40 grayscale cursor-not-allowed" : ""
+                        }`}
+                      >
+                        <GameIcon icon={g.icon} grad={g.grad} image={g.image} name={g.name} />
+                        <div className="p-2">
+                          <div className="text-white text-[11px] font-semibold leading-tight">{g.name}</div>
+                          <div className={`text-[10px] font-bold ${isComingSoon ? "text-slate-400" : "text-emerald-400"}`}>
+                            {isComingSoon ? "မကြာမီလာမည်" : g.tag}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -1181,6 +1206,24 @@ export default function MonkeyTopup() {
           <>
             <TopBar title="Admin Panel" onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-5">
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">📢 User များအားလုံးထံ စာပို့ရန်</h2>
+                <textarea
+                  value={broadcastText}
+                  onChange={(e) => setBroadcastText(e.target.value)}
+                  placeholder="ဥပမာ - ဒီနေ့ event အသစ်အကြောင်း..."
+                  rows={3}
+                  className="w-full border rounded-lg p-2 text-sm resize-none"
+                />
+                <button
+                  onClick={handleBroadcastSend}
+                  disabled={!broadcastText.trim() || broadcastSending}
+                  className="w-full bg-violet-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {broadcastSending ? "ပို့နေသည်..." : "User အားလုံးထံ ပို့မည်"}
+                </button>
+              </div>
+
               {adminLoading ? (
                 <div className="text-white/80 text-center mt-16 text-sm">⏳<br />Pending items များ ရယူနေသည်...</div>
               ) : pendingCount === 0 ? (
