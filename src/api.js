@@ -58,6 +58,13 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ telegramId, targetTelegramId, isReseller }),
     }),
+  // Manually adjusts a user's balance by `amount` (positive to add, negative
+  // to deduct). Used to fix mistakes like an incorrectly-approved deposit.
+  adjustBalance: (telegramId, targetTelegramId, currency, amount, reason) =>
+    request(`/admin/adjust-balance`, {
+      method: "POST",
+      body: JSON.stringify({ telegramId, targetTelegramId, currency, amount, reason }),
+    }),
 };
 
 // ---------------------------------------------------------------------

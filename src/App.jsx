@@ -559,6 +559,11 @@ export default function MonkeyTopup() {
   const [resellerDiscountPercent, setResellerDiscountPercent] = useState(0);
   const [resellerTargetId, setResellerTargetId] = useState("");
   const [resellerSaving, setResellerSaving] = useState(false);
+  const [adjustTargetId, setAdjustTargetId] = useState("");
+  const [adjustAmount, setAdjustAmount] = useState("");
+  const [adjustCurrency, setAdjustCurrency] = useState("mmk");
+  const [adjustReason, setAdjustReason] = useState("");
+  const [adjustSaving, setAdjustSaving] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
@@ -977,6 +982,26 @@ export default function MonkeyTopup() {
       setResellerSaving(false);
     }
   }
+  async function handleAdjustBalance() {
+    const targetId = adjustTargetId.trim();
+    const amt = Number(adjustAmount);
+    if (!targetId || !amt || adjustSaving) return;
+    setAdjustSaving(true);
+    try {
+      const result = await api.adjustBalance(telegramId, targetId, adjustCurrency, amt, adjustReason.trim());
+      showToast({
+        type: "ok",
+        msg: `Telegram ID ${targetId} ရဲ့ balance အသစ်: ${fmt(result.newBalance)} ${adjustCurrency.toUpperCase()}`,
+      });
+      setAdjustTargetId("");
+      setAdjustAmount("");
+      setAdjustReason("");
+    } catch (err) {
+      showToast({ type: "error", msg: err.message || "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setAdjustSaving(false);
+    }
+  }
 
 
   // Only reachable on the website (Telegram always supplies an id
@@ -1315,6 +1340,52 @@ export default function MonkeyTopup() {
                     {resellerSaving ? "..." : "Reseller ဖြုတ်ရန်"}
                   </button>
                 </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🛠️ Balance ပြင်ဆင်ရန်</h2>
+                <p className="text-xs text-slate-500">
+                  Deposit approve မှားတာမျိုး ပြင်ချင်ရင် သုံးပါ — ပေါင်းချင်ရင် အပေါင်းကိန်း (ဥပမာ 5000)၊ နှုတ်ချင်ရင် အနုတ်ကိန်း (ဥပမာ -5000) ထည့်ပါ။
+                </p>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={adjustTargetId}
+                  onChange={(e) => setAdjustTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <div className="flex gap-2">
+                  <select
+                    value={adjustCurrency}
+                    onChange={(e) => setAdjustCurrency(e.target.value)}
+                    className="border rounded-lg p-2 text-sm"
+                  >
+                    <option value="mmk">MMK</option>
+                    <option value="thb">THB</option>
+                  </select>
+                  <input
+                    type="number"
+                    value={adjustAmount}
+                    onChange={(e) => setAdjustAmount(e.target.value)}
+                    placeholder="ပမာဏ (+/-)"
+                    className="flex-1 border rounded-lg p-2 text-sm"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value={adjustReason}
+                  onChange={(e) => setAdjustReason(e.target.value)}
+                  placeholder="အကြောင်းပြချက် (မဖြစ်မနေ မလိုပါ)"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <button
+                  onClick={handleAdjustBalance}
+                  disabled={!adjustTargetId.trim() || !adjustAmount || adjustSaving}
+                  className="w-full bg-amber-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {adjustSaving ? "..." : "Balance ပြင်မည်"}
+                </button>
               </div>
 
               {adminLoading ? (
