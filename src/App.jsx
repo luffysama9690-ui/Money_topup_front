@@ -1492,6 +1492,37 @@ async function handleDepositSubmit() {
         {view === "admin" && isAdmin && (
           <>
             <TopBar title="Admin Panel" onBack={() => setView("shop")} />
+            <div className="bg-white rounded-xl p-3 shadow space-y-2">
+  <div className="flex justify-between items-center">
+    <h2 className="font-bold text-slate-800">👥 User အားလုံး Balance</h2>
+    <button
+      onClick={loadAllUsers}
+      disabled={usersLoading}
+      className="bg-violet-600 text-white text-xs font-bold rounded-lg px-3 py-1.5 disabled:opacity-50"
+    >
+      {usersLoading ? "..." : "Refresh"}
+    </button>
+  </div>
+  {allUsers.length === 0 && !usersLoading && (
+    <div className="text-xs text-slate-400 text-center py-2">Refresh နှိပ်ပြီး list ကြည့်ပါ</div>
+  )}
+  <div className="max-h-80 overflow-y-auto divide-y">
+    {allUsers.map((u) => (
+      <div key={u.telegram_id} className="flex justify-between items-center py-2 text-sm">
+        <div>
+          <div className="font-semibold text-slate-800">
+            {u.username || "(no name)"} {u.is_reseller && <span className="text-emerald-600 text-[10px] font-bold ml-1">RESELLER</span>}
+          </div>
+          <div className="text-[11px] text-slate-400">ID: {u.telegram_id}</div>
+        </div>
+        <div className="text-right">
+          <div className="font-bold text-violet-700">{fmt(Number(u.balance_mmk))} ကျပ်</div>
+          <div className="text-xs text-slate-500">{fmt(Number(u.balance_thb))} ဘတ်</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
             <div className="p-4 flex-1 overflow-y-auto space-y-5">
               <div className="bg-white rounded-xl p-3 shadow space-y-2">
                 <h2 className="font-bold text-slate-800">📢 User များအားလုံးထံ စာပို့ရန်</h2>
