@@ -884,21 +884,21 @@ export default function MonkeyTopup() {
     if (RACING_PACKAGES.includes(pkg)) return "Racing Master";
     return "Unknown";
   }
-
-  async function handleDepositSubmit() {
-    if (depositing || depositUploading) return;
-    if (!depositAmount) {
-      showToast({ type: "error", msg: "ဖြည့်မည့်ပမာဏ ထည့်ပါ" });
-      return;
-    }
-    if (currency === "thb" && Number(depositAmount) < 100) {
-      showToast({ type: "error", msg: "အနည်းဆုံး 100 ဘတ် ဖြည့်ရပါမည်" });
-      return;
-    }
-    if (!depositScreenshotUrl) {
-      showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
-      return;
-    }
+async function handleDepositSubmit() {
+  if (depositing || depositUploading) return;
+  if (!depositAmount) {
+    showToast({ type: "error", msg: "ဖြည့်မည့်ပမာဏ ထည့်ပါ" });
+    return;
+  }
+  if (currency === "mmk" && Number(depositAmount) < 900) {
+    showToast({ type: "error", msg: "အနည်းဆုံး 900 ကျပ် ဖြည့်ရပါမည်" });
+    return;
+  }
+  if (currency === "thb" && Number(depositAmount) < 7) {
+    showToast({ type: "error", msg: "အနည်းဆုံး 7 ဘတ် ဖြည့်ရပါမည်" });
+    return;
+  }
+  ...
     setDepositing(true);
     try {
       const rec = await api.createDeposit({
