@@ -141,6 +141,8 @@ export function getTelegramUser() {
       lastName: "",
       username: session.user.email || "",
       photoUrl: "",
+      checkAdmin: (telegramId) => request(`/admin/check?telegramId=${telegramId}`),
+  getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
     };
   }
   return null;
