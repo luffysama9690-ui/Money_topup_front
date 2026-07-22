@@ -574,6 +574,8 @@ export default function MonkeyTopup() {
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [pendingDeposits, setPendingDeposits] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(false);
   const [pendingOrders, setPendingOrders] = useState([]);
   const [adminLoading, setAdminLoading] = useState(false);
   const [adminActingId, setAdminActingId] = useState(null);
@@ -938,6 +940,23 @@ async function handleDepositSubmit() {
       setAdminLoading(false);
     }
   }
+  // 👇 အသစ်ထည့်ရမည့်နေရာ
+async function loadAllUsers() {
+  if (usersLoading) return;
+  setUsersLoading(true);
+  try {
+    const users = await api.getAllUsers(telegramId);
+    setAllUsers(users);
+  } catch (err) {
+    showToast({ type: "error", msg: "Users list ရယူခြင်း မအောင်မြင်ပါ" });
+  } finally {
+    setUsersLoading(false);
+  }
+}
+
+async function handleDepositDecision(id, status) {
+    // ... existing code
+}
 
   async function handleDepositDecision(id, status) {
     if (adminActingId) return;
