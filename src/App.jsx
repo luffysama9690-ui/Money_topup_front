@@ -898,7 +898,6 @@ async function handleDepositSubmit() {
     showToast({ type: "error", msg: "အနည်းဆုံး 7 ဘတ် ဖြည့်ရပါမည်" });
     return;
   }
-  ...
     setDepositing(true);
     try {
       const rec = await api.createDeposit({
