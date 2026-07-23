@@ -42,7 +42,6 @@ export const api = {
   // ADMIN_TELEGRAM_ID on every one of these calls — nothing here is trusted
   // just because the frontend calls it.
   checkAdmin: (telegramId) => request(`/admin/check?telegramId=${telegramId}`),
-  getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
   getPendingItems: (telegramId) => request(`/admin/pending?telegramId=${telegramId}`),
   updateDepositStatus: (telegramId, id, status) =>
     request(`/admin/deposits/${id}/status`, { method: "PATCH", body: JSON.stringify({ telegramId, status }) }),
@@ -66,6 +65,8 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ telegramId, targetTelegramId, currency, amount, reason }),
     }),
+  // Lists every user's balance — admin-only.
+  getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
 
   // Lucky Spin (ကံစမ်းမဲ) — once every 24h, random MMK cashback.
   getSpinStatus: (telegramId) => request(`/spin/status/${telegramId}`),
@@ -142,8 +143,6 @@ export function getTelegramUser() {
       lastName: "",
       username: session.user.email || "",
       photoUrl: "",
-      checkAdmin: (telegramId) => request(`/admin/check?telegramId=${telegramId}`),
-  getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
     };
   }
   return null;
