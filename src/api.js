@@ -67,6 +67,12 @@ export const api = {
     }),
   // Lists every user's balance — admin-only.
   getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
+  // Clears targetTelegramId's spin cooldown so they can spin again right away.
+  resetSpin: (telegramId, targetTelegramId) =>
+    request(`/admin/reset-spin`, {
+      method: "POST",
+      body: JSON.stringify({ telegramId, targetTelegramId }),
+    }),
 
   // Lucky Spin (ကံစမ်းမဲ) — once every 24h, random MMK cashback.
   getSpinStatus: (telegramId) => request(`/spin/status/${telegramId}`),
