@@ -132,13 +132,13 @@ function isWeeklyPass(pkg) {
 }
 
 const GAMES = [
-  { id: "ml", name: "Mobile Legends", tag: "10k+ Sold", grad: "from-sky-400 to-indigo-600", icon: "⚔️", image: GAME_IMAGES.ml },
+  { id: "ml", name: "Mobile Legends", tag: "10k+ Sold", grad: "from-sky-400 to-[#2196F3]", icon: "⚔️", image: GAME_IMAGES.ml },
   { id: "mc", name: "Magic Chess GoGo", tag: "10k+ Sold", grad: "from-amber-400 to-orange-500", icon: "♟️", image: GAME_IMAGES.mc },
   { id: "pubg", name: "PUBG Mobile", tag: "10k+ Sold", grad: "from-sky-300 to-slate-600", icon: "🎯", image: GAME_IMAGES.pubg },
   { id: "newstate", name: "PUBG New State", tag: "New!", grad: "from-slate-700 to-teal-600", icon: "🆕", image: GAME_IMAGES.pubgNewState },
   { id: "coc", name: "Clash Of Clans", tag: "10k+ Sold", grad: "from-amber-700/70 to-orange-900/70", icon: "🛡️", image: GAME_IMAGES.coc },
   { id: "racing", name: "Racing Master", tag: "New!", grad: "from-red-600 to-slate-900", icon: "🏎️", image: GAME_IMAGES.racingMaster },
-  { id: "social", name: "Social Media", tag: "New!", grad: "from-fuchsia-500 to-purple-700", icon: "📱" },
+  { id: "social", name: "Social Media", tag: "New!", grad: "from-[#2196F3] to-[#0D47A1]", icon: "📱" },
 ];
 
 // ---- Social Media: TikTok ----
@@ -285,7 +285,7 @@ function TopBar({ title, onBack }) {
   return (
     <div className="sticky top-0 z-20 bg-gradient-to-b from-slate-900 to-slate-800 text-white px-4 py-3 relative flex items-center justify-center shadow-md">
       {onBack && (
-        <button onClick={onBack} className="absolute left-4 text-violet-300 text-sm font-medium active:opacity-60">
+        <button onClick={onBack} className="absolute left-4 text-[#90CAF9] text-sm font-medium active:opacity-60">
           ← Back
         </button>
       )}
@@ -314,7 +314,7 @@ function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendi
         <button
           key={it.key}
           onClick={() => onNavigate && onNavigate(it.key)}
-          className={`relative flex flex-col items-center gap-1 py-2 ${active === it.key ? "text-violet-400" : ""}`}
+          className={`relative flex flex-col items-center gap-1 py-2 ${active === it.key ? "text-[#90CAF9]" : ""}`}
         >
           <span className="relative text-lg leading-none">
             {it.icon}
@@ -448,10 +448,10 @@ function AuthScreen({ onAuthSuccess }) {
 
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center items-center font-sans p-4">
-      <div className="w-full max-w-sm bg-gradient-to-b from-indigo-950 via-violet-900 to-slate-900 rounded-2xl shadow-xl p-6">
+      <div className="w-full max-w-sm bg-gradient-to-b from-[#0D47A1] via-[#2196F3] to-slate-900 rounded-2xl shadow-xl p-6">
         <div className="text-center mb-6">
           <div className="text-2xl font-bold text-white">{APP_NAME}</div>
-          <div className="text-violet-300 text-sm mt-1">
+          <div className="text-[#90CAF9] text-sm mt-1">
             {mode === "login" ? "အကောင့်ဝင်ပါ" : "အကောင့်အသစ် ဖွင့်ပါ"}
           </div>
         </div>
@@ -494,7 +494,7 @@ function AuthScreen({ onAuthSuccess }) {
           </button>
         </form>
 
-        <div className="text-center mt-4 text-xs text-violet-300">
+        <div className="text-center mt-4 text-xs text-[#90CAF9]">
           {mode === "login" ? (
             <>
               အကောင့် မရှိသေးဘူးလား?{" "}
@@ -590,6 +590,8 @@ export default function MonkeyTopup() {
   const [adjustCurrency, setAdjustCurrency] = useState("mmk");
   const [adjustReason, setAdjustReason] = useState("");
   const [adjustSaving, setAdjustSaving] = useState(false);
+  const [respinTargetId, setRespinTargetId] = useState("");
+  const [respinSaving, setRespinSaving] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
@@ -1039,6 +1041,24 @@ export default function MonkeyTopup() {
     }
   }
 
+  async function handleResetSpin() {
+    const targetId = respinTargetId.trim();
+    if (!targetId || respinSaving) return;
+    setRespinSaving(true);
+    try {
+      await api.resetSpin(telegramId, targetId);
+      showToast({ type: "ok", msg: `Telegram ID ${targetId} ကို ပြန်လည် ကံစမ်းခွင့် ပေးလိုက်ပါပြီ` });
+      setRespinTargetId("");
+    } catch (err) {
+      showToast({
+        type: "error",
+        msg: err.message === "User not found — they need to have opened the app at least once" ? "ဒီ Telegram ID က app ကို တစ်ခါမှ မဖွင့်ဖူးသေးပါ" : "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ",
+      });
+    } finally {
+      setRespinSaving(false);
+    }
+  }
+
   async function loadAllUsers() {
     setUsersLoading(true);
     try {
@@ -1112,7 +1132,7 @@ export default function MonkeyTopup() {
 
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
-      <div className="w-full max-w-sm bg-gradient-to-b from-indigo-950 via-violet-900 to-slate-900 min-h-screen flex flex-col relative">
+      <div className="w-full max-w-sm bg-gradient-to-b from-[#0D47A1] via-[#2196F3] to-slate-900 min-h-screen flex flex-col relative">
         {/* ---------------- SHOP HOME ---------------- */}
         {view === "shop" && (
           <>
@@ -1153,7 +1173,7 @@ export default function MonkeyTopup() {
                 <button onClick={() => setView("topup")} className="bg-emerald-500 active:bg-emerald-600 text-white font-bold rounded-lg py-3 shadow">
                   ငွေဖြည့်မည်
                 </button>
-                <button onClick={() => setView("orders")} className="bg-gradient-to-r from-violet-700 to-indigo-800 active:from-violet-800 active:to-indigo-900 text-white font-bold rounded-lg py-3 shadow">
+                <button onClick={() => setView("orders")} className="bg-gradient-to-r from-[#2196F3] to-[#0D47A1] active:from-[#2196F3] active:to-[#0D47A1] text-white font-bold rounded-lg py-3 shadow">
                   အော်ဒါများ
                 </button>
               </div>
@@ -1202,14 +1222,14 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               <div className="bg-white rounded-xl overflow-hidden shadow">
-                <div className="bg-gradient-to-r from-indigo-950 to-violet-800 text-white px-4 py-3 flex justify-between items-center">
+                <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] text-white px-4 py-3 flex justify-between items-center">
                   <span className="font-bold">ငွေဖြည့်မည်</span>
-                  <button onClick={() => setHistoryOpen(true)} className="bg-violet-500/40 text-xs px-2 py-1 rounded">
+                  <button onClick={() => setHistoryOpen(true)} className="bg-[#2196F3]/40 text-xs px-2 py-1 rounded">
                     မှတ်တမ်း
                   </button>
                 </div>
                 <div className="p-4 space-y-4">
-                  <div className="bg-violet-50 text-violet-900 text-xs rounded-lg p-3 text-center leading-relaxed">
+                  <div className="bg-[#E3F2FD] text-[#0D47A1] text-xs rounded-lg p-3 text-center leading-relaxed">
                     ဘတ်ဖြည့်ပြီး ကျပ်ငွေဖြင့် ဝယ်ယူသည့်ဝန်ဆောင်မှု မရနိုင်သေးပါ 🙏
                   </div>
 
@@ -1219,7 +1239,7 @@ export default function MonkeyTopup() {
                       <button
                         onClick={() => setCurrency("mmk")}
                         className={`flex-1 rounded-lg py-2 text-sm font-bold border-2 transition ${
-                          currency === "mmk" ? "border-violet-500 bg-violet-50 text-violet-700" : "border-slate-200 text-slate-500"
+                          currency === "mmk" ? "border-[#2196F3] bg-[#E3F2FD] text-[#2196F3]" : "border-slate-200 text-slate-500"
                         }`}
                       >
                         🇲🇲 မြန်မာကျပ် · MMK
@@ -1320,7 +1340,7 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto">
               <div className="bg-white rounded-xl overflow-hidden shadow">
-                <div className="bg-gradient-to-r from-indigo-950 to-violet-800 text-white text-center py-3 font-bold">
+                <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] text-white text-center py-3 font-bold">
                   ဝယ်ယူမှုမှတ်တမ်းများ
                 </div>
                 <div className="grid grid-cols-3 text-xs font-bold text-slate-500 px-3 py-2 border-b">
@@ -1334,7 +1354,7 @@ export default function MonkeyTopup() {
                     onClick={() => { setSelectedOrder(o); setOrderDetailOpen(true); }}
                     className="grid grid-cols-3 items-center px-3 py-3 border-b text-sm cursor-pointer active:bg-slate-50 transition"
                   >
-                    <div className="text-violet-600 font-semibold">{o.id}</div>
+                    <div className="text-[#2196F3] font-semibold">{o.id}</div>
                     <div className="font-bold">{o.item}</div>
                     <div>
                       {o.status === "success" && <Pill tone="green">success</Pill>}
@@ -1399,7 +1419,7 @@ export default function MonkeyTopup() {
                               <div>
                                 <div className="font-bold text-slate-800">Deposit #{d.id}</div>
                                 <div className="text-sm text-slate-500">Telegram ID: {d.telegram_id}</div>
-                                <div className="text-sm font-semibold text-violet-600">
+                                <div className="text-sm font-semibold text-[#2196F3]">
                                   {fmt(Number(d.amount))} {d.currency === "mmk" ? "ကျပ်" : "ဘတ်"}
                                 </div>
                               </div>
@@ -1456,7 +1476,7 @@ export default function MonkeyTopup() {
                                 <div className="text-sm text-slate-600">
                                   {o.item} {o.game_id ? `(${o.game_id}${o.server_id ? ` / ${o.server_id}` : ""})` : ""}
                                 </div>
-                                <div className="text-sm font-semibold text-violet-600">
+                                <div className="text-sm font-semibold text-[#2196F3]">
                                   {fmt(Number(o.price))} {o.currency === "mmk" ? "ကျပ်" : "ဘတ်"}
                                 </div>
                               </div>
@@ -1514,7 +1534,7 @@ export default function MonkeyTopup() {
                   <button
                     onClick={loadAllUsers}
                     disabled={usersLoading}
-                    className="bg-violet-600 text-white text-xs font-bold rounded-lg px-3 py-1.5 disabled:opacity-50"
+                    className="bg-[#2196F3] text-white text-xs font-bold rounded-lg px-3 py-1.5 disabled:opacity-50"
                   >
                     {usersLoading ? "..." : "Refresh"}
                   </button>
@@ -1532,7 +1552,7 @@ export default function MonkeyTopup() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-violet-700">{fmt(Number(u.balance_mmk))} ကျပ်</div>
+                        <div className="font-bold text-[#2196F3]">{fmt(Number(u.balance_mmk))} ကျပ်</div>
                         <div className="text-xs text-slate-500">{fmt(Number(u.balance_thb))} ဘတ်</div>
                       </div>
                     </div>
@@ -1559,7 +1579,7 @@ export default function MonkeyTopup() {
                 <button
                   onClick={handleBroadcastSend}
                   disabled={(!broadcastText.trim() && !broadcastImageUrl) || broadcastSending || broadcastUploading}
-                  className="w-full bg-violet-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  className="w-full bg-[#2196F3] text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
                 >
                   {broadcastSending ? "ပို့နေသည်..." : "User အားလုံးထံ ပို့မည်"}
                 </button>
@@ -1639,6 +1659,28 @@ export default function MonkeyTopup() {
                   className="w-full bg-amber-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
                 >
                   {adjustSaving ? "..." : "Balance ပြင်မည်"}
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🎡 Re-spin ခွင့်ပေးရန်</h2>
+                <p className="text-xs text-slate-500">
+                  User က ၂၄ နာရီ မစောင့်ဘဲ "ကံစမ်းမဲ" ကို ချက်ချင်း ပြန်လှည့်နိုင်စေရန် Telegram ID ထည့်ပါ။
+                </p>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={respinTargetId}
+                  onChange={(e) => setRespinTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <button
+                  onClick={handleResetSpin}
+                  disabled={!respinTargetId.trim() || respinSaving}
+                  className="w-full bg-[#2196F3] text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {respinSaving ? "..." : "ပြန်လှည့်ခွင့် ပေးမည်"}
                 </button>
               </div>
             </div>
@@ -1729,7 +1771,7 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               <div className="bg-white rounded-xl shadow overflow-hidden">
-                <div className="bg-gradient-to-r from-indigo-950 to-violet-800 px-4 py-5 flex items-center gap-4">
+                <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] px-4 py-5 flex items-center gap-4">
                   {telegramUser.photoUrl ? (
                     <img
                       src={telegramUser.photoUrl}
@@ -1746,7 +1788,7 @@ export default function MonkeyTopup() {
                       {telegramUser.firstName} {telegramUser.lastName}
                     </div>
                     {telegramUser.username && (
-                      <div className="text-violet-200 text-sm">@{telegramUser.username}</div>
+                      <div className="text-[#90CAF9] text-sm">@{telegramUser.username}</div>
                     )}
                   </div>
                 </div>
@@ -1823,7 +1865,7 @@ export default function MonkeyTopup() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-violet-700" : "bg-violet-700/40 text-white"}`}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
                   >
                     🇲🇲 MMK
                   </button>
@@ -1853,7 +1895,7 @@ export default function MonkeyTopup() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-violet-700" : "bg-violet-700/40 text-white"}`}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
                   >
                     🇲🇲 MMK
                   </button>
@@ -1883,7 +1925,7 @@ export default function MonkeyTopup() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-violet-700" : "bg-violet-700/40 text-white"}`}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
                   >
                     🇲🇲 MMK
                   </button>
@@ -1913,7 +1955,7 @@ export default function MonkeyTopup() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-violet-700" : "bg-violet-700/40 text-white"}`}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
                   >
                     🇲🇲 MMK
                   </button>
@@ -1966,7 +2008,7 @@ export default function MonkeyTopup() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-violet-700" : "bg-violet-700/40 text-white"}`}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
                   >
                     🇲🇲 MMK
                   </button>
@@ -2089,7 +2131,7 @@ export default function MonkeyTopup() {
         {socialModalOpen && selectedSocialPkg && (
           <div className="fixed inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[88vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-indigo-950 to-violet-700 text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
                 <span className="font-bold">{socialPlatform} — {selectedSocialPkg.label}</span>
                 <button onClick={() => setSocialModalOpen(false)} className="text-lg">✕</button>
               </div>
@@ -2104,8 +2146,8 @@ export default function MonkeyTopup() {
                   />
                 </div>
 
-                <div className="bg-violet-50 rounded-lg p-3 text-center">
-                  <div className="text-lg font-bold text-violet-900">
+                <div className="bg-[#E3F2FD] rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-[#0D47A1]">
                     {fmt(selectedSocialPkg[currency][0])} {currency === "mmk" ? "ကျပ်" : "ဘတ်"}
                   </div>
                 </div>
@@ -2159,7 +2201,7 @@ export default function MonkeyTopup() {
         {modalOpen && selectedPkg && (
           <div className="fixed inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[88vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-indigo-950 to-violet-700 text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
                 <span className="font-bold">အချက်အလက်များ ဖြည့်သွင်းပါ</span>
                 <button onClick={() => setModalOpen(false)} className="text-lg">✕</button>
               </div>
@@ -2187,7 +2229,7 @@ export default function MonkeyTopup() {
                   <button
                     onClick={handleVerify}
                     disabled={!gameId || verifyState === "loading"}
-                    className="w-full text-sm font-semibold rounded-lg py-2 bg-violet-600 text-white disabled:opacity-40 active:scale-[0.98] transition"
+                    className="w-full text-sm font-semibold rounded-lg py-2 bg-[#2196F3] text-white disabled:opacity-40 active:scale-[0.98] transition"
                   >
                     {verifyState === "loading" ? "စစ်ဆေးနေသည်..." : "Game ID စစ်ဆေးမည် (Verify)"}
                   </button>
@@ -2259,7 +2301,7 @@ export default function MonkeyTopup() {
                   />
                 )}
 
-                <div className="bg-violet-50 text-violet-900 rounded-lg p-3 text-center text-sm space-y-1">
+                <div className="bg-[#E3F2FD] text-[#0D47A1] rounded-lg p-3 text-center text-sm space-y-1">
                   <div>လက်ကျန်ငွေ = {fmt(currency === "mmk" ? balance : balanceThb)} {currencyLabel}</div>
                   <div className="font-bold">ကျသင့်ငွေ = {fmt(total)} {currencyLabel}</div>
                 </div>
@@ -2270,7 +2312,7 @@ export default function MonkeyTopup() {
                 </label>
 
                 <div className="flex gap-3 pb-2">
-                  <button onClick={() => setModalOpen(false)} className="flex-1 border-2 border-violet-500 text-violet-600 font-bold rounded-lg py-2">
+                  <button onClick={() => setModalOpen(false)} className="flex-1 border-2 border-[#2196F3] text-[#2196F3] font-bold rounded-lg py-2">
                     မဝယ်သေးပါ
                   </button>
                   <button
@@ -2308,7 +2350,7 @@ export default function MonkeyTopup() {
         {historyOpen && (
           <div className="fixed inset-0 z-40 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[80vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-indigo-950 to-violet-800 text-white px-4 py-3 flex justify-between items-center rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#0D47A1] to-[#2196F3] text-white px-4 py-3 flex justify-between items-center rounded-t-2xl">
                 <span className="font-bold">ငွေဖြည့်မှတ်တမ်း</span>
                 <button onClick={() => setHistoryOpen(false)}>✕</button>
               </div>
@@ -2320,7 +2362,7 @@ export default function MonkeyTopup() {
                 </div>
                 {deposits.map((d) => (
                   <div key={d.id} className="grid grid-cols-3 items-center px-2 py-3 border-b text-sm">
-                    <div className="text-violet-600 font-semibold">{d.id}</div>
+                    <div className="text-[#2196F3] font-semibold">{d.id}</div>
                     <div className="font-bold">{fmt(d.amount)} {d.currency === "mmk" ? "ကျပ်" : "ဘတ်"}</div>
                     <div><Pill tone={d.status === "success" ? "green" : "amber"}>{d.status}</Pill></div>
                   </div>
