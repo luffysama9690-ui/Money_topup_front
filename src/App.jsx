@@ -587,7 +587,7 @@ export default function MonkeyTopup() {
 
   const [view, setView] = useState("shop");
   const [bannerSlide, setBannerSlide] = useState(0);
-  const BANNER_COUNT = 3;
+  const BANNER_COUNT = 4;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1241,35 +1241,40 @@ export default function MonkeyTopup() {
                   { img: BANNER_IMAGES.banner1, text: "Shop ထဲမှ Game Items များကို 24 နာရီ ဝယ်ယူနိုင်ပါသည်", color: "text-amber-200 font-bold" },
                   { img: BANNER_IMAGES.banner2, text: "ည ၁၂ နာရီနောက်ပိုင်း ငွေဖြည့်အော်ဒါများကို မနက် 9 နာရီမှာ ဖြည့်ပေးသွားပါမည်", color: "text-amber-100 font-semibold text-sm" },
                   { img: BANNER_IMAGES.banner3, text: "စိန်တွေ ဖြည့်ရင်း cash back ကံစမ်းကြမယ် 💎🎉", color: "text-amber-200 font-bold" },
+                  {
+                    text: "Monkey Topup နှင့်အတူ အစဉ်တစိုက် လက်တွဲလာခဲ့ကြသော လူကြီးမင်းတို့ တစ်ဦးချင်းစီတိုင်းကို Monkey Topup Team မှ ကျေးဇူးအထူးတင်ရှိရင်း မင်္ဂလာအပေါင်းနှင့် ပြည့်စုံပါစေကြောင်း ဆုမွန်ကောင်းတောင်းအပ်ပါသည်။🙏",
+                    color: "text-amber-100 font-semibold text-[11px] leading-snug",
+                    gradient: true,
+                  },
                 ].map((slide, i) => (
                   <div
                     key={i}
-                    className="absolute inset-0 flex items-center justify-center text-center p-4 transition-opacity duration-700"
-                    style={{
-                      backgroundImage: `url(${slide.img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      opacity: bannerSlide === i ? 1 : 0,
-                    }}
+                    className={`absolute inset-0 flex items-center justify-center text-center p-4 transition-opacity duration-700 ${
+                      slide.gradient ? "bg-gradient-to-br from-[#6b4b70] via-[#8c567d] to-[#534263]" : ""
+                    }`}
+                    style={
+                      slide.gradient
+                        ? { opacity: bannerSlide === i ? 1 : 0 }
+                        : {
+                            backgroundImage: `url(${slide.img})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            opacity: bannerSlide === i ? 1 : 0,
+                          }
+                    }
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/70" />
+                    {!slide.gradient && <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/70" />}
                     <div className={`relative drop-shadow ${slide.color}`}>{slide.text}</div>
                   </div>
                 ))}
                 <div className="absolute bottom-1.5 left-0 right-0 flex justify-center gap-1.5">
-                  {[0, 1, 2].map((i) => (
+                  {[0, 1, 2, 3].map((i) => (
                     <span
                       key={i}
                       className={`h-1.5 rounded-full transition-all ${bannerSlide === i ? "w-4 bg-amber-300" : "w-1.5 bg-white/50"}`}
                     />
                   ))}
                 </div>
-              </div>
-
-              <div className="text-white/90 text-xs text-center leading-relaxed px-2">
-                Monkey Topup နှင့်အတူ အစဉ်တစိုက် လက်တွဲလာခဲ့ကြသော လူကြီးမင်းတို့ တစ်ဦးချင်းစီတိုင်းကို
-                Monkey Topup Team မှ ကျေးဇူးအထူးတင်ရှိရင်း မင်္ဂလာအပေါင်းနှင့် ပြည့်စုံပါစေကြောင်း
-                ဆုမွန်ကောင်းတောင်းအပ်ပါသည်။🙏
               </div>
 
               <div className="bg-black text-white rounded-lg py-3 font-bold tracking-wide grid grid-cols-2 divide-x divide-white/20">
