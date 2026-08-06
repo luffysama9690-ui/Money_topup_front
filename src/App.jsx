@@ -184,7 +184,7 @@ const GAMES = [
   { id: "sausage", name: "Sausage Man", tag: "New!", grad: "from-emerald-500 to-teal-700", icon: "🌭", image: GAME_IMAGES.sausage },
   { id: "bloodstrike", name: "Blood Strike", tag: "New!", grad: "from-rose-700 to-slate-900", icon: "🔫", image: GAME_IMAGES.bloodStrike },
   { id: "wwm", name: "Where Winds Meet", tag: "New!", grad: "from-slate-800 to-[#3b2437]", icon: "🏯", image: GAME_IMAGES.wwm, imgFit: "contain" },
-  { id: "freefire", name: "Free Fire", tag: "New!", grad: "from-orange-500 to-red-700", icon: "🔥", image: GAME_IMAGES.freefire },
+  { id: "freefire", name: "Free Fire", tag: "New!", grad: "from-orange-500 to-red-700", icon: "🔥", image: GAME_IMAGES.freefire, imgFit: "contain" },
   { id: "social", name: "Social Media", tag: "New!", grad: "from-[#2196F3] to-[#0D47A1]", icon: "📱" },
 ];
 
@@ -274,22 +274,22 @@ const FF_GLOBAL_DIAMONDS = [
   [1060, 40700, 320], [1166, 40000, 315], [1188, 44400, 350],
   [2398, 74500, 587], [2420, 88600, 698], [4450, 188600, 1485],
   [6160, 194200, 1529], [6900, 282900, 2228],
-].map(([amt, mmk, thb]) => ({ id: "ffg" + amt, label: `Global ${amt} Diamonds`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgFreeFireAll }));
+].map(([amt, mmk, thb]) => ({ id: "ffg" + amt, label: `Global ${amt} Diamonds`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" }));
 
 const FF_GLOBAL_PASSES = [
-  { id: "ffg-weeklylite", name: "Global Weekly Lite", mmk: [1400], thb: [11], image: PKG_IMAGES.imgFreeFireAll },
-  { id: "ffg-weeklymem", name: "Global Weekly Membership", mmk: [7600], thb: [60], image: PKG_IMAGES.imgFreeFireAll },
-  { id: "ffg-monthlymem", name: "Global Monthly Membership", mmk: [44700], thb: [352], image: PKG_IMAGES.imgFreeFireAll },
+  { id: "ffg-weeklylite", name: "Global Weekly Lite", mmk: [1400], thb: [11], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "ffg-weeklymem", name: "Global Weekly Membership", mmk: [7600], thb: [60], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "ffg-monthlymem", name: "Global Monthly Membership", mmk: [44700], thb: [352], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
 ];
 
 const FF_THAILAND_DIAMONDS = [
   [33, 1700, 13], [68, 3000, 24], [172, 7600, 60], [310, 13500, 106],
   [517, 22600, 178], [690, 29200, 230], [1052, 43800, 345], [1801, 72900, 574],
-].map(([amt, mmk, thb]) => ({ id: "fft" + amt, label: `Thailand ${amt} Diamonds`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgFreeFireAll }));
+].map(([amt, mmk, thb]) => ({ id: "fft" + amt, label: `Thailand ${amt} Diamonds`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" }));
 
 const FF_THAILAND_PASSES = [
-  { id: "fft-growth", name: "Thailand Growth Pack", mmk: [11700], thb: [92], image: PKG_IMAGES.imgFreeFireAll },
-  { id: "fft-monthlyvalue", name: "Thailand Monthly Value Pack", mmk: [44000], thb: [346], image: PKG_IMAGES.imgFreeFireAll },
+  { id: "fft-growth", name: "Thailand Growth Pack", mmk: [11700], thb: [92], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "fft-monthlyvalue", name: "Thailand Monthly Value Pack", mmk: [44000], thb: [346], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
 ];
 
 // ---- Sausage Man ----
@@ -2750,7 +2750,11 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
           return (
             <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
               {it.image ? (
-                <img src={it.image} alt={label} className="w-full h-20 object-cover" />
+                <img
+                  src={it.image}
+                  alt={label}
+                  className={`w-full h-20 ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
+                />
               ) : (
                 <div className="h-20 bg-slate-100" />
               )}
