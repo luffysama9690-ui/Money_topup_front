@@ -1290,18 +1290,17 @@ export default function MonkeyTopup() {
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
       <div className="w-full max-w-sm bg-gradient-to-b from-[#6b4b70] via-[#8c567d] to-[#534263] min-h-screen flex flex-col relative">
+        <style>{`
+          @keyframes marqueeScroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+          }
+        `}</style>
         {/* ---------------- SHOP HOME ---------------- */}
         {view === "shop" && (
           <>
             <TopBar title={APP_NAME} />
             <div className="p-4 space-y-4 flex-1 overflow-y-auto pb-4">
-              <style>{`
-                @keyframes marqueeScroll {
-                  from { transform: translateX(100%); }
-                  to { transform: translateX(-100%); }
-                }
-              `}</style>
-
               <div className="relative rounded-xl overflow-hidden shadow-inner h-28">
                 {[
                   { img: BANNER_IMAGES.banner1, text: "Shop ထဲမှ Game Items များကို 24 နာရီ ဝယ်ယူနိုင်ပါသည်", color: "text-amber-200 font-bold" },
