@@ -94,17 +94,17 @@ const PKG_IMAGES = {
 
 // ---------- Package data ----------
 const ML_PASSES = [
-  { id: "elite", name: "Weekly Elite Bundle", mmk: [3566], thb: [29], image: PKG_IMAGES.imgWeeklyElite },
-  { id: "epic", name: "Monthly Epic Bundle", mmk: [17967], thb: [143], image: PKG_IMAGES.imgMonthlyEpic },
-  { id: "weekly", name: "Weekly Pass", mmk: [6949], thb: [56], image: PKG_IMAGES.imgWeeklyPass },
-  { id: "twilight", name: "Twilight Pass", mmk: [36803], thb: [293], image: PKG_IMAGES.imgTwilightMiya },
+  { id: "elite", name: "Weekly Elite Bundle", mmk: [3600], thb: [28], image: PKG_IMAGES.imgWeeklyElite },
+  { id: "epic", name: "Monthly Epic Bundle", mmk: [18000], thb: [142], image: PKG_IMAGES.imgMonthlyEpic },
+  { id: "weekly", name: "Weekly Pass", mmk: [6900], thb: [55], image: PKG_IMAGES.imgWeeklyPass },
+  { id: "twilight", name: "Twilight Pass", mmk: [36800], thb: [290], image: PKG_IMAGES.imgTwilightMiya },
 ];
 
 const ML_2X = [
   { id: "d50", label: "50+50 အပိုရ", mmk: [3600], thb: [28], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d150", label: "150+150 အပိုရ", mmk: [10600], thb: [83], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d250", label: "250+250 အပိုရ", mmk: [17000], thb: [134], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d500", label: "500+500 အပိုရ", mmk: [34900], thb: [275], image: PKG_IMAGES.imgDiamond2x },
+  { id: "d150", label: "150+150 အပိုရ", mmk: [10700], thb: [84], image: PKG_IMAGES.imgDiamond2x },
+  { id: "d250", label: "250+250 အပိုရ", mmk: [17200], thb: [135], image: PKG_IMAGES.imgDiamond2x },
+  { id: "d500", label: "500+500 အပိုရ", mmk: [35200], thb: [277], image: PKG_IMAGES.imgDiamond2x },
 ];
 
 // "Other Diamonds" is shown to the customer split across three pages; each
@@ -112,11 +112,11 @@ const ML_2X = [
 // the rest), matching the reference screenshots.
 const ML_DIAMONDS = [
   [11, 915, 8], [22, 1738, 14], [33, 2606, 21], [44, 3475, 28], [56, 4344, 35],
-  [86, 5624, 45], [112, 8687, 69], [172, 11155, 89], [257, 16230, 129],
-  [343, 21853, 174], [429, 27385, 218], [514, 32459, 258], [600, 38083, 303],
-  [706, 43889, 349], [878, 55044, 437], [963, 60118, 478], [1049, 65741, 522],
-  [1135, 71273, 566], [1412, 87777, 697], [2195, 132854, 1055], [2901, 176742, 1403],
-  [3688, 221636, 1760], [4394, 265524, 2108], [5532, 334648, 2656], [9288, 555826, 4412],
+  [86, 5700, 45], [112, 8687, 69], [172, 11200, 88], [257, 16200, 128],
+  [343, 21900, 172], [429, 27400, 216], [514, 32400, 255], [600, 38100, 300],
+  [706, 43900, 346], [878, 55000, 433], [963, 60100, 473], [1049, 65700, 517],
+  [1135, 71200, 561], [1412, 87700, 691], [2195, 132700, 1045], [2901, 176500, 1390],
+  [3688, 221300, 1743], [4394, 265100, 2087], [5532, 334100, 2631], [9288, 554800, 4369],
 ].map(([amt, mmk, thb], i) => ({
   id: "dm" + amt,
   label: `Diamond ${amt}`,
@@ -129,39 +129,39 @@ const ML_DIAMONDS = [
 const MC_PASSES = [
   { id: "mc-bounty", name: "Lukas's Battle Bounty", mmk: [3700], thb: [29], image: PKG_IMAGES.imgLukasBounty },
   { id: "mc-discount", name: "Battle for Discounts", mmk: [3700], thb: [29], image: PKG_IMAGES.imgLingMcgg },
-  { id: "mc-weekly", name: "Mcgg Weekly Pass", mmk: [8200], thb: [65], image: PKG_IMAGES.imgWeekBook },
+  { id: "mc-weekly", name: "Mcgg Weekly Pass", mmk: [8400], thb: [66], image: PKG_IMAGES.imgWeekBook },
 ];
 
 const MC_2X = [
   { id: "mc50", label: "Mcgg 50+50 အပိုရ", mmk: [3700], thb: [29], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc150", label: "Mcgg 150+150 အပိုရ", mmk: [10900], thb: [86], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc250", label: "Mcgg 250+250 အပိုရ", mmk: [18200], thb: [143], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc500", label: "Mcgg 500+500 အပိုရ", mmk: [41700], thb: [328], image: PKG_IMAGES.imgDiamondSack },
+  { id: "mc150", label: "Mcgg 150+150 အပိုရ", mmk: [11000], thb: [87], image: PKG_IMAGES.imgDiamondSack },
+  { id: "mc250", label: "Mcgg 250+250 အပိုရ", mmk: [18300], thb: [144], image: PKG_IMAGES.imgDiamondSack },
+  { id: "mc500", label: "Mcgg 500+500 အပိုရ", mmk: [36600], thb: [288], image: PKG_IMAGES.imgDiamondSack },
 ];
 
 const MC_DIAMONDS = [
-  [86, 5700, 45], [172, 11400, 90], [257, 17000, 134], [344, 26100, 206],
-  [516, 34000, 268], [706, 45300, 357], [1346, 84900, 669], [1825, 130100, 1024],
-  [2195, 135800, 1069], [3688, 226300, 1782], [5532, 339400, 2672], [9288, 565700, 4454],
+  [86, 5800, 46], [172, 11500, 91], [257, 19700, 155], [344, 22900, 180],
+  [516, 34300, 270], [706, 45700, 360], [1346, 85600, 674], [1825, 131200, 1033],
+  [2195, 136900, 1078], [3688, 228200, 1797], [5532, 342300, 2695], [9288, 570400, 4491],
 ].map(([amt, mmk, thb]) => ({ id: "mcdm" + amt, label: `Mcgg Dia ${amt}`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgDiamondSack }));
 
 // ---- PUBG Mobile ----
 const PUBG_UC = [
-  [60, 4400, 35], [120, 8400, 66], [180, 12600, 99], [325, 22000, 173],
-  [385, 25100, 198], [660, 43700, 344], [1800, 108900, 857], [3850, 220100, 1733],
-  [8100, 434200, 3419], [16200, 843500, 6642],
+  [60, 4400, 35], [120, 8400, 66], [180, 12600, 99], [325, 22100, 174],
+  [385, 25100, 198], [660, 44200, 348], [1800, 111400, 877], [3850, 222800, 1754],
+  [8100, 443600, 3493], [16200, 843500, 6642],
 ].map(([amt, mmk, thb]) => ({ id: "uc" + amt, label: `UC ${amt}`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgUcStack }));
 
 const PUBG_SPECIAL = [
   { id: "pubg-first", name: "First Purchase Pack", mmk: [4400], thb: [35], image: PKG_IMAGES.imgFirstPurchase },
-  { id: "pubg-firearm", name: "Firearm Material Pack", mmk: [13100], thb: [103], image: PKG_IMAGES.imgFirearm },
-  { id: "pubg-mythic", name: "Mythic Emblem Pack", mmk: [21800], thb: [172], image: PKG_IMAGES.imgMysticEmblem },
+  { id: "pubg-firearm", name: "Firearm Material Pack", mmk: [13300], thb: [105], image: PKG_IMAGES.imgFirearm },
+  { id: "pubg-mythic", name: "Mythic Emblem Pack", mmk: [22000], thb: [173], image: PKG_IMAGES.imgMysticEmblem },
 ];
 
 const PUBG_PRIME = [
-  { id: "prime-1m", name: "Prime Pack 1 Month", mmk: [4500], thb: [35], image: PKG_IMAGES.imgPrimeCrown },
-  { id: "prime-3m", name: "Prime Pack 3 Months", mmk: [13100], thb: [103], image: PKG_IMAGES.imgPrimeCrown },
-  { id: "primeplus-1m", name: "Prime Plus 1 Month", mmk: [43600], thb: [343], image: PKG_IMAGES.imgPrimePlusCrown },
+  { id: "prime-1m", name: "Prime Pack 1 Month", mmk: [4400], thb: [35], image: PKG_IMAGES.imgPrimeCrown },
+  { id: "prime-3m", name: "Prime Pack 3 Months", mmk: [13300], thb: [105], image: PKG_IMAGES.imgPrimeCrown },
+  { id: "primeplus-1m", name: "Prime Plus 1 Month", mmk: [44100], thb: [347], image: PKG_IMAGES.imgPrimePlusCrown },
   { id: "primeplus-3m", name: "Prime Plus 3 Months", mmk: [129800], thb: [1022], image: PKG_IMAGES.imgPrimePlusCrown },
   { id: "primeplus-6m", name: "Prime Plus 6 Months", mmk: [255600], thb: [2013], image: PKG_IMAGES.imgPrimePlusCrown },
   { id: "primeplus-12m", name: "Prime Plus 12 Months", mmk: [516200], thb: [4065], image: PKG_IMAGES.imgPrimePlusCrown },
