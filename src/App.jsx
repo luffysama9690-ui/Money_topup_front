@@ -95,30 +95,31 @@ const PKG_IMAGES = {
 };
 
 // ---------- Package data ----------
+// ✅ SWITCHED SUPPLIER: FazerCards (reseller.fazercards.com), category
+// "Mobile Legends (Global)" — category_id a67331f3-7a3a-4345-b948-a07aa81cba62.
+// Prices = FazerCards USD wholesale × 1.15 (15% margin), converted at
+// 1 USD ≈ 4,193 MMK / 33.03 THB (the app's existing implied street rate).
+// Re-check FazerCards' live USD price before trusting this long-term —
+// wholesale rates can move.
 const ML_PASSES = [
-  { id: "elite", name: "Weekly Elite Bundle", mmk: [3600], thb: [28], image: PKG_IMAGES.imgWeeklyElite },
-  { id: "epic", name: "Monthly Epic Bundle", mmk: [18000], thb: [142], image: PKG_IMAGES.imgMonthlyEpic },
-  { id: "weekly", name: "Weekly Pass", mmk: [6900], thb: [55], image: PKG_IMAGES.imgWeeklyPass },
-  { id: "twilight", name: "Twilight Pass", mmk: [36800], thb: [290], image: PKG_IMAGES.imgTwilightMiya },
+  { id: "elite", name: "Weekly Elite Bundle", mmk: [3620], thb: [28], image: PKG_IMAGES.imgWeeklyElite },
+  { id: "epic", name: "Monthly Epic Bundle", mmk: [17940], thb: [141], image: PKG_IMAGES.imgMonthlyEpic },
+  { id: "weekly", name: "Weekly Pass", mmk: [6940], thb: [55], image: PKG_IMAGES.imgWeeklyPass },
+  { id: "twilight", name: "Twilight Pass", mmk: [36750], thb: [290], image: PKG_IMAGES.imgTwilightMiya },
 ];
 
-const ML_2X = [
-  { id: "d50", label: "50+50 အပိုရ", mmk: [3600], thb: [28], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d150", label: "150+150 အပိုရ", mmk: [10700], thb: [84], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d250", label: "250+250 အပိုရ", mmk: [17200], thb: [135], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d500", label: "500+500 အပိုရ", mmk: [35200], thb: [277], image: PKG_IMAGES.imgDiamond2x },
-];
+// ⚠️ "2x Diamonds" (50+50 / 150+150 / 250+250 / 500+500 အပိုရ) bundles are
+// REMOVED — FazerCards' Global category doesn't sell a matching "double
+// bonus" product (its first-top-up bonus is a much smaller ~10% top-up,
+// not a 2x match). Re-add here if a supplier with a real 2x promo is found.
 
-// "Other Diamonds" is shown to the customer split across three pages; each
-// page uses its own icon (tier1 = first 9 items, tier2 = next 9, tier3 =
-// the rest), matching the reference screenshots.
+// Only 9 of the old 19 diamond denominations exist on FazerCards Global —
+// the rest (343, 514, 600, 878, 963, 1049, 1135, 1412, 2901, 4394) aren't
+// sold there at all and have been dropped from the shop.
 const ML_DIAMONDS = [
-  [11, 915, 8], [22, 1738, 14], [33, 2606, 21], [44, 3475, 28], [56, 4344, 35],
-  [86, 5700, 45], [112, 8687, 69], [172, 11200, 88], [257, 16200, 128],
-  [343, 21900, 172], [429, 27400, 216], [514, 32400, 255], [600, 38100, 300],
-  [706, 43900, 346], [878, 55000, 433], [963, 60100, 473], [1049, 65700, 517],
-  [1135, 71200, 561], [1412, 87700, 691], [2195, 132700, 1045], [2901, 176500, 1390],
-  [3688, 221300, 1743], [4394, 265100, 2087], [5532, 334100, 2631], [9288, 554800, 4369],
+  [86, 5640, 44], [172, 11090, 87], [257, 16060, 126], [429, 27290, 215],
+  [706, 43780, 345], [2195, 132230, 1042], [3688, 220560, 1737],
+  [5532, 333000, 2623], [9288, 553030, 4356],
 ].map(([amt, mmk, thb], i) => ({
   id: "dm" + amt,
   label: `Diamond ${amt}`,
@@ -1043,7 +1044,7 @@ export default function MonkeyTopup() {
   // order's "game" column) — falls back to "Unknown" if it can't tell.
   function selectedGameName(pkg) {
     if (!pkg) return "Unknown";
-    if (ML_PASSES.includes(pkg) || ML_2X.includes(pkg) || ML_DIAMONDS.includes(pkg)) return "Mobile Legends";
+    if (ML_PASSES.includes(pkg) || ML_DIAMONDS.includes(pkg)) return "Mobile Legends";
     if (MC_PASSES.includes(pkg) || MC_2X.includes(pkg) || MC_DIAMONDS.includes(pkg)) return "Magic Chess GoGo";
     if (PUBG_UC.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
@@ -2076,8 +2077,7 @@ export default function MonkeyTopup() {
               </div>
 
               <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="2x Diamonds" items={ML_2X} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Other Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
