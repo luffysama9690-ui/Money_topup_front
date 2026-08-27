@@ -95,23 +95,17 @@ const PKG_IMAGES = {
 };
 
 // ---------- Package data ----------
-// ✅ HYBRID SUPPLIER for Mobile Legends — cheapest-per-item sourcing:
-//   • 9 diamond amounts + 3 passes (Weekly Elite/Monthly Epic/Twilight) come
-//     from FazerCards (category "Mobile Legends (Global)",
-//     category_id a67331f3-7a3a-4345-b948-a07aa81cba62) — cost × 1.07 (7%
-//     margin), at 1 USD ≈ 4,193 MMK / 33.03 THB.
-//   • The other 16 diamond amounts + all 4 "2x Diamonds" bundles aren't sold
-//     on FazerCards, so they're relayed via the easytopup4ubot Telegram
-//     relay instead, priced at 7% over that supplier's coin cost.
-//   • Weekly Pass keeps its own fixed price (6,900 MMK / 55 THB) per a
-//     standing pricing decision — still fulfilled via FazerCards since its
-//     cost there is well under that price.
-//   • 11/22/33/44/56/112 Diamonds (PH-region, small denominations) have no
-//     established cost breakdown from either supplier — left at their
-//     existing price rather than guessed. Get a real cost before touching these.
-// Backend routing for which supplier fulfills which item lives in
-// Monkey-Topup/services/relay/relayFazercards.js (FAZERCARDS_ML_ITEMS) —
-// keep that list in sync with this one.
+// ✅ 100% FazerCards for Mobile Legends — category "Mobile Legends (Global)",
+// category_id a67331f3-7a3a-4345-b948-a07aa81cba62. Cost × 1.07 (7% margin),
+// at 1 USD ≈ 4,193 MMK / 33.03 THB.
+// Only 9 diamond denominations are sold on FazerCards Global — the rest
+// (343, 514, 600, 878, 963, 1049, 1135, 1412, 2901, 4394, and the small PH
+// ones 11/22/33/44/56/112) plus all 4 "2x Diamonds" bundles are NOT on
+// FazerCards and have been removed from the shop (previously a hybrid with
+// an easytopup4ubot fallback — dropped per Myatko's decision to run ML on
+// FazerCards only).
+// Weekly Pass keeps its own fixed price (6,900 MMK / 55 THB) per a
+// standing pricing decision — its FazerCards cost is well under that price.
 const ML_PASSES = [
   { id: "elite", name: "Weekly Elite Bundle", mmk: [3365], thb: [27], image: PKG_IMAGES.imgWeeklyElite },
   { id: "epic", name: "Monthly Epic Bundle", mmk: [16690], thb: [131], image: PKG_IMAGES.imgMonthlyEpic },
@@ -119,31 +113,17 @@ const ML_PASSES = [
   { id: "twilight", name: "Twilight Pass", mmk: [34190], thb: [269], image: PKG_IMAGES.imgTwilightMiya },
 ];
 
-// "2x Diamonds" — sourced via easytopup4ubot (not on FazerCards), 7% margin
-// over that supplier's coin cost.
-const ML_2X = [
-  { id: "d50", label: "50+50 အပိုရ", mmk: [3612], thb: [29], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d150", label: "150+150 အပိုရ", mmk: [10731], thb: [85], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d250", label: "250+250 အပိုရ", mmk: [17252], thb: [136], image: PKG_IMAGES.imgDiamond2x },
-  { id: "d500", label: "500+500 အပိုရ", mmk: [35297], thb: [278], image: PKG_IMAGES.imgDiamond2x },
-];
-
 const ML_DIAMONDS = [
-  // ⚠️ Unchanged — no cost basis on file for these (PH small denominations).
-  [11, 915, 8], [22, 1738, 14], [33, 2606, 21], [44, 3475, 28], [56, 4344, 35], [112, 8687, 69],
-  // ✅ FazerCards-sourced (7% margin over FazerCards USD cost)
   [86, 5249, 41], [172, 10319, 81], [257, 14940, 118], [429, 25394, 200], [706, 40738, 321],
   [2195, 123020, 969], [3688, 205213, 1617], [5532, 309838, 2441], [9288, 514603, 4054],
-  // easytopup4ubot-sourced (7% margin over supplier coin cost)
-  [343, 21964, 184], [514, 32485, 256], [600, 38206, 301], [878, 55149, 434], [963, 60265, 474],
-  [1049, 65879, 519], [1135, 71393, 562], [1412, 87937, 692], [2901, 176972, 1393], [4394, 265803, 2093],
-].sort((a, b) => a[0] - b[0]).map(([amt, mmk, thb], i) => ({
+].map(([amt, mmk, thb]) => ({
   id: "dm" + amt,
   label: `Diamond ${amt}`,
   mmk: [mmk],
   thb: [thb],
-  image: i < 9 ? PKG_IMAGES.imgDiamondTier1 : i < 18 ? PKG_IMAGES.imgDiamondTier2 : PKG_IMAGES.imgDiamondTier3,
+  image: PKG_IMAGES.imgDiamondTier1,
 }));
+
 
 // ---- Magic Chess GoGo ----
 const MC_PASSES = [
@@ -1061,7 +1041,7 @@ export default function MonkeyTopup() {
   // order's "game" column) — falls back to "Unknown" if it can't tell.
   function selectedGameName(pkg) {
     if (!pkg) return "Unknown";
-    if (ML_PASSES.includes(pkg) || ML_2X.includes(pkg) || ML_DIAMONDS.includes(pkg)) return "Mobile Legends";
+    if (ML_PASSES.includes(pkg) || ML_DIAMONDS.includes(pkg)) return "Mobile Legends";
     if (MC_PASSES.includes(pkg) || MC_2X.includes(pkg) || MC_DIAMONDS.includes(pkg)) return "Magic Chess GoGo";
     if (PUBG_UC.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
@@ -2094,8 +2074,7 @@ export default function MonkeyTopup() {
               </div>
 
               <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="2x Diamonds" items={ML_2X} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
