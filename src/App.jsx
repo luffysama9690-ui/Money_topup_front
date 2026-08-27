@@ -203,7 +203,7 @@ const GAMES = [
   { id: "racing", name: "Racing Master", tag: "New!", grad: "from-red-600 to-slate-900", icon: "🏎️", image: GAME_IMAGES.racingMaster },
   { id: "sausage", name: "Sausage Man", tag: "New!", grad: "from-emerald-500 to-teal-700", icon: "🌭", image: GAME_IMAGES.sausage },
   { id: "bloodstrike", name: "Blood Strike", tag: "New!", grad: "from-rose-700 to-slate-900", icon: "🔫", image: GAME_IMAGES.bloodStrike },
-  { id: "wwm", name: "Where Winds Meet", tag: "New!", grad: "from-slate-800 to-[#0d0b1a]", icon: "🏯", image: GAME_IMAGES.wwm, imgFit: "contain" },
+  { id: "wwm", name: "Where Winds Meet", tag: "New!", grad: "from-slate-800 to-[#241d47]", icon: "🏯", image: GAME_IMAGES.wwm, imgFit: "contain" },
   { id: "freefire", name: "Free Fire", tag: "New!", grad: "from-orange-500 to-red-700", icon: "🔥", image: GAME_IMAGES.freefire, imgFit: "contain" },
   { id: "steam", name: "Steam", tag: "New!", grad: "from-slate-800 to-[#1b2838]", icon: "🎮", image: GAME_IMAGES.steam, imgFit: "contain" },
   { id: "social", name: "Social Media", tag: "New!", grad: "from-[#2196F3] to-[#0D47A1]", icon: "📱" },
@@ -427,7 +427,7 @@ function copyText(text, onDone) {
 // ---------- Small UI atoms ----------
 function TopBar({ title, onBack }) {
   return (
-    <div className="sticky top-0 z-20 bg-gradient-to-b from-[#140f26] to-[#1a1530] text-white px-4 py-3 relative flex items-center justify-center shadow-md">
+    <div className="sticky top-0 z-20 bg-gradient-to-b from-[#352a63] to-[#3f3272] text-white px-4 py-3 relative flex items-center justify-center shadow-md">
       {onBack && (
         <button onClick={onBack} className="absolute left-4 text-[#90CAF9] text-sm font-medium active:opacity-60">
           ← Back
@@ -451,7 +451,7 @@ function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendi
   ];
   return (
     <div
-      className="sticky bottom-0 z-20 bg-[#120e22] grid text-[11px] text-slate-400 border-t border-slate-800"
+      className="sticky bottom-0 z-20 bg-[#2d2456] grid text-[11px] text-slate-400 border-t border-slate-800"
       style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
     >
       {items.map((it) => (
@@ -592,7 +592,7 @@ function AuthScreen({ onAuthSuccess }) {
 
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center items-center font-sans p-4">
-      <div className="w-full max-w-sm bg-gradient-to-b from-[#1a1530] via-[#140f26] to-[#120e22] rounded-2xl shadow-xl p-6">
+      <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] rounded-2xl shadow-xl p-6">
         <div className="text-center mb-6">
           <div className="text-2xl font-bold text-white">{APP_NAME}</div>
           <div className="text-[#90CAF9] text-sm mt-1">
@@ -1317,7 +1317,7 @@ export default function MonkeyTopup() {
 
   return (
     <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
-      <div className="w-full max-w-sm bg-gradient-to-b from-[#1a1530] via-[#140f26] to-[#120e22] min-h-screen flex flex-col relative">
+      <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative">
         <style>{`
           @keyframes marqueeScroll {
             from { transform: translateX(100%); }
@@ -1359,7 +1359,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <div className="relative h-6 overflow-hidden rounded-full bg-[#0d0b1a]/70">
+              <div className="relative h-6 overflow-hidden rounded-full bg-[#241d47]/70">
                 <div
                   className="absolute top-0 whitespace-nowrap text-amber-100 text-[11px] font-semibold leading-6"
                   style={{ animation: "marqueeScroll 22s linear infinite" }}
@@ -1383,7 +1383,7 @@ export default function MonkeyTopup() {
                 <button onClick={() => setView("topup")} className="bg-emerald-500 active:bg-emerald-600 text-white font-bold rounded-lg py-3 shadow">
                   ငွေဖြည့်မည်
                 </button>
-                <button onClick={() => setView("orders")} className="bg-gradient-to-r from-[#ff3d9a] to-[#140f26] active:from-[#c92f79] active:to-[#100c1e] text-white font-bold rounded-lg py-3 shadow">
+                <button onClick={() => setView("orders")} className="bg-gradient-to-r from-[#ff3d9a] to-[#352a63] active:from-[#c92f79] active:to-[#1c1638] text-white font-bold rounded-lg py-3 shadow">
                   အော်ဒါများ
                 </button>
               </div>
@@ -1437,7 +1437,7 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               <div className="bg-white rounded-xl overflow-hidden shadow">
-                <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] text-white px-4 py-3 flex justify-between items-center">
+                <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] text-white px-4 py-3 flex justify-between items-center">
                   <span className="font-bold">ငွေဖြည့်မည်</span>
                   <button onClick={() => setHistoryOpen(true)} className="bg-[#2196F3]/40 text-xs px-2 py-1 rounded">
                     မှတ်တမ်း
@@ -1504,7 +1504,7 @@ export default function MonkeyTopup() {
                             <button
                               type="button"
                               onClick={() => handleCopy(acc.number)}
-                              className="bg-[#1a1530] text-white text-xs px-3 py-1.5 rounded active:scale-95 transition"
+                              className="bg-[#3f3272] text-white text-xs px-3 py-1.5 rounded active:scale-95 transition"
                             >
                               Copy
                             </button>
@@ -1555,7 +1555,7 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto">
               <div className="bg-white rounded-xl overflow-hidden shadow">
-                <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] text-white text-center py-3 font-bold">
+                <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] text-white text-center py-3 font-bold">
                   ဝယ်ယူမှုမှတ်တမ်းများ
                 </div>
                 <div className="grid grid-cols-3 text-xs font-bold text-slate-500 px-3 py-2 border-b">
@@ -1986,7 +1986,7 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               <div className="bg-white rounded-xl shadow overflow-hidden">
-                <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] px-4 py-5 flex items-center gap-4">
+                <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] px-4 py-5 flex items-center gap-4">
                   {telegramUser.photoUrl ? (
                     <img
                       src={telegramUser.photoUrl}
@@ -2051,7 +2051,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <div className="bg-[#0d0b1a]/70 rounded-xl p-4 text-white space-y-3">
+              <div className="bg-[#241d47]/70 rounded-xl p-4 text-white space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="font-bold">🖥 Select Server</span>
                   <button onClick={() => setView("shop")} className="text-amber-300 text-xs font-bold active:opacity-60">
@@ -2354,7 +2354,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <div className="bg-[#0d0b1a]/70 rounded-xl p-4 text-white space-y-3">
+              <div className="bg-[#241d47]/70 rounded-xl p-4 text-white space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="font-bold">🖥 Select Server</span>
                   <button onClick={() => setView("shop")} className="text-amber-300 text-xs font-bold active:opacity-60">
@@ -2507,7 +2507,7 @@ export default function MonkeyTopup() {
         {socialModalOpen && selectedSocialPkg && (
           <div className="fixed inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[88vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
                 <span className="font-bold">{socialPlatform} — {selectedSocialPkg.label}</span>
                 <button onClick={() => setSocialModalOpen(false)} className="text-lg">✕</button>
               </div>
@@ -2533,13 +2533,13 @@ export default function MonkeyTopup() {
                   <div className="flex rounded-lg overflow-hidden border">
                     <button
                       onClick={() => setPayMethod("wallet")}
-                      className={`flex-1 py-2 text-sm font-bold ${payMethod === "wallet" ? "bg-[#1a1530] text-white" : "bg-white text-slate-700"}`}
+                      className={`flex-1 py-2 text-sm font-bold ${payMethod === "wallet" ? "bg-[#3f3272] text-white" : "bg-white text-slate-700"}`}
                     >
                       ပိုက်ဆံအိတ်
                     </button>
                     <button
                       onClick={() => setPayMethod("transfer")}
-                      className={`flex-1 py-2 text-sm font-bold ${payMethod === "transfer" ? "bg-[#1a1530] text-white" : "bg-white text-slate-700"}`}
+                      className={`flex-1 py-2 text-sm font-bold ${payMethod === "transfer" ? "bg-[#3f3272] text-white" : "bg-white text-slate-700"}`}
                     >
                       ငွေလွှဲပုံ
                     </button>
@@ -2577,7 +2577,7 @@ export default function MonkeyTopup() {
         {modalOpen && selectedPkg && (
           <div className="fixed inset-0 z-30 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[88vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] text-white px-4 py-3 flex justify-between items-center sticky top-0 rounded-t-2xl">
                 <span className="font-bold">အချက်အလက်များ ဖြည့်သွင်းပါ</span>
                 <button onClick={() => setModalOpen(false)} className="text-lg">✕</button>
               </div>
@@ -2659,13 +2659,13 @@ export default function MonkeyTopup() {
                   <div className="grid grid-cols-2 rounded-lg overflow-hidden border">
                     <button
                       onClick={() => setPayMethod("wallet")}
-                      className={`py-2 text-sm font-bold transition ${payMethod === "wallet" ? "bg-[#1a1530] text-white" : "bg-white text-slate-600"}`}
+                      className={`py-2 text-sm font-bold transition ${payMethod === "wallet" ? "bg-[#3f3272] text-white" : "bg-white text-slate-600"}`}
                     >
                       ပိုက်ဆံအိတ်
                     </button>
                     <button
                       onClick={() => setPayMethod("transfer")}
-                      className={`py-2 text-sm font-bold transition ${payMethod === "transfer" ? "bg-[#1a1530] text-white" : "bg-white text-slate-600"}`}
+                      className={`py-2 text-sm font-bold transition ${payMethod === "transfer" ? "bg-[#3f3272] text-white" : "bg-white text-slate-600"}`}
                     >
                       ငွေလွှဲပုံ
                     </button>
@@ -2730,7 +2730,7 @@ export default function MonkeyTopup() {
         {historyOpen && (
           <div className="fixed inset-0 z-40 bg-black/50 flex items-center justify-center p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl max-h-[80vh] overflow-y-auto shadow-2xl">
-              <div className="bg-gradient-to-r from-[#1a1530] to-[#140f26] text-white px-4 py-3 flex justify-between items-center rounded-t-2xl">
+              <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] text-white px-4 py-3 flex justify-between items-center rounded-t-2xl">
                 <span className="font-bold">ငွေဖြည့်မှတ်တမ်း</span>
                 <button onClick={() => setHistoryOpen(false)}>✕</button>
               </div>
@@ -2780,7 +2780,7 @@ export default function MonkeyTopup() {
 
         {/* ---------------- TOAST ---------------- */}
         {toast && (
-          <div className="fixed top-28 left-1/2 -translate-x-1/2 z-50 bg-[#1a1530] text-white text-base font-semibold px-5 py-3 rounded-full shadow-lg max-w-[90%] text-center">
+          <div className="fixed top-28 left-1/2 -translate-x-1/2 z-50 bg-[#3f3272] text-white text-base font-semibold px-5 py-3 rounded-full shadow-lg max-w-[90%] text-center">
             {toast.msg}
           </div>
         )}
