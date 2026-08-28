@@ -95,77 +95,218 @@ const PKG_IMAGES = {
 };
 
 // ---------- Package data ----------
-// ✅ 100% FazerCards for Mobile Legends — category "Mobile Legends (Global)",
-// category_id a67331f3-7a3a-4345-b948-a07aa81cba62. Cost × 1.07 (7% margin),
-// at 1 USD ≈ 4,193 MMK / 33.03 THB.
-// Only 9 diamond denominations are sold on FazerCards Global — the rest
-// (343, 514, 600, 878, 963, 1049, 1135, 1412, 2901, 4394, and the small PH
-// ones 11/22/33/44/56/112) plus all 4 "2x Diamonds" bundles are NOT on
-// FazerCards and have been removed from the shop (previously a hybrid with
-// an easytopup4ubot fallback — dropped per Myatko's decision to run ML on
-// FazerCards only).
-// Weekly Pass keeps its own fixed price (6,900 MMK / 55 THB) per a
-// standing pricing decision — its FazerCards cost is well under that price.
-const ML_PASSES = [
-  { id: "elite", name: "Weekly Elite Bundle", mmk: [3365], thb: [27], image: PKG_IMAGES.imgWeeklyElite },
-  { id: "epic", name: "Monthly Epic Bundle", mmk: [16690], thb: [131], image: PKG_IMAGES.imgMonthlyEpic },
-  { id: "weekly", name: "Weekly Pass", mmk: [6900], thb: [55], image: PKG_IMAGES.imgWeeklyPass },
-  { id: "twilight", name: "Twilight Pass", mmk: [34190], thb: [269], image: PKG_IMAGES.imgTwilightMiya },
+// ✅ Full FazerCards catalog (Global + Philippines), from Myatko's confirmed
+// pricing sheet (monkey_topup_pricing-2.xlsx). Labels are prefixed with the
+// region ("Global 86 Diamonds") because some amounts exist in BOTH regions at
+// different prices — the prefix is how the backend knows which FazerCards
+// category to buy from (see relayFazercards.js resolveMlCategory).
+
+const ML_PASSES_GLOBAL = [
+  { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3429], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg14", label: "Global Weekly Pass", mmk: [6477], thb: [51], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [16764], thb: [132], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg29", label: "Global Twilight Pass", mmk: [34290], thb: [270], image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
-const ML_DIAMONDS = [
-  [86, 5249, 41], [172, 10319, 81], [257, 14940, 118], [429, 25394, 200], [706, 40738, 321],
-  [2195, 123020, 969], [3688, 205213, 1617], [5532, 309838, 2441], [9288, 514603, 4054],
-].map(([amt, mmk, thb]) => ({
-  id: "dm" + amt,
-  label: `Diamond ${amt}`,
-  mmk: [mmk],
-  thb: [thb],
-  image: PKG_IMAGES.imgDiamondTier1,
-}));
+const ML_BONUS_GLOBAL = [
+  { id: "mlg9", label: "Global 50 + 50 Diamonds (First Top-Up Bonus)", mmk: [3302], thb: [26], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg16", label: "Global 150 + 150 Diamonds (First Top-Up Bonus)", mmk: [10033], thb: [79], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg21", label: "Global 250 + 250 Diamonds (First Top-Up Bonus)", mmk: [16002], thb: [126], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg28", label: "Global 500 + 500 Diamonds (First Top-Up Bonus)", mmk: [32893], thb: [259], image: PKG_IMAGES.imgDiamondTier1 },
+];
 
+const ML_DIAMONDS_GLOBAL = [
+  { id: "mlg1", label: "Global 5 Diamonds", mmk: [381], thb: [3], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg2", label: "Global 11 Diamonds", mmk: [889], thb: [7], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg3", label: "Global 12 Diamonds", mmk: [1016], thb: [8], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg4", label: "Global 14 Diamonds", mmk: [1016], thb: [8], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg5", label: "Global 19 Diamonds", mmk: [1524], thb: [12], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg6", label: "Global 22 Diamonds", mmk: [1905], thb: [15], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg7", label: "Global 28 Diamonds", mmk: [2286], thb: [18], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg8", label: "Global 42 Diamonds", mmk: [3175], thb: [25], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg11", label: "Global 56 Diamonds", mmk: [4826], thb: [38], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg12", label: "Global 70 Diamonds", mmk: [5207], thb: [41], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg13", label: "Global 86 Diamonds", mmk: [5207], thb: [41], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg15", label: "Global 112 Diamonds", mmk: [9525], thb: [75], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg17", label: "Global 140 Diamonds", mmk: [10414], thb: [82], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg18", label: "Global 172 Diamonds", mmk: [10414], thb: [82], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg19", label: "Global 170 Diamonds", mmk: [13081], thb: [103], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg20", label: "Global 257 Diamonds", mmk: [15113], thb: [119], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg23", label: "Global 240 Diamonds", mmk: [18542], thb: [146], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg24", label: "Global 284 Diamonds", mmk: [20701], thb: [163], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg25", label: "Global 296 Diamonds", mmk: [22860], thb: [180], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg26", label: "Global 429 Diamonds", mmk: [25527], thb: [201], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg27", label: "Global 355 Diamonds", mmk: [25908], thb: [204], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg30", label: "Global 706 Diamonds", mmk: [40767], thb: [321], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg31", label: "Global 570 Diamonds", mmk: [41021], thb: [323], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg32", label: "Global 716 Diamonds", mmk: [51943], thb: [409], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg33", label: "Global 1084 Diamonds", mmk: [77978], thb: [614], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg34", label: "Global 1163 Diamonds", mmk: [83058], thb: [654], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg35", label: "Global 1446 Diamonds", mmk: [103632], thb: [816], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg36", label: "Global 2195 Diamonds", mmk: [123444], thb: [972], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg37", label: "Global 2010 Diamonds", mmk: [142875], thb: [1125], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg38", label: "Global 2398 Diamonds", mmk: [184531], thb: [1453], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg39", label: "Global 3688 Diamonds", mmk: [205994], thb: [1622], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg40", label: "Global 2976 Diamonds", mmk: [207772], thb: [1636], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg41", label: "Global 5532 Diamonds", mmk: [311023], thb: [2449], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg42", label: "Global 9288 Diamonds", mmk: [516636], thb: [4068], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg43", label: "Global 7502 Diamonds", mmk: [518287], thb: [4081], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const ML_PASSES_PH = [
+  { id: "mlp6", label: "PH Weekly Diamond Pass", mmk: [7747], thb: [61], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp14", label: "PH Twilight Pass", mmk: [38608], thb: [304], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const ML_BONUS_PH = [
+  { id: "mlp4", label: "PH 50 + 50 Diamonds (First Top-Up Bonus)", mmk: [3810], thb: [30], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp7", label: "PH 150 + 150 Diamonds (First Top-Up Bonus)", mmk: [11176], thb: [88], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp10", label: "PH 250 + 250 Diamonds (First Top-Up Bonus)", mmk: [18542], thb: [146], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp12", label: "PH 500 + 500 Diamonds (First Top-Up Bonus)", mmk: [37592], thb: [296], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const ML_DIAMONDS_PH = [
+  { id: "mlp1", label: "PH 11 Diamonds", mmk: [762], thb: [6], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp2", label: "PH 22 Diamonds", mmk: [1524], thb: [12], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp3", label: "PH 56 Diamonds", mmk: [3810], thb: [30], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp5", label: "PH 112 Diamonds", mmk: [7493], thb: [59], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp8", label: "PH 168 Diamonds", mmk: [11684], thb: [92], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp9", label: "PH 223 Diamonds", mmk: [14986], thb: [118], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp11", label: "PH 336 Diamonds", mmk: [22606], thb: [178], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp13", label: "PH 570 Diamonds", mmk: [37719], thb: [297], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp15", label: "PH 1163 Diamonds", mmk: [75438], thb: [594], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp16", label: "PH 2398 Diamonds", mmk: [150622], thb: [1186], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlp17", label: "PH 6042 Diamonds", mmk: [376809], thb: [2967], image: PKG_IMAGES.imgDiamondTier1 },
+];
 
 // ---- Magic Chess GoGo ----
-const MC_PASSES = [
-  { id: "mc-bounty", name: "Lukas's Battle Bounty", mmk: [3700], thb: [29], image: PKG_IMAGES.imgLukasBounty },
-  { id: "mc-discount", name: "Battle for Discounts", mmk: [3700], thb: [29], image: PKG_IMAGES.imgLingMcgg },
-  { id: "mc-weekly", name: "Mcgg Weekly Pass", mmk: [8400], thb: [66], image: PKG_IMAGES.imgWeekBook },
+// ✅ Full FazerCards catalog (Global + RU). Labels prefixed with region for
+// the same reason as ML (some amounts overlap between regions at different
+// prices). ⚠️ RU has no FazerCards category_id yet — pricing shown but backend
+// automation isn't wired for RU until Myatko provides one.
+
+const MC_PASSES_GLOBAL = [
+  { id: "mcg9", label: "Global Battle for Discounts", mmk: [3429], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg10", label: "Global Lukas's Battle Bounty", mmk: [3429], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg11", label: "Global Lancelot's Limited-Time Gift", mmk: [3683], thb: [29], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg17", label: "Global Weekly Card", mmk: [8128], thb: [64], image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
-const MC_2X = [
-  { id: "mc50", label: "Mcgg 50+50 အပိုရ", mmk: [3700], thb: [29], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc150", label: "Mcgg 150+150 အပိုရ", mmk: [11000], thb: [87], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc250", label: "Mcgg 250+250 အပိုရ", mmk: [18300], thb: [144], image: PKG_IMAGES.imgDiamondSack },
-  { id: "mc500", label: "Mcgg 500+500 အပိုရ", mmk: [36600], thb: [288], image: PKG_IMAGES.imgDiamondSack },
+const MC_BONUS_GLOBAL = [
+  { id: "mcg12", label: "Global First Recharge 100 (50 + 50 Bonus)", mmk: [3937], thb: [31], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg19", label: "Global First Recharge 300 (150 + 150 Bonus)", mmk: [10541], thb: [83], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg25", label: "Global First Recharge 500 (250 + 250 Bonus)", mmk: [17526], thb: [138], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg35", label: "Global First Recharge 1000 (500 + 500 Bonus)", mmk: [39751], thb: [313], image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
-const MC_DIAMONDS = [
-  [86, 5800, 46], [172, 11500, 91], [257, 19700, 155], [344, 22900, 180],
-  [516, 34300, 270], [706, 45700, 360], [1346, 85600, 674], [1825, 131200, 1033],
-  [2195, 136900, 1078], [3688, 228200, 1797], [5532, 342300, 2695], [9288, 570400, 4491],
-].map(([amt, mmk, thb]) => ({ id: "mcdm" + amt, label: `Mcgg Dia ${amt}`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgDiamondSack }));
+const MC_DIAMONDS_GLOBAL = [
+  { id: "mcg1", label: "Global 5 Diamonds", mmk: [381], thb: [3], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg2", label: "Global 11 Diamonds", mmk: [762], thb: [6], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg3", label: "Global 12 Diamonds", mmk: [1270], thb: [10], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg4", label: "Global 22 Diamonds", mmk: [1524], thb: [12], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg5", label: "Global 19 Diamonds", mmk: [1778], thb: [14], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg6", label: "Global 28 Diamonds", mmk: [2540], thb: [20], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg7", label: "Global 44 Diamonds", mmk: [3175], thb: [25], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg8", label: "Global 56 Diamonds", mmk: [3302], thb: [26], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg13", label: "Global 59 Diamonds", mmk: [4445], thb: [35], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg14", label: "Global 86 Diamonds", mmk: [5334], thb: [42], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg15", label: "Global 85 Diamonds", mmk: [6477], thb: [51], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg16", label: "Global 112 Diamonds", mmk: [6604], thb: [52], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg18", label: "Global 165 Diamonds", mmk: [10414], thb: [82], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg20", label: "Global 172 Diamonds", mmk: [10795], thb: [85], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg21", label: "Global 170 Diamonds", mmk: [12319], thb: [97], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg22", label: "Global 223 Diamonds", mmk: [13081], thb: [103], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg23", label: "Global 257 Diamonds", mmk: [16129], thb: [127], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg24", label: "Global 275 Diamonds", mmk: [16383], thb: [129], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg26", label: "Global 240 Diamonds", mmk: [17526], thb: [138], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg27", label: "Global 336 Diamonds", mmk: [19685], thb: [155], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg28", label: "Global 344 Diamonds", mmk: [21336], thb: [168], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg29", label: "Global 296 Diamonds", mmk: [21590], thb: [170], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg30", label: "Global 408 Diamonds", mmk: [28956], thb: [228], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg31", label: "Global 516 Diamonds", mmk: [32385], thb: [255], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg32", label: "Global 570 Diamonds", mmk: [32766], thb: [258], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg33", label: "Global 565 Diamonds", mmk: [32766], thb: [258], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg34", label: "Global 568 Diamonds", mmk: [39497], thb: [311], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg36", label: "Global 706 Diamonds", mmk: [42545], thb: [335], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg37", label: "Global 875 Diamonds", mmk: [61341], thb: [483], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg38", label: "Global 1060 Diamonds", mmk: [63881], thb: [503], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg39", label: "Global 1163 Diamonds", mmk: [65532], thb: [516], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg40", label: "Global 1346 Diamonds", mmk: [78613], thb: [619], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg41", label: "Global 1825 Diamonds", mmk: [103124], thb: [812], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg42", label: "Global 2195 Diamonds", mmk: [124460], thb: [980], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg43", label: "Global 2398 Diamonds", mmk: [130937], thb: [1031], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg44", label: "Global 2010 Diamonds", mmk: [138430], thb: [1090], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg45", label: "Global 3688 Diamonds", mmk: [206375], thb: [1625], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg46", label: "Global 5532 Diamonds", mmk: [307848], thb: [2424], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg47", label: "Global 4830 Diamonds", mmk: [320294], thb: [2522], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg48", label: "Global 6042 Diamonds", mmk: [327533], thb: [2579], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcg49", label: "Global 9288 Diamonds", mmk: [512572], thb: [4036], image: PKG_IMAGES.imgDiamondTier1 },
+];
 
-// ---- PUBG Mobile ----
+const MC_PASSES_RU = [
+  { id: "mcr3", label: "RU Battle for Discounts", mmk: [4191], thb: [33], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr4", label: "RU Lukas's Battle Bounty", mmk: [4191], thb: [33], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr5", label: "RU Weekly Card", mmk: [4191], thb: [33], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr6", label: "RU Weekly Diamond Pass", mmk: [8001], thb: [63], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const MC_BONUS_RU = [
+  { id: "mcr2", label: "RU First Recharge 100 (50 + 50 Bonus)", mmk: [4191], thb: [33], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr8", label: "RU First Recharge 300 (150 + 150 Bonus)", mmk: [12573], thb: [99], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr10", label: "RU First Recharge 500 (250 + 250 Bonus)", mmk: [20955], thb: [165], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr12", label: "RU First Recharge 1000 (500 + 500 Bonus)", mmk: [42037], thb: [331], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const MC_DIAMONDS_RU = [
+  { id: "mcr1", label: "RU 55 Diamonds", mmk: [4064], thb: [32], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr7", label: "RU 165 Diamonds", mmk: [12446], thb: [98], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr9", label: "RU 275 Diamonds", mmk: [20701], thb: [163], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr11", label: "RU 565 Diamonds", mmk: [41783], thb: [329], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr13", label: "RU 1060 Diamonds", mmk: [79756], thb: [628], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr14", label: "RU 1155 Diamonds", mmk: [83947], thb: [661], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr15", label: "RU 1765 Diamonds", mmk: [125476], thb: [988], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr16", label: "RU 2975 Diamonds", mmk: [209423], thb: [1649], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mcr17", label: "RU 6000 Diamonds", mmk: [418338], thb: [3294], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
 const PUBG_UC = [
-  [60, 4400, 35], [120, 8400, 66], [180, 12600, 99], [325, 22100, 174],
-  [385, 25100, 198], [660, 44200, 348], [1800, 111400, 877], [3850, 222800, 1754],
-  [8100, 443600, 3493], [16200, 843500, 6642],
-].map(([amt, mmk, thb]) => ({ id: "uc" + amt, label: `UC ${amt}`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgUcStack }));
+  { id: "pubg4", name: "60 UC", mmk: [3937], thb: [31], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg5", name: "60 WOW Coins", mmk: [4064], thb: [32], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg11", name: "325 UC", mmk: [19812], thb: [156], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg12", name: "325 WOW Coins", mmk: [20574], thb: [162], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg16", name: "660 UC", mmk: [39878], thb: [314], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg17", name: "660 WOW Coins", mmk: [41148], thb: [324], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg20", name: "1800 UC", mmk: [99568], thb: [784], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg21", name: "1800 WOW Coins", mmk: [102870], thb: [810], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg24", name: "3850 UC", mmk: [199136], thb: [1568], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg25", name: "3850 WOW Coins", mmk: [205867], thb: [1621], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg27", name: "8100 UC", mmk: [398399], thb: [3137], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg28", name: "8100 WOW Coins", mmk: [411734], thb: [3242], image: PKG_IMAGES.imgUcStack },
+];
 
 const PUBG_SPECIAL = [
-  { id: "pubg-first", name: "First Purchase Pack", mmk: [4400], thb: [35], image: PKG_IMAGES.imgFirstPurchase },
-  { id: "pubg-firearm", name: "Firearm Material Pack", mmk: [13300], thb: [105], image: PKG_IMAGES.imgFirearm },
-  { id: "pubg-mythic", name: "Mythic Emblem Pack", mmk: [22000], thb: [173], image: PKG_IMAGES.imgMysticEmblem },
+  { id: "pubg1", name: "First Purchase Pack", mmk: [3810], thb: [30], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg3", name: "Weekly Deal Pack 1", mmk: [3937], thb: [31], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg6", name: "Upgradable Firearm Materials Pack", mmk: [11684], thb: [92], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg8", name: "Weekly Mythic Emblem Value Pack", mmk: [11684], thb: [92], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg9", name: "Weekly Deal Pack 2", mmk: [11684], thb: [92], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg10", name: "Mythic Emblem Pack", mmk: [19431], thb: [153], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg14", name: "Elite Pass LV1-50", mmk: [23368], thb: [184], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg19", name: "Elite Pass LV1-100", mmk: [47498], thb: [374], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg22", name: "Elite Pass Plus LV1-100", mmk: [116459], thb: [917], image: PKG_IMAGES.imgUcStack },
 ];
 
 const PUBG_PRIME = [
-  { id: "prime-1m", name: "Prime Pack 1 Month", mmk: [4400], thb: [35], image: PKG_IMAGES.imgPrimeCrown },
-  { id: "prime-3m", name: "Prime Pack 3 Months", mmk: [13300], thb: [105], image: PKG_IMAGES.imgPrimeCrown },
-  { id: "primeplus-1m", name: "Prime Plus 1 Month", mmk: [44100], thb: [347], image: PKG_IMAGES.imgPrimePlusCrown },
-  { id: "primeplus-3m", name: "Prime Plus 3 Months", mmk: [129800], thb: [1022], image: PKG_IMAGES.imgPrimePlusCrown },
-  { id: "primeplus-6m", name: "Prime Plus 6 Months", mmk: [255600], thb: [2013], image: PKG_IMAGES.imgPrimePlusCrown },
-  { id: "primeplus-12m", name: "Prime Plus 12 Months", mmk: [516200], thb: [4065], image: PKG_IMAGES.imgPrimePlusCrown },
+  { id: "pubg2", name: "Prime (1 Month)", mmk: [3810], thb: [30], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg7", name: "Prime (3 Months)", mmk: [11684], thb: [92], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg13", name: "Prime (6 Months)", mmk: [23368], thb: [184], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg15", name: "Prime Plus (1 Month)", mmk: [38862], thb: [306], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg18", name: "Prime (12 Months)", mmk: [46609], thb: [367], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg23", name: "Prime Plus (3 Months)", mmk: [116459], thb: [917], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg26", name: "Prime Plus (6 Months)", mmk: [232791], thb: [1833], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg29", name: "Prime Plus (12 Months)", mmk: [465709], thb: [3667], image: PKG_IMAGES.imgUcStack },
 ];
+
 
 // Any package whose name contains "Weekly" (Weekly Pass, Weekly Elite Bundle,
 // Mcgg Weekly Pass, etc.) is capped at 10 per order.
@@ -704,6 +845,8 @@ export default function MonkeyTopup() {
   const [currency, setCurrency] = useState("mmk");
   const [ffServer, setFfServer] = useState("global");
   const [rmServer, setRmServer] = useState("sea");
+  const [mlServer, setMlServer] = useState("global");
+  const [mcServer, setMcServer] = useState("global");
   const [server, setServer] = useState("Global");
   const [newStateServer, setNewStateServer] = useState("New State");
   const [selectedPkg, setSelectedPkg] = useState(null);
@@ -1078,8 +1221,8 @@ export default function MonkeyTopup() {
   // order's "game" column) — falls back to "Unknown" if it can't tell.
   function selectedGameName(pkg) {
     if (!pkg) return "Unknown";
-    if (ML_PASSES.includes(pkg) || ML_DIAMONDS.includes(pkg)) return "Mobile Legends";
-    if (MC_PASSES.includes(pkg) || MC_2X.includes(pkg) || MC_DIAMONDS.includes(pkg)) return "Magic Chess GoGo";
+    if (ML_PASSES_GLOBAL.includes(pkg) || ML_BONUS_GLOBAL.includes(pkg) || ML_DIAMONDS_GLOBAL.includes(pkg) || ML_PASSES_PH.includes(pkg) || ML_BONUS_PH.includes(pkg) || ML_DIAMONDS_PH.includes(pkg)) return "Mobile Legends";
+    if (MC_PASSES_GLOBAL.includes(pkg) || MC_BONUS_GLOBAL.includes(pkg) || MC_DIAMONDS_GLOBAL.includes(pkg) || MC_PASSES_RU.includes(pkg) || MC_BONUS_RU.includes(pkg) || MC_DIAMONDS_RU.includes(pkg)) return "Magic Chess GoGo";
     if (PUBG_UC.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
     if (RACING_SEA.includes(pkg) || RACING_LATAM.includes(pkg)) return "Racing Master";
@@ -2110,8 +2253,34 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Diamonds" items={ML_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setMlServer("global")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "global" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                >
+                  🌍 Global
+                </button>
+                <button
+                  onClick={() => setMlServer("philippines")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "philippines" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                >
+                  🇵🇭 Philippines
+                </button>
+              </div>
+
+              {mlServer === "global" ? (
+                <>
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                </>
+              ) : (
+                <>
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                </>
+              )}
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -2139,9 +2308,34 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="2x Diamonds" items={MC_2X} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setMcServer("global")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mcServer === "global" ? "bg-white text-orange-600" : "bg-white/20 text-white"}`}
+                >
+                  🌍 Global
+                </button>
+                <button
+                  onClick={() => setMcServer("ru")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mcServer === "ru" ? "bg-white text-orange-600" : "bg-white/20 text-white"}`}
+                >
+                  🇷🇺 Russia
+                </button>
+              </div>
+
+              {mcServer === "global" ? (
+                <>
+                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                </>
+              ) : (
+                <>
+                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                </>
+              )}
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
