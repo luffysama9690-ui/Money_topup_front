@@ -1730,7 +1730,7 @@ export default function MonkeyTopup() {
                     className="grid grid-cols-3 items-center px-3 py-3 border-b text-sm cursor-pointer active:bg-slate-50 transition"
                   >
                     <div className="text-[#2196F3] font-semibold">{o.id}</div>
-                    <div className="font-bold">{o.item}</div>
+                    <div className="font-bold">{displayLabel(o.item)}</div>
                     <div>
                       {o.status === "success" && <Pill tone="green">success</Pill>}
                       {o.status === "pending" && <Pill tone="amber">pending</Pill>}
@@ -2846,7 +2846,7 @@ export default function MonkeyTopup() {
                   <div className="text-sm font-semibold mb-1">ပမာဏ</div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-slate-100 rounded-lg px-3 py-2 text-sm font-semibold">
-                      {selectedPkg.label || selectedPkg.name}
+                      {displayLabel(selectedPkg.label || selectedPkg.name)}
                     </div>
                     <div className="bg-slate-100 rounded-lg px-3 py-2 text-sm font-semibold text-right">
                       {fmt(price(selectedPkg))} {currencyLabel}
@@ -2988,7 +2988,7 @@ export default function MonkeyTopup() {
               <div className="divide-y">
                 <DetailRow label="GameID" value={`${selectedOrder.gameId || "-"} (${selectedOrder.serverId || "-"})`} />
                 <DetailRow label="Count" value={selectedOrder.qty ?? 1} />
-                <DetailRow label="Amount" value={selectedOrder.item} />
+                <DetailRow label="Amount" value={displayLabel(selectedOrder.item)} />
                 <DetailRow label="Price" value={fmt(selectedOrder.price || 0)} />
                 <DetailRow label="Date" value={selectedOrder.date || "-"} />
                 <div className="flex justify-between items-center px-4 py-3">
@@ -3014,6 +3014,18 @@ export default function MonkeyTopup() {
   );
 }
 
+const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU)\s+/;
+const BONUS_SUFFIX_RE = /\s*\(First Top-Up Bonus\)\s*$/i;
+
+/** Strips the region prefix and "(First Top-Up Bonus)" suffix for display only — the underlying `label` (used for orders) is untouched. */
+function displayLabel(rawLabel) {
+  return rawLabel.replace(REGION_PREFIX_RE, "").replace(BONUS_SUFFIX_RE, "").trim();
+}
+
+function isBonusLabel(rawLabel) {
+  return BONUS_SUFFIX_RE.test(rawLabel);
+}
+
 function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }) {
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   return (
@@ -3026,9 +3038,14 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
         {items.map((it) => {
           const rawPrice = it[currency][0];
           const priceVal = applyResellerDiscount(rawPrice, discountPercent);
-          const label = it.label || it.name;
+          const rawLabel = it.label || it.name;
+          const label = displayLabel(rawLabel);
+          const showBonusBadge = isBonusLabel(rawLabel);
           return (
-            <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
+            <button key={it.id} onClick={() => onPick(it)} className="relative bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
+              {showBonusBadge && (
+                <span className="absolute top-1 right-1 z-10 bg-[#c05b58] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow">2X</span>
+              )}
               {it.image ? (
                 <img
                   src={it.image}
