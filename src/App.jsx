@@ -237,17 +237,53 @@ const NEWSTATE_NC = [
 ];
 const NEWSTATE_SERVERS = ["New State", "Korea", "Global"];
 
-const RACING_PACKAGES = [
-  { id: "rm70", label: "70+4 (Bonus 35)", mmk: [4242], thb: [36], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm140", label: "140+7 (Bonus 70)", mmk: [9000], thb: [72], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm210", label: "210+11 (Bonus 105)", mmk: [13506], thb: [108], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm350", label: "350+18 (Bonus 175)", mmk: [22516], thb: [180], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm700", label: "700+35 (Bonus 350)", mmk: [44230], thb: [354], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm1000", label: "1000+50 (Bonus 500)", mmk: [65764], thb: [526], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm1400", label: "1400+70 (Bonus 700)", mmk: [90090], thb: [721], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm2100", label: "2100+105 (Bonus 1050)", mmk: [133258], thb: [1066], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm3400", label: "3400+170 (Bonus 1700)", mmk: [211645], thb: [1693], image: PKG_IMAGES.imgRacingGem },
-  { id: "rm6600", label: "6600+330 (Bonus 3300)", mmk: [409865], thb: [3279], image: PKG_IMAGES.imgRacingGem },
+// ✅ From monkey_topup_pricing-2.xlsx (Myatko's confirmed pricing sheet):
+// rate 33 THB/USD, 7% retail margin. Two regions, same pattern as Free Fire's
+// Global/Thailand toggle. MMK derived at the app's standing ~127 MMK/THB rate.
+const RACING_SEA = [
+  { id: "rmSeaNovice", label: "Novice Pack", mmk: [635], thb: [5], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea70", label: "70 Gems", mmk: [3302], thb: [26], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaOutfit", label: "Value Outfit Pack", mmk: [3683], thb: [29], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaWeekly", label: "Weekly Card", mmk: [3683], thb: [29], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea140", label: "140 Gems", mmk: [6604], thb: [52], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaMonthly", label: "Monthly Card", mmk: [8509], thb: [67], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea210", label: "210 Gems", mmk: [9906], thb: [78], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea350", label: "350 Gems", mmk: [17018], thb: [134], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaPremiumUpgrade", label: "Upgrade to the Premium MP", mmk: [17145], thb: [135], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaDeluxe", label: "DELUXE MP", mmk: [18795], thb: [148], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaGrowth", label: "Growth Fund", mmk: [24003], thb: [189], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea700", label: "700 Gems", mmk: [33655], thb: [265], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaPremium", label: "PREMIUM MP", mmk: [34798], thb: [274], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSeaLimited", label: "Limited-Time Fund", mmk: [41529], thb: [327], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea1000", label: "1000 Gems", mmk: [47498], thb: [374], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea1400", label: "1400 Gems", mmk: [66675], thb: [525], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea2100", label: "2100 Gems", mmk: [100203], thb: [789], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea3400", label: "3400 Gems", mmk: [161544], thb: [1272], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmSea6600", label: "6600 Gems", mmk: [313182], thb: [2466], image: PKG_IMAGES.imgRacingGem },
+];
+
+const RACING_LATAM = [
+  { id: "rmLatamNovice", label: "Novice Pack", mmk: [762], thb: [6], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam70", label: "70 Gems", mmk: [2413], thb: [19], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamOutfit", label: "Value Outfit Pack", mmk: [2413], thb: [19], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamWeekly", label: "Weekly Card", mmk: [4572], thb: [36], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam140", label: "140 Gems", mmk: [4953], thb: [39], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam210", label: "210 Gems", mmk: [7366], thb: [58], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamMonthly", label: "Monthly Card", mmk: [10668], thb: [84], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam350", label: "350 Gems", mmk: [12319], thb: [97], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamPremiumUpgrade", label: "Upgrade to the Premium MP", mmk: [20955], thb: [165], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamDeluxe", label: "DELUXE MP", mmk: [22606], thb: [178], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam700", label: "700 Gems", mmk: [24765], thb: [195], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamGrowth", label: "Growth Fund", mmk: [29591], thb: [233], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam1000", label: "1000 Gems", mmk: [35814], thb: [282], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamPremium", label: "PREMIUM MP", mmk: [43561], thb: [343], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam1400", label: "1400 Gems", mmk: [49403], thb: [389], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamLegendary", label: "Legendary Car Pack", mmk: [65787], thb: [518], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam2100", label: "2100 Gems", mmk: [73154], thb: [576], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamUpgradeMp", label: "Upgrade MP", mmk: [87126], thb: [686], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatamBundle", label: "MP Bundle", mmk: [109347], thb: [861], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam3400", label: "3400 Gems", mmk: [115938], thb: [913], image: PKG_IMAGES.imgRacingGem },
+  { id: "rmLatam6600", label: "6600 Gems", mmk: [222123], thb: [1749], image: PKG_IMAGES.imgRacingGem },
 ];
 
 // ---- Where Winds Meet ----
@@ -667,6 +703,7 @@ export default function MonkeyTopup() {
   const [wheelRotation, setWheelRotation] = useState(0);
   const [currency, setCurrency] = useState("mmk");
   const [ffServer, setFfServer] = useState("global");
+  const [rmServer, setRmServer] = useState("sea");
   const [server, setServer] = useState("Global");
   const [newStateServer, setNewStateServer] = useState("New State");
   const [selectedPkg, setSelectedPkg] = useState(null);
@@ -1045,7 +1082,7 @@ export default function MonkeyTopup() {
     if (MC_PASSES.includes(pkg) || MC_2X.includes(pkg) || MC_DIAMONDS.includes(pkg)) return "Magic Chess GoGo";
     if (PUBG_UC.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
-    if (RACING_PACKAGES.includes(pkg)) return "Racing Master";
+    if (RACING_SEA.includes(pkg) || RACING_LATAM.includes(pkg)) return "Racing Master";
     if (SAUSAGE_PACKAGES.includes(pkg)) return "Sausage Man";
     if (BLOODSTRIKE_PACKAGES.includes(pkg)) return "Blood Strike";
     if (WWM_ECHO.includes(pkg) || WWM_PASSES.includes(pkg)) return "Where Winds Meet";
@@ -2145,6 +2182,21 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setRmServer("sea")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${rmServer === "sea" ? "bg-white text-red-600" : "bg-white/20 text-white"}`}
+                >
+                  🌏 SEA
+                </button>
+                <button
+                  onClick={() => setRmServer("latam")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${rmServer === "latam" ? "bg-white text-red-600" : "bg-white/20 text-white"}`}
+                >
+                  🌎 LATAM
+                </button>
+              </div>
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2162,7 +2214,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Gems" items={RACING_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Gems" items={rmServer === "sea" ? RACING_SEA : RACING_LATAM} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
