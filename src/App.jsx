@@ -368,13 +368,15 @@ const FACEBOOK_PACKAGES = [
 ];
 
 // ---- PUBG New State ----
+// ✅ FazerCards category "pubg_new_state" — all 6 amounts confirmed to match
+// exactly. Field is "Account ID" only (no separate server_id).
 const NEWSTATE_NC = [
-  { id: "ns300", label: "300 NC", mmk: [4188], thb: [33], image: PKG_IMAGES.imgNewStateCoin },
-  { id: "ns1580", label: "1,500 + 80 NC", mmk: [20639], thb: [163], image: PKG_IMAGES.imgNewStateCoin },
-  { id: "ns3850", label: "3,600 + 250 NC", mmk: [49353], thb: [389], image: PKG_IMAGES.imgNewStateCoin },
-  { id: "ns10230", label: "9,300 + 930 NC", mmk: [127419], thb: [1003], image: PKG_IMAGES.imgNewStateCoin },
-  { id: "ns16800", label: "15,000 + 1,800 NC", mmk: [205486], thb: [1618], image: PKG_IMAGES.imgNewStateCoin },
-  { id: "ns35000", label: "30,000 + 5,000 NC", mmk: [410871], thb: [3235], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns300", label: "300 NC", mmk: [4430], thb: [35], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns1580", label: "1580 NC", mmk: [22149], thb: [174], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns3850", label: "3850 NC", mmk: [53157], thb: [419], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns10230", label: "10230 NC", mmk: [137322], thb: [1082], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns16800", label: "16800 NC", mmk: [221488], thb: [1745], image: PKG_IMAGES.imgNewStateCoin },
+  { id: "ns35000", label: "35000 NC", mmk: [442976], thb: [3490], image: PKG_IMAGES.imgNewStateCoin },
 ];
 const NEWSTATE_SERVERS = ["New State", "Korea", "Global"];
 
@@ -3015,7 +3017,7 @@ export default function MonkeyTopup() {
 }
 
 const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU)\s+/;
-const BONUS_SUFFIX_RE = /\s*\(First Top-Up Bonus\)\s*$/i;
+const BONUS_SUFFIX_RE = /\s*\([^)]*Bonus\)\s*$/i;
 
 /** Strips the region prefix and "(First Top-Up Bonus)" suffix for display only — the underlying `label` (used for orders) is untouched. */
 function displayLabel(rawLabel) {
