@@ -517,15 +517,18 @@ const CAPCUT_PACKAGES = [
 ];
 
 // ---- Sausage Man ----
+// ✅ Full FazerCards catalog for Sausage Man (category_id: sausage_man),
+// 7% margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB
+// (2569-08-30 pricing, GET /api/v2/topups/offers?category_id=sausage_man).
 const SAUSAGE_PACKAGES = [
-  { id: "sm61", label: "Candy 61", mmk: [2100], thb: [17], image: PKG_IMAGES.imgCandy },
-  { id: "sm186", label: "Candy 186", mmk: [6000], thb: [47], image: PKG_IMAGES.imgCandy },
-  { id: "sm318", label: "Candy 318", mmk: [10000], thb: [79], image: PKG_IMAGES.imgCandy },
-  { id: "sm686", label: "Candy 686", mmk: [19900], thb: [157], image: PKG_IMAGES.imgCandy },
-  { id: "sm1378", label: "Candy 1378", mmk: [37800], thb: [298], image: PKG_IMAGES.imgCandy },
-  { id: "sm2118", label: "Candy 2118", mmk: [57700], thb: [454], image: PKG_IMAGES.imgCandy },
-  { id: "sm3548", label: "Candy 3548", mmk: [99400], thb: [783], image: PKG_IMAGES.imgCandy },
-  { id: "sm7108", label: "Candy 7108", mmk: [198700], thb: [1565], image: PKG_IMAGES.imgCandy },
+  { id: "sm61", label: "61 Candies", mmk: [1799], thb: [14], image: PKG_IMAGES.imgCandy },
+  { id: "sm186", label: "186 Candies", mmk: [5442], thb: [43], image: PKG_IMAGES.imgCandy },
+  { id: "sm318", label: "318 Candies", mmk: [9081], thb: [72], image: PKG_IMAGES.imgCandy },
+  { id: "sm686", label: "686 Candies", mmk: [18166], thb: [143], image: PKG_IMAGES.imgCandy },
+  { id: "sm1378", label: "1378 Candies", mmk: [34489], thb: [272], image: PKG_IMAGES.imgCandy },
+  { id: "sm2118", label: "2118 Candies", mmk: [52606], thb: [414], image: PKG_IMAGES.imgCandy },
+  { id: "sm3548", label: "3548 Candies", mmk: [90738], thb: [715], image: PKG_IMAGES.imgCandy },
+  { id: "sm7108", label: "7108 Candies", mmk: [181471], thb: [1430], image: PKG_IMAGES.imgCandy },
 ];
 
 // ---- Blood Strike ----
@@ -2909,17 +2912,21 @@ export default function MonkeyTopup() {
                   <input
                     value={gameId}
                     onChange={(e) => { setGameId(e.target.value.replace(/[^0-9]/g, "")); setVerifyState("idle"); }}
-                    placeholder="Game Id"
+                    placeholder={selectedGameName(selectedPkg) === "Sausage Man" ? "Character Id" : "Game Id"}
                     className="flex-1 border rounded-lg px-3 py-2 text-sm"
                   />
-                  <span className="self-center text-slate-400">(</span>
-                  <input
-                    value={serverId}
-                    onChange={(e) => { setServerId(e.target.value.replace(/[^0-9]/g, "")); setVerifyState("idle"); }}
-                    placeholder="Server Id"
-                    className="flex-1 border rounded-lg px-3 py-2 text-sm"
-                  />
-                  <span className="self-center text-slate-400">)</span>
+                  {selectedGameName(selectedPkg) !== "Sausage Man" && (
+                    <>
+                      <span className="self-center text-slate-400">(</span>
+                      <input
+                        value={serverId}
+                        onChange={(e) => { setServerId(e.target.value.replace(/[^0-9]/g, "")); setVerifyState("idle"); }}
+                        placeholder="Server Id"
+                        className="flex-1 border rounded-lg px-3 py-2 text-sm"
+                      />
+                      <span className="self-center text-slate-400">)</span>
+                    </>
+                  )}
                 </div>
 
                 <div>
