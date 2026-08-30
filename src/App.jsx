@@ -590,7 +590,7 @@ function copyText(text, onDone) {
 }
 
 // ---------- Small UI atoms ----------
-function TopBar({ title, onBack }) {
+function TopBar({ title, onBack, onHome }) {
   return (
     <div className="sticky top-0 z-20 bg-gradient-to-b from-[#352a63] to-[#3f3272] text-white px-4 py-3 relative flex items-center justify-center shadow-md">
       {onBack && (
@@ -601,6 +601,20 @@ function TopBar({ title, onBack }) {
       <div className="font-extrabold text-lg tracking-wide bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 bg-clip-text text-transparent drop-shadow-sm">
         {title}
       </div>
+      {onHome && (
+        <button onClick={onHome} className="absolute right-4 text-amber-300 text-xs font-bold active:opacity-60 flex items-center gap-1">
+          🏠 Home
+        </button>
+      )}
+    </div>
+  );
+}
+
+function DetailThumbnail({ label }) {
+  return (
+    <div className="w-full aspect-[16/7] rounded-xl bg-[#241d47]/60 border border-dashed border-white/15 flex items-center justify-center overflow-hidden">
+      {/* TODO: ဒီနေရာမှာ ဂိမ်း thumbnail/banner ပုံ ထည့်ရန် */}
+      <span className="text-white/20 text-xs">{label}</span>
     </div>
   );
 }
@@ -2224,32 +2238,9 @@ export default function MonkeyTopup() {
 
         {view === "mlDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <div className="bg-[#241d47]/70 rounded-xl p-4 text-white space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">🖥 Select Server</span>
-                  <button onClick={() => setView("shop")} className="text-amber-300 text-xs font-bold active:opacity-60">
-                    🏠 Home
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {SERVERS.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setServer(s)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
-                        server === s ? "bg-emerald-600 border-emerald-400" : "bg-slate-800 border-slate-700"
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-                <div className="bg-rose-950/40 text-rose-300 text-xs rounded p-2 text-center">
-                  ⚠ မိမိဝယ်ယူလိုသည့်ဆာဗာကို ရွေးချယ်ပါ
-                </div>
-              </div>
+              <DetailThumbnail label="Mobile Legends" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -2304,8 +2295,10 @@ export default function MonkeyTopup() {
         {/* ---------------- MAGIC CHESS GOGO DETAIL ---------------- */}
         {view === "mcDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Magic Chess GoGo" />
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2359,8 +2352,10 @@ export default function MonkeyTopup() {
         {/* ---------------- PUBG MOBILE DETAIL ---------------- */}
         {view === "pubgDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="PUBG Mobile" />
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2389,8 +2384,10 @@ export default function MonkeyTopup() {
         {/* ---------------- PUBG NEW STATE DETAIL ---------------- */}
         {view === "racingDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Racing Master" />
+
               <div className="flex gap-2">
                 <button
                   onClick={() => setRmServer("sea")}
@@ -2431,8 +2428,10 @@ export default function MonkeyTopup() {
 
         {view === "sausageDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Sausage Man" />
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2512,8 +2511,10 @@ export default function MonkeyTopup() {
 
         {view === "wwmDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Where Winds Meet" />
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2592,33 +2593,9 @@ export default function MonkeyTopup() {
 
         {view === "newstateDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <div className="bg-[#241d47]/70 rounded-xl p-4 text-white space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">🖥 Select Server</span>
-                  <button onClick={() => setView("shop")} className="text-amber-300 text-xs font-bold active:opacity-60">
-                    🏠 Home
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {NEWSTATE_SERVERS.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setNewStateServer(s)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
-                        newStateServer === s ? "bg-teal-600 border-teal-400" : "bg-slate-800 border-slate-700"
-                      }`}
-                    >
-                      {s === "New State" ? "🌍 " : s === "Korea" ? "🇰🇷 " : "🌐 "}
-                      {s}
-                    </button>
-                  ))}
-                </div>
-                <div className="bg-rose-950/40 text-rose-300 text-xs rounded p-2 text-center">
-                  ⚠ မိမိဝယ်ယူလိုသည့်ဆာဗာကို ရွေးချယ်ပါ
-                </div>
-              </div>
+              <DetailThumbnail label="PUBG New State" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
