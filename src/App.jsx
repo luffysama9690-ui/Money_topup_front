@@ -103,7 +103,7 @@ const PKG_IMAGES = {
 
 const ML_PASSES_GLOBAL = [
   { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3429], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg14", label: "Global Weekly Pass", mmk: [6477], thb: [51], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg14", label: "Global Weekly Pass", mmk: [6604], thb: [52], resellerPrice: { mmk: [6350], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [16764], thb: [132], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg29", label: "Global Twilight Pass", mmk: [34290], thb: [270], image: PKG_IMAGES.imgDiamondTier1 },
 ];
@@ -552,8 +552,14 @@ function fmt(n) {
 // Applies a reseller's flat discount to a price, rounding to the nearest
 // whole unit (MMK/THB don't use decimals here). `percent` is 0 for regular
 // users, so this is a no-op unless the logged-in user is a reseller.
-function applyResellerDiscount(price, percent) {
+// If `pkg` carries a `resellerPrice` override for the given `currency`
+// (used for e.g. ML's Weekly Pass, which has a fixed reseller price
+// instead of a percentage discount), that overrides the percent math —
+// every other item is unaffected.
+function applyResellerDiscount(price, percent, pkg, currency) {
   if (!percent) return price;
+  const override = pkg && pkg.resellerPrice && pkg.resellerPrice[currency];
+  if (override != null) return override[0];
   return Math.round(price * (1 - percent / 100));
 }
 
@@ -915,7 +921,7 @@ export default function MonkeyTopup() {
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
-  const price = (pkg) => applyResellerDiscount(pkg ? pkg[currency][0] : 0, resellerDiscountPercent);
+  const price = (pkg) => applyResellerDiscount(pkg ? pkg[currency][0] : 0, resellerDiscountPercent, pkg, currency);
   const qtyMax = isWeeklyPass(selectedPkg) ? 10 : 999;
   const qtyNum = Math.min(qtyMax, Math.max(1, parseInt(qty, 10) || 1));
   const total = selectedPkg ? price(selectedPkg) * qtyNum : 0;
@@ -1181,7 +1187,7 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: "ငွေလွှဲပြေစာ ပုံ တင်ပေးပါ" });
       return;
     }
-    const price = applyResellerDiscount(selectedSocialPkg[currency][0], resellerDiscountPercent);
+    const price = applyResellerDiscount(selectedSocialPkg[currency][0], resellerDiscountPercent, selectedSocialPkg, currency);
     setBuying(true);
     try {
       const order = await api.createOrder({
@@ -3039,7 +3045,7 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
       <div className="grid grid-cols-3 gap-2">
         {items.map((it) => {
           const rawPrice = it[currency][0];
-          const priceVal = applyResellerDiscount(rawPrice, discountPercent);
+          const priceVal = applyResellerDiscount(rawPrice, discountPercent, it, currency);
           const rawLabel = it.label || it.name;
           const label = displayLabel(rawLabel);
           const showBonusBadge = isBonusLabel(rawLabel);
@@ -3078,7 +3084,7 @@ function SocialPkgGrid({ items, currency, logo, discountPercent = 0, onPick }) {
     <div className="grid grid-cols-3 gap-2">
       {items.map((it) => {
         const [rawPrice] = it[currency];
-        const price = applyResellerDiscount(rawPrice, discountPercent);
+        const price = applyResellerDiscount(rawPrice, discountPercent, it, currency);
         return (
           <button key={it.id} onClick={() => onPick(it)} className="bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition p-2">
             <img src={logo} alt="" className="w-9 h-9 object-contain mx-auto mb-1" />
