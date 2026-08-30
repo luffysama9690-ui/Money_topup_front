@@ -2977,19 +2977,10 @@ export default function MonkeyTopup() {
 
                 <div>
                   <div className="text-sm font-semibold mb-1">ဝယ်ယူမည့်နည်းလမ်း</div>
-                  <div className="grid grid-cols-2 rounded-lg overflow-hidden border">
-                    <button
-                      onClick={() => setPayMethod("wallet")}
-                      className={`py-2 text-sm font-bold transition ${payMethod === "wallet" ? "bg-[#3f3272] text-white" : "bg-white text-slate-600"}`}
-                    >
+                  <div className="rounded-lg overflow-hidden border">
+                    <div className="py-2 text-sm font-bold text-center bg-[#3f3272] text-white">
                       ပိုက်ဆံအိတ်
-                    </button>
-                    <button
-                      onClick={() => setPayMethod("transfer")}
-                      className={`py-2 text-sm font-bold transition ${payMethod === "transfer" ? "bg-[#3f3272] text-white" : "bg-white text-slate-600"}`}
-                    >
-                      ငွေလွှဲပုံ
-                    </button>
+                    </div>
                   </div>
                 </div>
 
