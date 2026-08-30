@@ -271,16 +271,19 @@ const MC_DIAMONDS_RU = [
 
 const PUBG_UC = [
   { id: "pubg4", name: "60 UC", mmk: [3937], thb: [31], image: PKG_IMAGES.imgUcStack },
-  { id: "pubg5", name: "60 WOW Coins", mmk: [4064], thb: [32], image: PKG_IMAGES.imgUcStack },
   { id: "pubg11", name: "325 UC", mmk: [19812], thb: [156], image: PKG_IMAGES.imgUcStack },
-  { id: "pubg12", name: "325 WOW Coins", mmk: [20574], thb: [162], image: PKG_IMAGES.imgUcStack },
   { id: "pubg16", name: "660 UC", mmk: [39878], thb: [314], image: PKG_IMAGES.imgUcStack },
-  { id: "pubg17", name: "660 WOW Coins", mmk: [41148], thb: [324], image: PKG_IMAGES.imgUcStack },
   { id: "pubg20", name: "1800 UC", mmk: [99568], thb: [784], image: PKG_IMAGES.imgUcStack },
-  { id: "pubg21", name: "1800 WOW Coins", mmk: [102870], thb: [810], image: PKG_IMAGES.imgUcStack },
   { id: "pubg24", name: "3850 UC", mmk: [199136], thb: [1568], image: PKG_IMAGES.imgUcStack },
-  { id: "pubg25", name: "3850 WOW Coins", mmk: [205867], thb: [1621], image: PKG_IMAGES.imgUcStack },
   { id: "pubg27", name: "8100 UC", mmk: [398399], thb: [3137], image: PKG_IMAGES.imgUcStack },
+];
+
+const PUBG_WOW = [
+  { id: "pubg5", name: "60 WOW Coins", mmk: [4064], thb: [32], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg12", name: "325 WOW Coins", mmk: [20574], thb: [162], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg17", name: "660 WOW Coins", mmk: [41148], thb: [324], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg21", name: "1800 WOW Coins", mmk: [102870], thb: [810], image: PKG_IMAGES.imgUcStack },
+  { id: "pubg25", name: "3850 WOW Coins", mmk: [205867], thb: [1621], image: PKG_IMAGES.imgUcStack },
   { id: "pubg28", name: "8100 WOW Coins", mmk: [411734], thb: [3242], image: PKG_IMAGES.imgUcStack },
 ];
 
@@ -1252,7 +1255,7 @@ export default function MonkeyTopup() {
     if (!pkg) return "Unknown";
     if (ML_PASSES_GLOBAL.includes(pkg) || ML_BONUS_GLOBAL.includes(pkg) || ML_DIAMONDS_GLOBAL.includes(pkg) || ML_PASSES_PH.includes(pkg) || ML_BONUS_PH.includes(pkg) || ML_DIAMONDS_PH.includes(pkg)) return "Mobile Legends";
     if (MC_PASSES_GLOBAL.includes(pkg) || MC_BONUS_GLOBAL.includes(pkg) || MC_DIAMONDS_GLOBAL.includes(pkg) || MC_PASSES_RU.includes(pkg) || MC_BONUS_RU.includes(pkg) || MC_DIAMONDS_RU.includes(pkg)) return "Magic Chess GoGo";
-    if (PUBG_UC.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
+    if (PUBG_UC.includes(pkg) || PUBG_WOW.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
     if (RACING_SEA.includes(pkg) || RACING_LATAM.includes(pkg)) return "Racing Master";
     if (SAUSAGE_PACKAGES.includes(pkg)) return "Sausage Man";
@@ -2374,8 +2377,9 @@ export default function MonkeyTopup() {
               </div>
 
               <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Special Packs" items={PUBG_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Prime" items={PUBG_PRIME} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="WOW Coins" items={PUBG_WOW} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="3" title="Special Packs" items={PUBG_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="4" title="Prime" items={PUBG_PRIME} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -2420,7 +2424,17 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Gems" items={rmServer === "sea" ? RACING_SEA : RACING_LATAM} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              {(() => {
+                const items = rmServer === "sea" ? RACING_SEA : RACING_LATAM;
+                const gems = items.filter((it) => isGemsLabel(it.label));
+                const bundles = items.filter((it) => !isGemsLabel(it.label));
+                return (
+                  <>
+                    <PkgSection num="1" title="Gems" items={gems} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                    <PkgSection num="2" title="Passes & Bundles" items={bundles} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  </>
+                );
+              })()}
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -2505,7 +2519,8 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Gold" items={BLOODSTRIKE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Gold" items={BLOODSTRIKE_PACKAGES.filter((it) => /Gold$/i.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Special Items" items={BLOODSTRIKE_PACKAGES.filter((it) => !/Gold$/i.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3020,6 +3035,11 @@ function displayLabel(rawLabel) {
 
 function isBonusLabel(rawLabel) {
   return BONUS_SUFFIX_RE.test(rawLabel);
+}
+
+/** Racing Master items whose (region-stripped) label ends in "Gems" are pure currency; everything else (Novice Pack, Weekly/Monthly Card, MP tiers, Growth Fund, etc.) is a pass/bundle. */
+function isGemsLabel(rawLabel) {
+  return /Gems$/i.test(displayLabel(rawLabel));
 }
 
 function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }) {
