@@ -954,22 +954,29 @@ export default function MonkeyTopup() {
     async function loadAll() {
       try {
         setLoading(true);
-        const [user, orderRows, depositRows, messageRows, unread] = await Promise.all([
-          api.getUser(telegramId),
+
+        // Balance is the thing people look at first, so fetch it alone and
+        // paint it the moment it's back — don't make it wait on orders/
+        // deposits/messages/unread-count, which can be slower (bigger
+        // tables) but aren't needed for the home screen's balance display.
+        const user = await api.getUser(telegramId);
+        if (cancelled) return;
+        setBalance(Number(user.balance_mmk));
+        setBalanceThb(Number(user.balance_thb || 0));
+        setResellerDiscountPercent(user.is_reseller ? RESELLER_DISCOUNT_PERCENT : 0);
+        setLoadError("");
+
+        const [orderRows, depositRows, messageRows, unread] = await Promise.all([
           api.getOrders(telegramId),
           api.getDeposits(telegramId),
           api.getMessages(telegramId),
           api.getUnreadCount(telegramId),
         ]);
         if (cancelled) return;
-        setBalance(Number(user.balance_mmk));
-        setBalanceThb(Number(user.balance_thb || 0));
-        setResellerDiscountPercent(user.is_reseller ? RESELLER_DISCOUNT_PERCENT : 0);
         setOrders(orderRows.map(mapOrder));
         setDeposits(depositRows);
         setMessages(messageRows.map(mapMessage));
         setUnreadCount(unread.count);
-        setLoadError("");
 
         // Admin check is best-effort and separate from the main load — if it
         // fails, the person is just treated as a normal (non-admin) user.
