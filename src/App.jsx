@@ -2457,7 +2457,7 @@ export default function MonkeyTopup() {
 
         {view === "steamDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -2484,8 +2484,10 @@ export default function MonkeyTopup() {
 
         {view === "bloodstrikeDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Blood Strike" />
+
               <div className="flex justify-end">
                 <div className="flex gap-2">
                   <button
@@ -2541,8 +2543,10 @@ export default function MonkeyTopup() {
 
         {view === "freefireDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Free Fire" />
+
               <div className="flex justify-center gap-2">
                 <button
                   onClick={() => setFfServer("global")}
@@ -2623,7 +2627,7 @@ export default function MonkeyTopup() {
         {/* ---------------- SOCIAL MEDIA (placeholder) ---------------- */}
         {view === "socialDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("shop")} />
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               <div className="text-white font-bold text-lg text-center mt-2">Social Media Top-up</div>
               <div className="grid grid-cols-3 gap-3">
@@ -2654,7 +2658,7 @@ export default function MonkeyTopup() {
 
         {view === "tiktokDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("socialDetail")} />
+            <TopBar title={APP_NAME} onBack={() => setView("socialDetail")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
               <div className="flex items-center gap-2 justify-center">
                 <img src={PKG_IMAGES.imgTiktokLogo} alt="" className="w-7 h-7 object-contain" />
@@ -2688,7 +2692,7 @@ export default function MonkeyTopup() {
 
         {view === "facebookDetail" && (
           <>
-            <TopBar title={APP_NAME} onBack={() => setView("socialDetail")} />
+            <TopBar title={APP_NAME} onBack={() => setView("socialDetail")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
               <div className="flex items-center gap-2 justify-center">
                 <img src={PKG_IMAGES.imgFacebookLogo} alt="" className="w-7 h-7 object-contain" />
