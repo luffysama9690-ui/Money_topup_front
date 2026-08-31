@@ -665,18 +665,41 @@ function TopBar({ title, onBack, onHome }) {
 }
 
 function DetailThumbnail({ label, image, images }) {
-  // A single `image` (e.g. a square logo like CapCut's) is letterboxed with
-  // `object-contain` so nothing gets cropped. Multiple `images` (banner
-  // artwork split side-by-side) use `object-cover` to fill each tile edge
-  // to edge, which looks right for photographic game art.
+  // Multiple `images` -> auto-rotating crossfade slideshow, same pattern as
+  // the shop home page banner (bannerSlide state + 4s interval + dots).
+  // A single `image` (e.g. a square logo like CapCut's) stays static and
+  // letterboxed with `object-contain` so nothing gets cropped.
+  const [slide, setSlide] = useState(0);
+  const count = images ? images.length : 0;
+
+  useEffect(() => {
+    if (count < 2) return;
+    const timer = setInterval(() => setSlide((s) => (s + 1) % count), 4000);
+    return () => clearInterval(timer);
+  }, [count]);
+
   if (images && images.length > 0) {
     return (
-      <div className="w-full aspect-[16/7] rounded-xl bg-black flex items-stretch justify-center overflow-hidden gap-px">
+      <div className="relative w-full aspect-[16/7] rounded-xl bg-black overflow-hidden">
         {images.map((src, i) => (
-          <div key={i} className="flex-1 overflow-hidden">
-            <img src={src} alt={`${label} ${i + 1}`} className="w-full h-full object-cover" />
-          </div>
+          <img
+            key={i}
+            src={src}
+            alt={`${label} ${i + 1}`}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+            style={{ opacity: slide === i ? 1 : 0 }}
+          />
         ))}
+        {images.length > 1 && (
+          <div className="absolute bottom-1.5 left-0 right-0 flex justify-center gap-1.5">
+            {images.map((_, i) => (
+              <span
+                key={i}
+                className={`h-1.5 rounded-full transition-all ${slide === i ? "w-4 bg-amber-300" : "w-1.5 bg-white/50"}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
