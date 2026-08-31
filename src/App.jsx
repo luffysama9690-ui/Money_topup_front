@@ -470,22 +470,25 @@ const RACING_LATAM = [
 ];
 
 // ---- Where Winds Meet ----
+// ✅ Full FazerCards catalog for Where Winds Meet (category_id:
+// where_winds_meet), 7% margin over FazerCards USD cost at 1 USD ≈ 4,193
+// MMK / 33.03 THB (2569-08-31 pricing, GET /api/v2/topups/offers).
 const WWM_ECHO = [
-  [60, 4500, 35, PKG_IMAGES.imgWwmPearl60],
-  [180, 13500, 106, PKG_IMAGES.imgWwmPearl180],
-  [300, 23500, 185, PKG_IMAGES.imgWwmPearl300],
-  [668, 48000, 377, PKG_IMAGES.imgWwmPearl668],
-  [1015, 74500, 585, PKG_IMAGES.imgWwmPearlBig],
-  [2068, 148500, 1166, PKG_IMAGES.imgWwmPearlBig],
-  [3458, 244500, 1921, PKG_IMAGES.imgWwmPearlBig],
-  [7200, 490000, 3850, PKG_IMAGES.imgWwmPearlBig],
-  [14400, 975000, 7659, PKG_IMAGES.imgWwmPearlBig],
+  [60, 4240, 33, PKG_IMAGES.imgWwmPearl60],
+  [180, 12205, 96, PKG_IMAGES.imgWwmPearl180],
+  [300, 20476, 161, PKG_IMAGES.imgWwmPearl300],
+  [600, 40953, 323, PKG_IMAGES.imgWwmPearl668],
+  [900, 61746, 486, PKG_IMAGES.imgWwmPearlBig],
+  [1800, 123581, 973, PKG_IMAGES.imgWwmPearlBig],
+  [3000, 204808, 1613, PKG_IMAGES.imgWwmPearlBig],
+  [6000, 413188, 3255, PKG_IMAGES.imgWwmPearlBig],
+  [12000, 825652, 6504, PKG_IMAGES.imgWwmPearlBig],
 ].map(([amt, mmk, thb, image]) => ({ id: "wwm" + amt, label: `Echo ${amt}`, mmk: [mmk], thb: [thb], image }));
 
 const WWM_PASSES = [
-  { id: "wwm-monthly", name: "Monthly Pass", mmk: [23500], thb: [185], image: PKG_IMAGES.imgWwmMonthly },
-  { id: "wwm-elite", name: "Elite Battle Pass", mmk: [45500], thb: [357], image: PKG_IMAGES.imgWwmElite },
-  { id: "wwm-premium", name: "Premium Battle Pass", mmk: [91500], thb: [719], image: PKG_IMAGES.imgWwmPremium },
+  { id: "wwm-monthly", name: "Monthly Pass", mmk: [20476], thb: [161], image: PKG_IMAGES.imgWwmMonthly },
+  { id: "wwm-elite", name: "Elite Battle Pass", mmk: [40953], thb: [323], image: PKG_IMAGES.imgWwmElite },
+  { id: "wwm-premium", name: "Premium Battle Pass", mmk: [81905], thb: [645], image: PKG_IMAGES.imgWwmPremium },
 ];
 
 // ---- Free Fire (two separate server regions with different pricing) ----
@@ -3092,10 +3095,15 @@ export default function MonkeyTopup() {
 
                   // Games that only need a single numeric ID (no Server/Zone
                   // ID) on FazerCards' side -- PUBG Mobile is Player ID
-                  // only, and Sausage Man is Character ID only.
-                  const singleIdGame = gName === "PUBG Mobile" || gName === "Sausage Man";
+                  // only, Sausage Man and Where Winds Meet are Character ID
+                  // only.
+                  const singleIdGame = gName === "PUBG Mobile" || gName === "Sausage Man" || gName === "Where Winds Meet";
                   const idPlaceholder =
-                    gName === "Sausage Man" ? "Character Id" : gName === "PUBG Mobile" ? "Player Id" : "Game Id";
+                    gName === "Sausage Man" || gName === "Where Winds Meet"
+                      ? "Character Id"
+                      : gName === "PUBG Mobile"
+                        ? "Player Id"
+                        : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
