@@ -365,6 +365,7 @@ const GAMES = [
   { id: "steam", name: "Steam", tag: "New!", grad: "from-slate-800 to-[#1b2838]", icon: "🎮", image: GAME_IMAGES.steam, imgFit: "contain" },
   { id: "social", name: "Social Media", tag: "New!", grad: "from-[#2196F3] to-[#0D47A1]", icon: "📱" },
   { id: "capcut", name: "CapCut", tag: "New!", grad: "from-violet-500 to-fuchsia-700", icon: "✂️", image: PKG_IMAGES.imgCapcutLogo, imgFit: "contain" },
+  { id: "telegram", name: "Telegram", tag: "New!", grad: "from-sky-500 to-blue-700", icon: "✈️" },
 ];
 
 // ---- Social Media: TikTok ----
@@ -529,6 +530,34 @@ const CAPCUT_PACKAGES = [
   { id: "cc-uk-pro", label: "1 Month (UK) Pro", mmk: [79546], thb: [627], image: PKG_IMAGES.imgCapcutLogo, imgFit: "contain" },
 ];
 
+// ---- Telegram Stars & Premium ----
+// FazerCards prices these dynamically (price-per-star / price-per-plan)
+// rather than as fixed catalog offers -- GET /api/v2/telegram/stars and
+// /api/v2/telegram/premium (2569-08-31). Fixed tiers below match the
+// standard Fragment-style star packages; 7% margin over FazerCards USD
+// cost at 1 USD ≈ 4,193 MMK / 33.03 THB. Recipient is a Telegram username,
+// not a numeric Game ID -- see the purchase modal's Telegram-specific field.
+const TELEGRAM_STARS = [
+  { id: "tg-star-50", label: "⭐ 50 Stars", mmk: [3449], thb: [27] },
+  { id: "tg-star-100", label: "⭐ 100 Stars", mmk: [6898], thb: [54] },
+  { id: "tg-star-200", label: "⭐ 200 Stars", mmk: [13796], thb: [109] },
+  { id: "tg-star-250", label: "⭐ 250 Stars", mmk: [17245], thb: [136] },
+  { id: "tg-star-500", label: "⭐ 500 Stars", mmk: [34490], thb: [272] },
+  { id: "tg-star-750", label: "⭐ 750 Stars", mmk: [51735], thb: [408] },
+  { id: "tg-star-1000", label: "⭐ 1000 Stars", mmk: [68980], thb: [543] },
+  { id: "tg-star-1500", label: "⭐ 1500 Stars", mmk: [103470], thb: [815] },
+  { id: "tg-star-2000", label: "⭐ 2000 Stars", mmk: [137960], thb: [1087] },
+  { id: "tg-star-3000", label: "⭐ 3000 Stars", mmk: [206940], thb: [1630] },
+  { id: "tg-star-5000", label: "⭐ 5000 Stars", mmk: [344900], thb: [2717] },
+  { id: "tg-star-10000", label: "⭐ 10000 Stars", mmk: [689801], thb: [5434] },
+];
+
+const TELEGRAM_PREMIUM = [
+  { id: "tg-prem-3", label: "🎁 Premium 3 Months", mmk: [55138], thb: [434] },
+  { id: "tg-prem-6", label: "🎁 Premium 6 Months", mmk: [73533], thb: [579] },
+  { id: "tg-prem-12", label: "🎁 Premium 12 Months", mmk: [133316], thb: [1050] },
+];
+
 // ---- Sausage Man ----
 // ✅ Full FazerCards catalog for Sausage Man (category_id: sausage_man),
 // 7% margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB
@@ -592,6 +621,21 @@ function verifyGameIdFormat(gameId) {
     setTimeout(() => {
       if (!gameId || gameId.length < 6 || !/^\d+$/.test(gameId)) {
         reject(new Error("Game ID ပုံစံ မှားနေပါသည်"));
+      } else {
+        resolve(true);
+      }
+    }, 700);
+  });
+}
+
+// Telegram usernames: 5-32 chars, letters/digits/underscores, must start
+// with a letter (Telegram's own username rules). The leading "@" (if the
+// customer types it) is stripped before this check runs.
+function verifyTelegramUsernameFormat(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (!username || !/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(username)) {
+        reject(new Error("Telegram username ပုံစံ မှားနေပါသည်"));
       } else {
         resolve(true);
       }
@@ -967,6 +1011,7 @@ export default function MonkeyTopup() {
   const [ffServer, setFfServer] = useState("global");
   const [rmServer, setRmServer] = useState("sea");
   const [mlServer, setMlServer] = useState("global");
+  const [telegramTab, setTelegramTab] = useState("stars");
   const [mcServer, setMcServer] = useState("global");
   const [server, setServer] = useState("Global");
   const [newStateServer, setNewStateServer] = useState("New State");
@@ -1212,6 +1257,18 @@ export default function MonkeyTopup() {
     setVerifyError("");
     setPlayerName("");
 
+    // Telegram Stars/Premium use a username, not a numeric Game ID.
+    if (selectedGameName(selectedPkg) === "Telegram") {
+      try {
+        await verifyTelegramUsernameFormat(gameId.replace(/^@/, ""));
+        setVerifyState("ok");
+      } catch (e) {
+        setVerifyState("error");
+        setVerifyError(e.message);
+      }
+      return;
+    }
+
     // Real nickname lookup is only wired up for Mobile Legends right now
     // (via the supplier bot's `.n` command). Other games fall back to a
     // format-only check until their lookups are set up.
@@ -1360,6 +1417,7 @@ export default function MonkeyTopup() {
     if (FF_GLOBAL_DIAMONDS.includes(pkg) || FF_GLOBAL_PASSES.includes(pkg) || FF_THAILAND_DIAMONDS.includes(pkg) || FF_THAILAND_PASSES.includes(pkg)) return "Free Fire";
     if (STEAM_PACKAGES.includes(pkg)) return "Steam";
     if (CAPCUT_PACKAGES.includes(pkg)) return "CapCut";
+    if (TELEGRAM_STARS.includes(pkg) || TELEGRAM_PREMIUM.includes(pkg)) return "Telegram";
     return "Unknown";
   }
 
@@ -1704,6 +1762,7 @@ export default function MonkeyTopup() {
                           if (g.id === "steam") setView("steamDetail");
                           if (g.id === "social") setView("socialDetail");
                           if (g.id === "capcut") setView("capcutDetail");
+                          if (g.id === "telegram") setView("telegramDetail");
                         }}
                         className={`rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left ${
                           isComingSoon ? "opacity-40 grayscale cursor-not-allowed" : ""
@@ -2639,6 +2698,54 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "telegramDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Telegram" />
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setTelegramTab("stars")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "stars" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                >
+                  ⭐ Stars
+                </button>
+                <button
+                  onClick={() => setTelegramTab("premium")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "premium" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                >
+                  🎁 Premium
+                </button>
+              </div>
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              {telegramTab === "stars" ? (
+                <PkgSection num="1" title="Stars" items={TELEGRAM_STARS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              ) : (
+                <PkgSection num="1" title="Premium" items={TELEGRAM_PREMIUM} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              )}
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
 
         {view === "bloodstrikeDetail" && (
           <>
@@ -2965,10 +3072,25 @@ export default function MonkeyTopup() {
                 <div className="font-bold text-slate-800">Account Info</div>
 
                 {(() => {
-                  // Games that only need a single ID (no Server/Zone ID) on
-                  // FazerCards' side -- PUBG Mobile is Player ID only, and
-                  // Sausage Man is Character ID only.
                   const gName = selectedGameName(selectedPkg);
+
+                  // Telegram Stars/Premium: a single Telegram username field
+                  // (letters allowed, no digit-only restriction) instead of
+                  // the numeric Game ID / Server ID pair every other game uses.
+                  if (gName === "Telegram") {
+                    return (
+                      <input
+                        value={gameId}
+                        onChange={(e) => { setGameId(e.target.value.replace(/[^A-Za-z0-9_@]/g, "")); setVerifyState("idle"); }}
+                        placeholder="@username"
+                        className="w-full border rounded-lg px-3 py-2 text-sm"
+                      />
+                    );
+                  }
+
+                  // Games that only need a single numeric ID (no Server/Zone
+                  // ID) on FazerCards' side -- PUBG Mobile is Player ID
+                  // only, and Sausage Man is Character ID only.
                   const singleIdGame = gName === "PUBG Mobile" || gName === "Sausage Man";
                   const idPlaceholder =
                     gName === "Sausage Man" ? "Character Id" : gName === "PUBG Mobile" ? "Player Id" : "Game Id";
