@@ -1609,8 +1609,8 @@ export default function MonkeyTopup() {
       <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative">
         <style>{`
           @keyframes marqueeScroll {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
           }
         `}</style>
         {/* ---------------- SHOP HOME ---------------- */}
@@ -1650,10 +1650,15 @@ export default function MonkeyTopup() {
 
               <div className="relative h-6 overflow-hidden rounded-full bg-[#241d47]/70">
                 <div
-                  className="absolute top-0 whitespace-nowrap text-amber-100 text-[11px] font-semibold leading-6"
+                  className="absolute top-0 flex whitespace-nowrap text-amber-100 text-[11px] font-semibold leading-6"
                   style={{ animation: "marqueeScroll 22s linear infinite" }}
                 >
-                  Monkey Topup နှင့်အတူ အစဉ်တစိုက် လက်တွဲလာခဲ့ကြသော လူကြီးမင်းတို့ တစ်ဦးချင်းစီတိုင်းကို Monkey Topup Team မှ ကျေးဇူးအထူးတင်ရှိရင်း မင်္ဂလာအပေါင်းနှင့် ပြည့်စုံပါစေကြောင်း ဆုမွန်ကောင်းတောင်းအပ်ပါသည်။🙏
+                  <span className="pr-16">
+                    Monkey Topup နှင့်အတူ အစဉ်တစိုက် လက်တွဲလာခဲ့ကြသော လူကြီးမင်းတို့ တစ်ဦးချင်းစီတိုင်းကို Monkey Topup Team မှ ကျေးဇူးအထူးတင်ရှိရင်း မင်္ဂလာအပေါင်းနှင့် ပြည့်စုံပါစေကြောင်း ဆုမွန်ကောင်းတောင်းအပ်ပါသည်။🙏
+                  </span>
+                  <span className="pr-16" aria-hidden="true">
+                    Monkey Topup နှင့်အတူ အစဉ်တစိုက် လက်တွဲလာခဲ့ကြသော လူကြီးမင်းတို့ တစ်ဦးချင်းစီတိုင်းကို Monkey Topup Team မှ ကျေးဇူးအထူးတင်ရှိရင်း မင်္ဂလာအပေါင်းနှင့် ပြည့်စုံပါစေကြောင်း ဆုမွန်ကောင်းတောင်းအပ်ပါသည်။🙏
+                  </span>
                 </div>
               </div>
 
