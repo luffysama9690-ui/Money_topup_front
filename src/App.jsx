@@ -505,14 +505,20 @@ const FF_GLOBAL_PASSES = [
   { id: "ffg-monthlymem", name: "Global Monthly Membership", mmk: [44700], thb: [352], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
 ];
 
+// ✅ Full FazerCards catalog for Free Fire (Thailand) (category_id:
+// free_fire_th), 7% margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK /
+// 33.03 THB (2569-08-31 pricing, GET /api/v2/topups/offers). Single
+// "Player ID" field -- no server ID needed.
 const FF_THAILAND_DIAMONDS = [
-  [33, 1700, 13], [68, 3000, 24], [172, 7600, 60], [310, 13500, 106],
-  [517, 22600, 178], [690, 29200, 230], [1052, 43800, 345], [1801, 72900, 574],
+  [33, 1311, 10], [68, 2622, 21], [172, 6554, 52], [310, 11798, 93],
+  [517, 19663, 155], [690, 26262, 207], [1052, 39370, 310], [1801, 65633, 517],
+  [3698, 131220, 1034],
 ].map(([amt, mmk, thb]) => ({ id: "fft" + amt, label: `Thailand ${amt} Diamonds`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" }));
 
 const FF_THAILAND_PASSES = [
-  { id: "fft-growth", name: "Thailand Growth Pack", mmk: [11700], thb: [92], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
-  { id: "fft-monthlyvalue", name: "Thailand Monthly Value Pack", mmk: [44000], thb: [346], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "fft-weeklymini", name: "Thailand Weekly Mini Pack", mmk: [4339], thb: [34], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "fft-weekly", name: "Thailand Weekly Pack", mmk: [9176], thb: [72], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
+  { id: "fft-monthly", name: "Thailand Monthly Pack", mmk: [39235], thb: [309], image: PKG_IMAGES.imgFreeFireAll, imgFit: "contain" },
 ];
 
 // ---- Steam Wallet ----
@@ -579,18 +585,37 @@ const SAUSAGE_PACKAGES = [
 ];
 
 // ---- Blood Strike ----
+// ✅ Full FazerCards catalog for Blood Strike (category_id: blood_strike,
+// Region: Global), 7% margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK
+// / 33.03 THB (2569-08-31 pricing, GET /api/v2/topups/offers). Single
+// "Player ID" field -- no server ID needed.
 const BLOODSTRIKE_PACKAGES = [
-  { id: "bs105", label: "105 Gold", mmk: [4000], thb: [31], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs320", label: "320 Gold", mmk: [11100], thb: [87], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs540", label: "540 Gold", mmk: [18400], thb: [145], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs1100", label: "1100 Gold", mmk: [36800], thb: [290], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs2260", label: "2260 Gold", mmk: [69500], thb: [547], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs2486", label: "2486 Gold", mmk: [80400], thb: [633], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs5800", label: "5800 Gold", mmk: [173200], thb: [1364], image: PKG_IMAGES.imgGoldBar },
-  { id: "bs6380", label: "6380 Gold", mmk: [201000], thb: [1583], image: PKG_IMAGES.imgGoldBar },
-  { id: "bsluckybag", label: "Lucky Bag Week", mmk: [4100], thb: [32], image: PKG_IMAGES.imgLuckyBagWeek },
-  { id: "bslevelup", label: "Level-Up Pass", mmk: [9500], thb: [75], image: PKG_IMAGES.imgLevelUpPass },
-  { id: "bsultra", label: "Ultra Skin Lucky Chest", mmk: [2100], thb: [17], image: PKG_IMAGES.imgUltraLuckyChest },
+  { id: "bs51", label: "51 BC", mmk: [1873], thb: [15], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs105", label: "105 BC", mmk: [3386], thb: [27], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs320", label: "320 BC", mmk: [10125], thb: [80], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs540", label: "540 BC", mmk: [16860], thb: [133], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs1100", label: "1100 BC", mmk: [33721], thb: [266], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs2260", label: "2260 BC", mmk: [67124], thb: [529], image: PKG_IMAGES.imgGoldBar },
+  { id: "bs5800", label: "5800 BC", mmk: [167246], thb: [1317], image: PKG_IMAGES.imgGoldBar },
+  { id: "bsdeal049", label: "0.49 DEAL", mmk: [1844], thb: [15] },
+  { id: "bsdeal099", label: "0.99 DEAL", mmk: [3674], thb: [29] },
+  { id: "bsdeal199", label: "1.99 DEAL", mmk: [7377], thb: [58] },
+  { id: "bsdeal299", label: "2.99 DEAL", mmk: [11066], thb: [87] },
+  { id: "bsdeal399", label: "3.99 DEAL", mmk: [14799], thb: [117] },
+  { id: "bsdeal499", label: "4.99 DEAL", mmk: [18488], thb: [146] },
+  { id: "bsdeal599", label: "5.99 DEAL", mmk: [22131], thb: [174] },
+  { id: "bsdeal699", label: "6.99 DEAL", mmk: [25819], thb: [203] },
+  { id: "bsdeal799", label: "7.99 DEAL", mmk: [29508], thb: [232] },
+  { id: "bsdeal899", label: "8.99 DEAL", mmk: [33241], thb: [262] },
+  { id: "bsdeal999", label: "9.99 DEAL", mmk: [36930], thb: [291] },
+  { id: "bsultra", label: "Ultra Skin Lucky Chest", mmk: [1837], thb: [14], image: PKG_IMAGES.imgUltraLuckyChest },
+  { id: "bsseason", label: "Season Pass", mmk: [3494], thb: [28] },
+  { id: "bsluckybag", label: "Lucky Bag Week", mmk: [3674], thb: [29], image: PKG_IMAGES.imgLuckyBagWeek },
+  { id: "bslevelup", label: "Level Up Pass", mmk: [7348], thb: [58], image: PKG_IMAGES.imgLevelUpPass },
+  { id: "bscornucopia", label: "Enable Cornucopia", mmk: [7377], thb: [58] },
+  { id: "bselite", label: "Strike Pass Elite", mmk: [14695], thb: [116] },
+  { id: "bspremium", label: "Strike Pass Premium", mmk: [33064], thb: [260] },
+  { id: "bspreorder", label: "Bloodstrike Pre-order Item", mmk: [6987], thb: [55] },
 ];
 
 const SERVERS = ["Myanmar", "Global", "Malaysia", "Singapore", "Philippine", "Indonesia", "Russia"];
@@ -2775,8 +2800,9 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Gold" items={BLOODSTRIKE_PACKAGES.filter((it) => /Gold$/i.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Special Items" items={BLOODSTRIKE_PACKAGES.filter((it) => !/Gold$/i.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="BC" items={BLOODSTRIKE_PACKAGES.filter((it) => /BC$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Special Deals" items={BLOODSTRIKE_PACKAGES.filter((it) => /DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="3" title="Special Items" items={BLOODSTRIKE_PACKAGES.filter((it) => !/BC$|DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3095,13 +3121,18 @@ export default function MonkeyTopup() {
 
                   // Games that only need a single numeric ID (no Server/Zone
                   // ID) on FazerCards' side -- PUBG Mobile is Player ID
-                  // only, Sausage Man and Where Winds Meet are Character ID
-                  // only.
-                  const singleIdGame = gName === "PUBG Mobile" || gName === "Sausage Man" || gName === "Where Winds Meet";
+                  // only, Sausage Man/Where Winds Meet/Blood Strike are
+                  // Character/Player ID only.
+                  const singleIdGame =
+                    gName === "PUBG Mobile" ||
+                    gName === "Sausage Man" ||
+                    gName === "Where Winds Meet" ||
+                    gName === "Blood Strike" ||
+                    gName === "Free Fire";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire"
                         ? "Player Id"
                         : "Game Id";
                   return (
