@@ -732,7 +732,7 @@ function DetailThumbnail({ label, image, images }) {
             key={i}
             src={src}
             alt={`${label} ${i + 1}`}
-            className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
             style={{ opacity: slide === i ? 1 : 0 }}
           />
         ))}
