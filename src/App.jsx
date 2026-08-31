@@ -119,7 +119,7 @@ const PKG_IMAGES = {
 
 const ML_PASSES_GLOBAL = [
   { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3429], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg14", label: "Global Weekly Pass", mmk: [6604], thb: [52], resellerPrice: { mmk: [6350], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg14", label: "Global Weekly Pass", mmk: [6500], thb: [52], resellerPrice: { mmk: [6350], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [16764], thb: [132], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg29", label: "Global Twilight Pass", mmk: [34290], thb: [270], image: PKG_IMAGES.imgDiamondTier1 },
 ];
