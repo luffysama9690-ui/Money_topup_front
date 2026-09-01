@@ -3386,6 +3386,9 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
               )}
               <div className="p-2">
                 <div className="text-[11px] font-bold leading-tight mb-1">{label}</div>
+                {priceVal < rawPrice && (
+                  <div className="text-[10px] text-rose-500 line-through leading-none">{fmt(rawPrice)} {currencyLabel}</div>
+                )}
                 <div className="text-sm font-bold text-amber-500">{fmt(priceVal)} {currencyLabel}</div>
               </div>
             </button>
