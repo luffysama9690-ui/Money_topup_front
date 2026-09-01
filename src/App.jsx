@@ -365,6 +365,7 @@ const GAMES = [
   { id: "steam", name: "Steam", tag: "New!", grad: "from-slate-800 to-[#1b2838]", icon: "🎮", image: GAME_IMAGES.steam, imgFit: "contain" },
   { id: "capcut", name: "CapCut", tag: "New!", grad: "from-violet-500 to-fuchsia-700", icon: "✂️", image: PKG_IMAGES.imgCapcutLogo, imgFit: "contain" },
   { id: "telegram", name: "Telegram", tag: "New!", grad: "from-sky-500 to-blue-700", icon: "✈️", image: PKG_IMAGES.imgTelegramLogo, imgFit: "contain" },
+  { id: "hok", name: "Honor of Kings", tag: "New!", grad: "from-yellow-600 to-red-800", icon: "👑" },
 ];
 
 // ---- PUBG New State ----
@@ -529,6 +530,33 @@ const TELEGRAM_PREMIUM = [
   { id: "tg-prem-12", label: "🎁 Premium 12 Months", mmk: [133300], thb: [1050], image: PKG_IMAGES.imgTelegramPremium, imgFit: "contain" },
 ];
 
+// ---- Honor of Kings ----
+// ✅ Full FazerCards catalog (category_id: honor_of_kings), 7% margin over
+// FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB (2569-09-02
+// pricing, GET /api/v2/topups/offers?category_id=honor_of_kings). MMK
+// rounded to the nearest 100. Single "Player ID" field -- no server ID.
+const HOK_TOKENS = [
+  { id: "hok16", label: "16 Tokens", mmk: [800], thb: [6] },
+  { id: "hok80", label: "80 Tokens", mmk: [3800], thb: [30] },
+  { id: "hok240", label: "240 Tokens", mmk: [11300], thb: [89] },
+  { id: "hok400", label: "400 Tokens", mmk: [18900], thb: [149] },
+  { id: "hok560", label: "560 Tokens", mmk: [26500], thb: [209] },
+  { id: "hok830", label: "830 Tokens", mmk: [37900], thb: [298] },
+  { id: "hok1245", label: "1245 Tokens", mmk: [56800], thb: [448] },
+  { id: "hok2508", label: "2508 Tokens", mmk: [113700], thb: [896] },
+  { id: "hok4180", label: "4180 Tokens", mmk: [189500], thb: [1493] },
+  { id: "hok8360", label: "8360 Tokens", mmk: [379000], thb: [2985] },
+];
+
+const HOK_SPECIAL = [
+  { id: "hok-doubletoken", label: "Double Token Lucky Bag", mmk: [1200], thb: [9] },
+  { id: "hok-honorpoint", label: "Honor Point Value Pack", mmk: [1200], thb: [9] },
+  { id: "hok-standardrebate", label: "Standard Purchase Rebate Pack", mmk: [1500], thb: [12] },
+  { id: "hok-weekly", label: "Weekly Card", mmk: [4300], thb: [34] },
+  { id: "hok-premiumrebate", label: "Premium Purchase Rebate Pack", mmk: [5300], thb: [42] },
+  { id: "hok-weeklyplus", label: "Weekly Card Plus", mmk: [12700], thb: [100] },
+];
+
 // ---- Sausage Man ----
 // ✅ Full FazerCards catalog for Sausage Man (category_id: sausage_man),
 // 7% margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB
@@ -626,6 +654,21 @@ function verifyTelegramUsernameFormat(username) {
     setTimeout(() => {
       if (!username || !/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(username)) {
         reject(new Error("Telegram username ပုံစံ မှားနေပါသည်"));
+      } else {
+        resolve(true);
+      }
+    }, 700);
+  });
+}
+
+// Steam account logins: 3-32 chars, letters/digits/underscores (Steam's
+// own username rules are looser than this, but this catches obvious typos
+// like an empty or single-character entry without being overly strict).
+function verifySteamLoginFormat(login) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (!login || !/^[A-Za-z0-9_]{3,32}$/.test(login)) {
+        reject(new Error("Steam Login ပုံစံ မှားနေပါသည်"));
       } else {
         resolve(true);
       }
@@ -1265,6 +1308,19 @@ export default function MonkeyTopup() {
       return;
     }
 
+    // Steam wallet top-up needs the account login (username), not a
+    // numeric Game ID either.
+    if (selectedGameName(selectedPkg) === "Steam") {
+      try {
+        await verifySteamLoginFormat(gameId);
+        setVerifyState("ok");
+      } catch (e) {
+        setVerifyState("error");
+        setVerifyError(e.message);
+      }
+      return;
+    }
+
     // Real nickname lookup is only wired up for Mobile Legends right now
     // (via the supplier bot's `.n` command). Other games fall back to a
     // format-only check until their lookups are set up.
@@ -1354,6 +1410,7 @@ export default function MonkeyTopup() {
     if (STEAM_PACKAGES.includes(pkg)) return "Steam";
     if (CAPCUT_PACKAGES.includes(pkg)) return "CapCut";
     if (TELEGRAM_STARS.includes(pkg) || TELEGRAM_PREMIUM.includes(pkg)) return "Telegram";
+    if (HOK_TOKENS.includes(pkg) || HOK_SPECIAL.includes(pkg)) return "Honor of Kings";
     return "Unknown";
   }
 
@@ -1718,6 +1775,7 @@ export default function MonkeyTopup() {
                           if (g.id === "steam") setView("steamDetail");
                           if (g.id === "capcut") setView("capcutDetail");
                           if (g.id === "telegram") setView("telegramDetail");
+                          if (g.id === "hok") setView("hokDetail");
                         }}
                         className={`rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left ${
                           isComingSoon ? "opacity-40 grayscale cursor-not-allowed" : ""
@@ -2709,6 +2767,36 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "hokDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Honor of Kings" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Tokens" items={HOK_TOKENS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="2" title="Special Items" items={HOK_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
 
         {view === "bloodstrikeDetail" && (
           <>
@@ -2871,12 +2959,15 @@ export default function MonkeyTopup() {
                   // Telegram Stars/Premium: a single Telegram username field
                   // (letters allowed, no digit-only restriction) instead of
                   // the numeric Game ID / Server ID pair every other game uses.
-                  if (gName === "Telegram") {
+                  // Steam wallet top-up is the same shape -- FazerCards
+                  // needs the Steam account *login* (username), not a
+                  // numeric id.
+                  if (gName === "Telegram" || gName === "Steam") {
                     return (
                       <input
                         value={gameId}
                         onChange={(e) => { setGameId(e.target.value.replace(/[^A-Za-z0-9_@]/g, "")); setVerifyState("idle"); }}
-                        placeholder="@username"
+                        placeholder={gName === "Steam" ? "Steam Login (username)" : "@username"}
                         className="w-full border rounded-lg px-3 py-2 text-sm"
                       />
                     );
@@ -2891,11 +2982,12 @@ export default function MonkeyTopup() {
                     gName === "Sausage Man" ||
                     gName === "Where Winds Meet" ||
                     gName === "Blood Strike" ||
-                    gName === "Free Fire";
+                    gName === "Free Fire" ||
+                    gName === "Honor of Kings";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings"
                         ? "Player Id"
                         : "Game Id";
                   return (
