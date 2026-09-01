@@ -1105,6 +1105,7 @@ export default function MonkeyTopup() {
   const [respinTargetId, setRespinTargetId] = useState("");
   const [respinSaving, setRespinSaving] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
+  const [activeUserCount, setActiveUserCount] = useState(null);
   const [usersLoading, setUsersLoading] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
@@ -1185,6 +1186,19 @@ export default function MonkeyTopup() {
     return () => {
       cancelled = true;
     };
+  }, [telegramId]);
+
+  // Heartbeat: re-fetch the user record every 60s while the app stays
+  // open, purely to keep last_active_at fresh on the backend (see
+  // routes/users.js) so the admin panel's "active now" count reflects
+  // people who genuinely still have the app open, not just whoever loaded
+  // it once and left the tab open. Ignores the response beyond that.
+  useEffect(() => {
+    if (!telegramId) return;
+    const timer = setInterval(() => {
+      api.getUser(telegramId).catch(() => {});
+    }, 60000);
+    return () => clearInterval(timer);
   }, [telegramId]);
 
   function formatOrderDate(d) {
@@ -1632,6 +1646,26 @@ export default function MonkeyTopup() {
       setUsersLoading(false);
     }
   }
+
+  // Active-now count for the Admin Panel: fetched immediately whenever the
+  // panel is open, then refreshed every 15s so it stays live without the
+  // admin needing to manually refresh.
+  useEffect(() => {
+    if (!(view === "admin" && isAdmin)) return;
+    let cancelled = false;
+    function poll() {
+      api
+        .getActiveUsers(telegramId, 5)
+        .then((r) => { if (!cancelled) setActiveUserCount(r.count); })
+        .catch(() => {});
+    }
+    poll();
+    const timer = setInterval(poll, 15000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [view, isAdmin, telegramId]);
 
 
   async function loadSpinStatus() {
@@ -2127,6 +2161,14 @@ export default function MonkeyTopup() {
           <>
             <TopBar title="Admin Panel" onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-5">
+              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 shadow text-white flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-semibold opacity-90">🟢 လက်ရှိ Active Users (last 5 min)</div>
+                  <div className="text-3xl font-extrabold mt-1">{activeUserCount === null ? "…" : activeUserCount}</div>
+                </div>
+                <div className="text-[10px] opacity-80 text-right">15 sec တိုင်း<br />auto-refresh</div>
+              </div>
+
               <div className="bg-white rounded-xl p-3 shadow space-y-2">
                 <div className="flex justify-between items-center">
                   <h2 className="font-bold text-slate-800">👥 User အားလုံး Balance</h2>

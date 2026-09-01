@@ -67,6 +67,8 @@ export const api = {
     }),
   // Lists every user's balance — admin-only.
   getAllUsers: (telegramId) => request(`/admin/users?telegramId=${telegramId}`),
+  // Real-time "active now" count (last N minutes, default 5) — admin-only.
+  getActiveUsers: (telegramId, minutes = 5) => request(`/admin/active-users?telegramId=${telegramId}&minutes=${minutes}`),
   // Clears targetTelegramId's spin cooldown so they can spin again right away.
   resetSpin: (telegramId, targetTelegramId) =>
     request(`/admin/reset-spin`, {
