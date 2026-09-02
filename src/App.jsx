@@ -1527,18 +1527,19 @@ export default function MonkeyTopup() {
     }
   }
   async function handleSetReseller(isReseller) {
-    const targetId = resellerTargetId.trim();
-    if (!targetId || resellerSaving) return;
+    const target = resellerTargetId.trim();
+    if (!target || resellerSaving) return;
     setResellerSaving(true);
     try {
-      await api.setReseller(telegramId, targetId, isReseller);
+      const result = await api.setReseller(telegramId, target, isReseller);
+      const label = result?.user?.username ? `@${result.user.username}` : target;
       showToast({
         type: "ok",
-        msg: isReseller ? `Telegram ID ${targetId} ကို Reseller ဖြစ်စေပြီးပါပြီ` : `Telegram ID ${targetId} ရဲ့ Reseller status ကို ဖြုတ်လိုက်ပါပြီ`,
+        msg: isReseller ? `${label} ကို Reseller ဖြစ်စေပြီးပါပြီ` : `${label} ရဲ့ Reseller status ကို ဖြုတ်လိုက်ပါပြီ`,
       });
       setResellerTargetId("");
     } catch (err) {
-      showToast({ type: "error", msg: err.message === "User not found — they need to have opened the app at least once" ? "ဒီ Telegram ID က app ကို တစ်ခါမှ မဖွင့်ဖူးသေးပါ" : "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
+      showToast({ type: "error", msg: /not found/i.test(err.message || "") ? "ဒီ Telegram Name ကို ရှာမတွေ့ပါ — စာလုံးပေါင်း စစ်ကြည့်ပါ (သို့) app ကို အရင်တစ်ခါဖွင့်ရမယ်" : "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
     } finally {
       setResellerSaving(false);
     }
@@ -2180,10 +2181,9 @@ export default function MonkeyTopup() {
                 </p>
                 <input
                   type="text"
-                  inputMode="numeric"
                   value={resellerTargetId}
                   onChange={(e) => setResellerTargetId(e.target.value)}
-                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  placeholder="User ရဲ့ Telegram Name (username) ထည့်ပါ"
                   className="w-full border rounded-lg p-2 text-sm"
                 />
                 <div className="flex gap-2">
