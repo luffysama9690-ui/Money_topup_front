@@ -132,16 +132,12 @@ const ML_BONUS_GLOBAL = [
 ];
 
 const ML_DIAMONDS_GLOBAL = [
-  { id: "mlg1", label: "Global 5 Diamonds", mmk: [400], thb: [3], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg2", label: "Global 11 Diamonds", mmk: [900], thb: [7], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg3", label: "Global 12 Diamonds", mmk: [1000], thb: [8], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg4", label: "Global 14 Diamonds", mmk: [1000], thb: [8], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg5", label: "Global 19 Diamonds", mmk: [1500], thb: [12], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg6", label: "Global 22 Diamonds", mmk: [1900], thb: [15], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg7", label: "Global 28 Diamonds", mmk: [2300], thb: [18], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg8", label: "Global 42 Diamonds", mmk: [3200], thb: [25], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg11", label: "Global 56 Diamonds", mmk: [4800], thb: [38], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg12", label: "Global 70 Diamonds", mmk: [5200], thb: [41], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg13", label: "Global 86 Diamonds", mmk: [5200], thb: [41], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg15", label: "Global 112 Diamonds", mmk: [9500], thb: [75], image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg17", label: "Global 140 Diamonds", mmk: [10400], thb: [82], image: PKG_IMAGES.imgDiamondTier1 },
