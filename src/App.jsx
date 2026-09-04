@@ -1069,6 +1069,127 @@ function AuthScreen({ onAuthSuccess }) {
   );
 }
 
+// ---------- Marketing site chrome (desktop/website visitors only) ----------
+// Wraps the exact same app (unchanged) in a proper website shell -- header,
+// hero, feature pitch, footer -- so a visitor who opens the Vercel URL in a
+// plain browser (not the Telegram Mini App) gets an actual website instead
+// of the bare phone-width app floating on grey. Telegram Mini App users
+// never see this (see the isTelegramContext() branch in MonkeyTopup below).
+function MarketingSite({ children }) {
+  const pillars = [
+    {
+      title: "စျေးအသက်သာဆုံး",
+      body: "Market ထဲက တခြားနေရာတွေထက် Diamond/UC ဈေးနှုန်း အသက်သာဆုံးဖြစ်အောင် ထားရှိပါတယ်။",
+    },
+    {
+      title: "Reseller အထူးစျေးနှုန်း",
+      body: "Reseller အဖြစ် လျှောက်ထားလိုက်ရင် app ထဲက item အားလုံးအတွက် ထပ်ပိုသက်သာတဲ့ စျေးနှုန်းနဲ့ ဝယ်ယူနိုင်ပါတယ်။",
+    },
+    {
+      title: "24/7 Auto Delivery",
+      body: "Admin စောင့်ရန် မလိုအပ်ဘဲ ည/နေ့ မရွေး Order တင်တာနဲ့ စက္ကန့်ပိုင်းအတွင်း ရောက်ရှိပါမယ်။",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen w-full bg-[#0d0a1f] font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
+        .mt-display { font-family: 'Sora', sans-serif; }
+        @keyframes mtMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      `}</style>
+
+      {/* Header */}
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0d0a1f]/90 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <span className="mt-display text-lg font-bold text-white">🐒 {APP_NAME}</span>
+          <a
+            href="#app"
+            className="text-sm font-semibold text-[#ff3d9a] hover:text-white transition"
+          >
+            App ကို ဖွင့်မည် ↓
+          </a>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="max-w-6xl mx-auto px-6 pt-16 pb-20 grid md:grid-cols-2 gap-14 items-center">
+        <div>
+          <h1 className="mt-display text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+            ဂိမ်း Diamond တွေကို
+            <br />
+            <span className="text-[#ff3d9a]">24/7</span> ချက်ချင်းဖြည့်ပေးတဲ့
+            <br />
+            Monkey Topup
+          </h1>
+          <p className="mt-5 text-[#b7aee0] text-base leading-relaxed max-w-md">
+            Mobile Legends, PUBG, Free Fire အစရှိတဲ့ ဂိမ်းတွေအတွက် Diamond/UC ကို market ထဲမှာ
+            အသက်သာဆုံးဈေးနဲ့ စက္ကန့်ပိုင်းအတွင်း ဝယ်ယူနိုင်ပါတယ်။
+          </p>
+          <a
+            href="#app"
+            className="inline-block mt-8 bg-[#ff3d9a] text-white font-bold px-7 py-3 rounded-full shadow-lg shadow-[#ff3d9a]/20 hover:brightness-110 transition"
+          >
+            အခုပဲ စတင်ဝယ်ယူမယ်
+          </a>
+          <div className="mt-10 flex gap-8 text-sm">
+            <div>
+              <div className="mt-display text-2xl font-bold text-white">10,000+</div>
+              <div className="text-[#8f88ad]">Order ပြီးမြောက်ပြီး</div>
+            </div>
+            <div>
+              <div className="mt-display text-2xl font-bold text-white">24/7</div>
+              <div className="text-[#8f88ad]">Auto Delivery</div>
+            </div>
+            <div>
+              <div className="mt-display text-2xl font-bold text-white">2-5 မိနစ်</div>
+              <div className="text-[#8f88ad]">ပျမ်းမျှ ပို့ချိန်</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Live app, framed like a phone -- doubles as the hero visual */}
+        <div id="app" className="flex justify-center md:justify-end scroll-mt-24">
+          <div className="rounded-[2.5rem] border-8 border-[#1b1638] shadow-2xl shadow-black/50 overflow-hidden">
+            {children}
+          </div>
+        </div>
+      </section>
+
+      {/* Game logo marquee */}
+      <section className="border-y border-white/10 bg-[#120f24] py-5 overflow-hidden">
+        <div className="flex gap-10 whitespace-nowrap" style={{ animation: "mtMarquee 28s linear infinite", width: "max-content" }}>
+          {[...GAMES, ...GAMES].map((g, i) => (
+            <span key={i} className="text-[#8f88ad] text-sm font-medium flex items-center gap-2">
+              <span className="text-lg">{g.icon}</span> {g.name}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Pillars */}
+      <section className="max-w-4xl mx-auto px-6 py-20">
+        <div className="divide-y divide-white/10">
+          {pillars.map((p) => (
+            <div key={p.title} className="py-7 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8">
+              <h3 className="mt-display text-white font-bold text-lg sm:w-56 shrink-0">{p.title}</h3>
+              <p className="text-[#b7aee0] leading-relaxed">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-[#0a0818] py-8">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-3 text-sm text-[#6f6790]">
+          <span>🐒 {APP_NAME} — Telegram Mini App ကနေ တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
+          <span>ပြဿနာရှိရင် app ထဲက "Contact to Admin" ကနေ ဆက်သွယ်ပါ</span>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
 // ---------- Main App ----------
 export default function MonkeyTopup() {
   const [telegramId, setTelegramId] = useState(getTelegramId());
@@ -1804,16 +1925,15 @@ export default function MonkeyTopup() {
     );
   }
 
-  return (
-    <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
-      <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative">
-        <style>{`
+  const appShell = (
+    <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative">
+      <style>{`
           @keyframes marqueeScroll {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
           }
         `}</style>
-        {/* ---------------- SHOP HOME ---------------- */}
+      {/* ---------------- SHOP HOME ---------------- */}
         {view === "shop" && (
           <>
             <TopBar title={APP_NAME} />
@@ -3392,15 +3512,24 @@ export default function MonkeyTopup() {
         )}
 
 
-        {/* ---------------- TOAST ---------------- */}
-        {toast && (
-          <div className="fixed top-28 left-1/2 -translate-x-1/2 z-50 bg-[#3f3272] text-white text-base font-semibold px-5 py-3 rounded-full shadow-lg max-w-[90%] text-center">
-            {toast.msg}
-          </div>
-        )}
-      </div>
+      {/* ---------------- TOAST ---------------- */}
+      {toast && (
+        <div className="fixed top-28 left-1/2 -translate-x-1/2 z-50 bg-[#3f3272] text-white text-base font-semibold px-5 py-3 rounded-full shadow-lg max-w-[90%] text-center">
+          {toast.msg}
+        </div>
+      )}
     </div>
   );
+
+  if (isTelegramContext()) {
+    return (
+      <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
+        {appShell}
+      </div>
+    );
+  }
+
+  return <MarketingSite>{appShell}</MarketingSite>;
 }
 
 const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|BR|Thailand)\s+/;
