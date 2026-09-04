@@ -58,6 +58,12 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ telegramId, targetTelegramId, isReseller }),
     }),
+  // Blocks/unblocks targetTelegramId from placing new orders or deposits.
+  setBanned: (telegramId, targetTelegramId, isBanned, reason) =>
+    request(`/admin/set-banned`, {
+      method: "POST",
+      body: JSON.stringify({ telegramId, targetTelegramId, isBanned, reason }),
+    }),
   // Manually adjusts a user's balance by `amount` (positive to add, negative
   // to deduct). Used to fix mistakes like an incorrectly-approved deposit.
   adjustBalance: (telegramId, targetTelegramId, currency, amount, reason) =>

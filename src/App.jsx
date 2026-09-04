@@ -1113,6 +1113,11 @@ export default function MonkeyTopup() {
   const [resellerDiscountPercent, setResellerDiscountPercent] = useState(0);
   const [resellerTargetId, setResellerTargetId] = useState("");
   const [resellerSaving, setResellerSaving] = useState(false);
+  const [isBanned, setIsBanned] = useState(false);
+  const [bannedReason, setBannedReason] = useState("");
+  const [banTargetId, setBanTargetId] = useState("");
+  const [banReason, setBanReason] = useState("");
+  const [banSaving, setBanSaving] = useState(false);
   const [adjustTargetId, setAdjustTargetId] = useState("");
   const [adjustAmount, setAdjustAmount] = useState("");
   const [adjustCurrency, setAdjustCurrency] = useState("mmk");
@@ -1169,7 +1174,17 @@ export default function MonkeyTopup() {
         setBalance(Number(user.balance_mmk));
         setBalanceThb(Number(user.balance_thb || 0));
         setResellerDiscountPercent(user.is_reseller ? RESELLER_DISCOUNT_PERCENT : 0);
+        setIsBanned(!!user.is_banned);
+        setBannedReason(user.banned_reason || "");
         setLoadError("");
+
+        // Banned accounts don't need orders/deposits/messages — the app
+        // shows a full "account suspended" screen instead of the shop (see
+        // the isBanned gate below), so skip the rest of the fetch.
+        if (user.is_banned) {
+          setLoading(false);
+          return;
+        }
 
         const [orderRows, depositRows, messageRows, unread] = await Promise.all([
           api.getOrders(telegramId),
@@ -1567,6 +1582,25 @@ export default function MonkeyTopup() {
       setResellerSaving(false);
     }
   }
+  async function handleSetBanned(banned) {
+    const target = banTargetId.trim();
+    if (!target || banSaving) return;
+    setBanSaving(true);
+    try {
+      const result = await api.setBanned(telegramId, target, banned, banReason.trim());
+      const label = result?.user?.username ? `@${result.user.username}` : target;
+      showToast({
+        type: "ok",
+        msg: banned ? `${label} ကို Ban လုပ်ပြီးပါပြီ` : `${label} ရဲ့ Ban ကို ဖြုတ်လိုက်ပါပြီ`,
+      });
+      setBanTargetId("");
+      setBanReason("");
+    } catch (err) {
+      showToast({ type: "error", msg: /not found/i.test(err.message || "") ? "ဒီ Telegram Name ကို ရှာမတွေ့ပါ — စာလုံးပေါင်း စစ်ကြည့်ပါ (သို့) app ကို အရင်တစ်ခါဖွင့်ရမယ်" : "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
+    } finally {
+      setBanSaving(false);
+    }
+  }
   async function handleAdjustBalance() {
     const targetId = adjustTargetId.trim();
     const amt = Number(adjustAmount);
@@ -1694,6 +1728,30 @@ export default function MonkeyTopup() {
           setTelegramUser({ firstName: user.username || user.email.split("@")[0], lastName: "", username: user.email, photoUrl: "" });
         }}
       />
+    );
+  }
+
+  // Banned customers see this instead of the shop -- they can still open
+  // the app (so the message is visible), but every other screen/action is
+  // blocked. Enforcement itself lives on the backend (routes/orders.js,
+  // routes/deposits.js reject with account_banned); this is just the UI.
+  if (isBanned) {
+    return (
+      <div className="min-h-screen w-full bg-slate-100 flex justify-center font-sans">
+        <div className="w-full max-w-sm min-h-screen flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] px-6 text-center">
+          <div className="text-6xl">🚫</div>
+          <h1 className="text-xl font-bold text-white">Account ဆိုင်းငံ့ထားပါသည်</h1>
+          <p className="text-sm text-slate-300">
+            သင့် account ကို admin မှ ယာယီ ဆိုင်းငံ့ထားပါသည်။ Order/Deposit အသစ် လုပ်ဆောင်လို့ မရတော့ပါ။
+          </p>
+          {bannedReason && (
+            <p className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white">
+              အကြောင်းရင်း: {bannedReason}
+            </p>
+          )}
+          <p className="text-xs text-slate-400">ပြန်လည် ဖွင့်ပေးရန် admin ကို ဆက်သွယ်ပါ။</p>
+        </div>
+      </div>
     );
   }
 
@@ -2223,6 +2281,43 @@ export default function MonkeyTopup() {
                     className="flex-1 bg-slate-200 text-slate-700 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
                   >
                     {resellerSaving ? "..." : "Reseller ဖြုတ်ရန်"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2 border border-red-200">
+                <h2 className="font-bold text-red-700">🚫 Customer Ban လုပ်ရန်</h2>
+                <p className="text-xs text-slate-500">
+                  Ban ခံရတဲ့ user က app ကို ဖွင့်လို့ရမယ့်အစား "account ဆိုင်းငံ့ထားသည်" screen ကိုပဲ မြင်ရမှာဖြစ်ပါတယ် — order/deposit လုံးဝ လုပ်လို့မရတော့ပါ။ Balance/history တွေတော့ ပျောက်မသွားပါဘူး။
+                </p>
+                <input
+                  type="text"
+                  value={banTargetId}
+                  onChange={(e) => setBanTargetId(e.target.value)}
+                  placeholder="User ရဲ့ Telegram Name (username) ထည့်ပါ"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <input
+                  type="text"
+                  value={banReason}
+                  onChange={(e) => setBanReason(e.target.value)}
+                  placeholder="အကြောင်းရင်း (optional — user ကို ပြပေးပါမယ်)"
+                  className="w-full border rounded-lg p-2 text-sm"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleSetBanned(true)}
+                    disabled={!banTargetId.trim() || banSaving}
+                    className="flex-1 bg-red-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {banSaving ? "..." : "Ban လုပ်ရန်"}
+                  </button>
+                  <button
+                    onClick={() => handleSetBanned(false)}
+                    disabled={!banTargetId.trim() || banSaving}
+                    className="flex-1 bg-slate-200 text-slate-700 font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                  >
+                    {banSaving ? "..." : "Ban ဖြုတ်ရန်"}
                   </button>
                 </div>
               </div>
