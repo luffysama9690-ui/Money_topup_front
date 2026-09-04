@@ -407,6 +407,12 @@ const GAMES = [
   { id: "genshin", name: "Genshin Impact (Global)", tag: "New!", grad: "from-amber-500 to-orange-800", icon: "⭐" },
   { id: "hsr", name: "Honkai: Star Rail (Global)", tag: "New!", grad: "from-sky-500 to-indigo-900", icon: "🚂" },
   { id: "hi3rd", name: "Honkai Impact 3rd (Asia)", tag: "New!", grad: "from-pink-500 to-fuchsia-900", icon: "💫" },
+  { id: "arenabreakout", name: "Arena Breakout", tag: "New!", grad: "from-stone-600 to-neutral-900", icon: "🎯" },
+  { id: "deltaforce", name: "Delta Force", tag: "New!", grad: "from-slate-600 to-zinc-900", icon: "🪖" },
+  { id: "eafc", name: "EAFC Mobile (MY)", tag: "New!", grad: "from-green-600 to-emerald-900", icon: "⚽" },
+  { id: "identityv", name: "Identity V", tag: "New!", grad: "from-violet-700 to-black", icon: "🎭" },
+  { id: "lordsmobile", name: "Lords Mobile", tag: "New!", grad: "from-amber-700 to-yellow-900", icon: "🏰" },
+  { id: "stumbleguys", name: "Stumble Guys", tag: "New!", grad: "from-lime-500 to-green-800", icon: "🏃" },
 ];
 
 // ---- PUBG New State ----
@@ -703,6 +709,106 @@ const HONKAI_IMPACT_3RD_ASIA_PACKAGES = [
   { id: "honkai_impact_3rd_asia-3300_crystals", label: "3300 Crystals", mmk: [100500], thb: [792] },
   { id: "honkai_impact_3rd_asia-6600_b_chips", label: "6600 B-Chips", mmk: [201100], thb: [1584] },
   { id: "honkai_impact_3rd_asia-6600_crystals", label: "6600 Crystals", mmk: [201100], thb: [1584] },
+];
+
+// ✅ Full FazerCards catalog (category_id: arena_breakout), 7% margin,
+// 2569-09-05 pricing. Single "Player ID" field.
+const ARENA_BREAKOUT_PACKAGES = [
+  { id: "arena_breakout-66_bonds", label: "66 Bonds", mmk: [3500], thb: [28] },
+  { id: "arena_breakout-335_bonds", label: "335 Bonds", mmk: [17900], thb: [141] },
+  { id: "arena_breakout-675_bonds", label: "675 Bonds", mmk: [35800], thb: [282] },
+  { id: "arena_breakout-1690_bonds", label: "1690 Bonds", mmk: [89400], thb: [705] },
+  { id: "arena_breakout-3400_bonds", label: "3400 Bonds", mmk: [179200], thb: [1411] },
+  { id: "arena_breakout-6820_bonds", label: "6820 Bonds", mmk: [357800], thb: [2818] },
+  { id: "arena_breakout-beginner_select", label: "Beginner Select", mmk: [3200], thb: [25] },
+  { id: "arena_breakout-monthly_advanced_battle_pass_activation_pass", label: "Monthly Advanced Battle Pass Activation Pass", mmk: [3900], thb: [31] },
+  { id: "arena_breakout-bulletproof_case_privileges", label: "Bulletproof Case Privileges", mmk: [10000], thb: [79] },
+  { id: "arena_breakout-bulletproof_case_30d", label: "Bulletproof Case (30d)", mmk: [9700], thb: [77] },
+  { id: "arena_breakout-monthly_premium_battle_pass_activation_pass", label: "Monthly Premium Battle Pass Activation Pass", mmk: [15800], thb: [125] },
+  { id: "arena_breakout-composite_case_privileges", label: "Composite Case Privileges", mmk: [30100], thb: [237] },
+  { id: "arena_breakout-composition_case_30d", label: "Composition Case (30d)", mmk: [29300], thb: [231] },
+  { id: "arena_breakout-quarterly_premium_battle_pass_bundle_activation_pass_bundle", label: "Quarterly Premium Battle Pass Bundle Activation Pass Bundle", mmk: [47700], thb: [376] },
+];
+
+// ✅ Full FazerCards catalog (category_id: delta_force), 7% margin,
+// 2569-09-05 pricing. Single "Player ID" field.
+const DELTA_FORCE_PACKAGES = [
+  { id: "delta_force-18_delta_coins", label: "18 Delta Coins", mmk: [1000], thb: [8] },
+  { id: "delta_force-30_delta_coins", label: "30 Delta Coins", mmk: [1700], thb: [13] },
+  { id: "delta_force-60_delta_coins", label: "60 Delta Coins", mmk: [3400], thb: [27] },
+  { id: "delta_force-320_delta_coins", label: "320 Delta Coins", mmk: [17000], thb: [134] },
+  { id: "delta_force-460_delta_coins", label: "460 Delta Coins", mmk: [24700], thb: [195] },
+  { id: "delta_force-750_delta_coins", label: "750 Delta Coins", mmk: [34100], thb: [268] },
+  { id: "delta_force-1480_delta_coins", label: "1480 Delta Coins", mmk: [68200], thb: [537] },
+  { id: "delta_force-1980_delta_coins", label: "1980 Delta Coins", mmk: [85200], thb: [671] },
+  { id: "delta_force-3950_delta_coins", label: "3950 Delta Coins", mmk: [170400], thb: [1342] },
+  { id: "delta_force-8100_delta_coins", label: "8100 Delta Coins", mmk: [340800], thb: [2684] },
+  { id: "delta_force-16200_delta_coins", label: "16200 Delta Coins", mmk: [707100], thb: [5570] },
+  { id: "delta_force-24300_delta_coins", label: "24300 Delta Coins", mmk: [1060700], thb: [8355] },
+  { id: "delta_force-season_pass_operations_special", label: "Season Pass Operations Special", mmk: [19100], thb: [151] },
+  { id: "delta_force-season_pass_warfare_special", label: "Season Pass Warfare Special", mmk: [19100], thb: [151] },
+  { id: "delta_force-season_pass_delta_force_deluxe", label: "Season Pass Delta Force Deluxe", mmk: [26500], thb: [209] },
+];
+
+// ✅ Full FazerCards catalog (category_id: eafc_mobile_my), 7% margin,
+// 2569-09-05 pricing. Single "Player ID" field.
+const EAFC_MOBILE_MY_PACKAGES = [
+  { id: "eafc_mobile_my-40_fc_points", label: "40 FC Points", mmk: [2200], thb: [17] },
+  { id: "eafc_mobile_my-100_fc_points", label: "100 FC Points", mmk: [5300], thb: [42] },
+  { id: "eafc_mobile_my-520_fc_points", label: "520 FC Points", mmk: [25900], thb: [204] },
+  { id: "eafc_mobile_my-1070_fc_points", label: "1070 FC Points", mmk: [48600], thb: [383] },
+  { id: "eafc_mobile_my-2200_fc_points", label: "2200 FC Points", mmk: [102700], thb: [809] },
+  { id: "eafc_mobile_my-5750_fc_points", label: "5750 FC Points", mmk: [259700], thb: [2045] },
+  { id: "eafc_mobile_my-12000_fc_points", label: "12000 FC Points", mmk: [519400], thb: [4092] },
+  { id: "eafc_mobile_my-39_silver", label: "39 Silver", mmk: [2200], thb: [17] },
+  { id: "eafc_mobile_my-99_silver", label: "99 Silver", mmk: [5300], thb: [42] },
+  { id: "eafc_mobile_my-499_silver", label: "499 Silver", mmk: [25900], thb: [204] },
+  { id: "eafc_mobile_my-999_silver", label: "999 Silver", mmk: [48600], thb: [383] },
+  { id: "eafc_mobile_my-1999_silver", label: "1999 Silver", mmk: [102700], thb: [809] },
+  { id: "eafc_mobile_my-4999_silver", label: "4999 Silver", mmk: [259700], thb: [2045] },
+  { id: "eafc_mobile_my-9999_silver", label: "9999 Silver", mmk: [519400], thb: [4092] },
+];
+
+// ✅ Full FazerCards catalog (category_id: identity_v), 7% margin,
+// 2569-09-05 pricing. Fields: Player ID + Server (hardcoded to "Asia" --
+// note the capital A, matching FazerCards' option value exactly).
+const IDENTITY_V_PACKAGES = [
+  { id: "identity_v-60_6_echoes", label: "60 + 6 Echoes", mmk: [4100], thb: [32] },
+  { id: "identity_v-inspirations_package", label: "Inspirations Package", mmk: [4200], thb: [33] },
+  { id: "identity_v-185_18_echoes", label: "185 + 18 Echoes", mmk: [12800], thb: [101] },
+  { id: "identity_v-305_30_echoes", label: "305 + 30 Echoes", mmk: [20700], thb: [163] },
+  { id: "identity_v-clues_package", label: "Clues Package", mmk: [21000], thb: [166] },
+  { id: "identity_v-690_69_echoes", label: "690 + 69 Echoes", mmk: [41400], thb: [327] },
+  { id: "identity_v-memory_sphere_package", label: "Memory Sphere Package", mmk: [42000], thb: [331] },
+  { id: "identity_v-2025_202_echoes", label: "2025 + 202 Echoes", mmk: [128400], thb: [1011] },
+  { id: "identity_v-3330_333_echoes", label: "3330 + 333 Echoes", mmk: [207600], thb: [1635] },
+  { id: "identity_v-6590_659_echoes", label: "6590 + 659 Echoes", mmk: [415300], thb: [3271] },
+];
+
+// ✅ Full FazerCards catalog (category_id: lords_mobile), 7% margin,
+// 2569-09-05 pricing. Single "Player ID" field.
+const LORDS_MOBILE_PACKAGES = [
+  { id: "lords_mobile-weekly_diamond_pass", label: "Weekly Diamond Pass", mmk: [9100], thb: [72] },
+  { id: "lords_mobile-395_diamonds", label: "395 Diamonds", mmk: [18200], thb: [143] },
+  { id: "lords_mobile-785_diamonds", label: "785 Diamonds", mmk: [36400], thb: [287] },
+  { id: "lords_mobile-1179_diamonds", label: "1179 Diamonds", mmk: [54600], thb: [430] },
+  { id: "lords_mobile-monthly_diamond_pass", label: "Monthly Diamond Pass", mmk: [90800], thb: [715] },
+  { id: "lords_mobile-1964_diamonds", label: "1964 Diamonds", mmk: [90800], thb: [715] },
+  { id: "lords_mobile-3928_diamonds", label: "3928 Diamonds", mmk: [181900], thb: [1433] },
+  { id: "lords_mobile-7857_diamonds", label: "7857 Diamonds", mmk: [363800], thb: [2866] },
+  { id: "lords_mobile-11785_diamonds", label: "11785 Diamonds", mmk: [545700], thb: [4298] },
+  { id: "lords_mobile-19642_diamonds", label: "19642 Diamonds", mmk: [909500], thb: [7165] },
+];
+
+// ✅ Full FazerCards catalog (category_id: stumble_guys), 7% margin,
+// 2569-09-05 pricing. Single "User ID" field.
+const STUMBLE_GUYS_PACKAGES = [
+  { id: "stumble_guys-250_gems", label: "250 Gems", mmk: [3300], thb: [26] },
+  { id: "stumble_guys-800_gems", label: "800 Gems", mmk: [7200], thb: [57] },
+  { id: "stumble_guys-120_tokens", label: "120 Tokens", mmk: [11400], thb: [90] },
+  { id: "stumble_guys-1600_gems_75_tokens", label: "1600 Gems + 75 Tokens", mmk: [12300], thb: [97] },
+  { id: "stumble_guys-5000_gems_275_tokens", label: "5000 Gems + 275 Tokens", mmk: [30600], thb: [241] },
+  { id: "stumble_guys-1300_tokens", label: "1300 Tokens", mmk: [95300], thb: [751] },
 ];
 
 // ---- Sausage Man ----
@@ -1666,15 +1772,19 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
-      // Genshin Impact / Honkai: Star Rail need a hidden "asia" server value
-      // sent to FazerCards even though no server picker is shown -- see the
-      // same note in handleBuy().
+      // Genshin Impact / Honkai: Star Rail / Identity V need a hidden
+      // server value sent to FazerCards even though no picker is shown --
+      // see the same note in handleBuy().
       const hardcodedServerId =
-        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" ? "asia" : null;
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)"
+          ? "asia"
+          : gName === "Identity V"
+            ? "Asia"
+            : null;
       const data = await api.verifyPlayer(gameId, hardcodedServerId || (needsServerId ? serverId : undefined), gName, selectedPkg.label || selectedPkg.name);
       if (data.name) {
         setPlayerName(data.name);
@@ -1700,7 +1810,11 @@ export default function MonkeyTopup() {
       // a server picker to the customer -- everyone here is SEA/MM, so it's
       // hardcoded to "asia" rather than adding UI for it.
       const hardcodedServerId =
-        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" ? "asia" : null;
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)"
+          ? "asia"
+          : gName === "Identity V"
+            ? "Asia"
+            : null;
       const order = await api.createOrder({
         telegramId,
         game: gName,
@@ -1760,6 +1874,12 @@ export default function MonkeyTopup() {
     if (GENSHIN_GLOBAL_PACKAGES.includes(pkg)) return "Genshin Impact (Global)";
     if (HONKAI_STAR_RAIL_GLOBAL_PACKAGES.includes(pkg)) return "Honkai: Star Rail (Global)";
     if (HONKAI_IMPACT_3RD_ASIA_PACKAGES.includes(pkg)) return "Honkai Impact 3rd (Asia)";
+    if (ARENA_BREAKOUT_PACKAGES.includes(pkg)) return "Arena Breakout";
+    if (DELTA_FORCE_PACKAGES.includes(pkg)) return "Delta Force";
+    if (EAFC_MOBILE_MY_PACKAGES.includes(pkg)) return "EAFC Mobile (MY)";
+    if (IDENTITY_V_PACKAGES.includes(pkg)) return "Identity V";
+    if (LORDS_MOBILE_PACKAGES.includes(pkg)) return "Lords Mobile";
+    if (STUMBLE_GUYS_PACKAGES.includes(pkg)) return "Stumble Guys";
     return "Unknown";
   }
 
@@ -1916,6 +2036,12 @@ export default function MonkeyTopup() {
     if (gameId === "genshin") setView("genshinDetail");
     if (gameId === "hsr") setView("hsrDetail");
     if (gameId === "hi3rd") setView("hi3rdDetail");
+    if (gameId === "arenabreakout") setView("arenaBreakoutDetail");
+    if (gameId === "deltaforce") setView("deltaForceDetail");
+    if (gameId === "eafc") setView("eafcDetail");
+    if (gameId === "identityv") setView("identityVDetail");
+    if (gameId === "lordsmobile") setView("lordsMobileDetail");
+    if (gameId === "stumbleguys") setView("stumbleGuysDetail");
   }
 
   async function handleSetBanned(banned) {
@@ -3454,6 +3580,182 @@ export default function MonkeyTopup() {
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
+        {view === "arenaBreakoutDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Arena Breakout" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Bonds & Passes" items={ARENA_BREAKOUT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "deltaForceDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Delta Force" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Delta Coins & Season Pass" items={DELTA_FORCE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "eafcDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="EAFC Mobile (MY)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="FC Points & Silver" items={EAFC_MOBILE_MY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "identityVDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Identity V" />
+              <div className="bg-[#E3F2FD] text-[#0D47A1] text-xs rounded-lg p-3 text-center leading-relaxed">
+                Asia Server အတွက်ပဲ ဝန်ဆောင်မှုပေးပါသည် — Player ID ကို ရိုက်ထည့်ပါ
+              </div>
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Echoes & Packages" items={IDENTITY_V_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "lordsMobileDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Lords Mobile" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Diamonds & Pass" items={LORDS_MOBILE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "stumbleGuysDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Stumble Guys" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Gems & Tokens" items={STUMBLE_GUYS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
 
 
         {view === "bloodstrikeDetail" && (
@@ -3648,11 +3950,17 @@ export default function MonkeyTopup() {
                     gName === "Call of Duty Mobile (SG/MY)" ||
                     gName === "Genshin Impact (Global)" ||
                     gName === "Honkai: Star Rail (Global)" ||
-                    gName === "Honkai Impact 3rd (Asia)";
+                    gName === "Honkai Impact 3rd (Asia)" ||
+                    gName === "Arena Breakout" ||
+                    gName === "Delta Force" ||
+                    gName === "EAFC Mobile (MY)" ||
+                    gName === "Identity V" ||
+                    gName === "Lords Mobile" ||
+                    gName === "Stumble Guys";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile (MY)" || gName === "Identity V" || gName === "Lords Mobile"
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
@@ -3660,7 +3968,9 @@ export default function MonkeyTopup() {
                             ? "Riot Id"
                             : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd (Asia)"
                               ? "Player Id (UID)"
-                              : "Game Id";
+                              : gName === "Stumble Guys"
+                                ? "User Id"
+                                : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
