@@ -1974,7 +1974,7 @@ export default function MonkeyTopup() {
   }
 
   const appShell = (
-    <div className="w-full max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative">
+    <div className={`w-full ${isTelegramContext() ? "max-w-sm" : "max-w-none sm:max-w-3xl lg:max-w-5xl"} bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative`}>
       <style>{`
           @keyframes marqueeScroll {
             from { transform: translateX(0); }
@@ -2793,26 +2793,26 @@ export default function MonkeyTopup() {
 
               {mlServer === "global" ? (
                 <>
-                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               ) : mlServer === "philippines" ? (
                 <>
-                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               ) : mlServer === "brazil" ? (
                 <>
-                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="2x Diamonds (First Top-Up)" items={ML_BONUS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="2x Diamonds (First Top-Up)" items={ML_BONUS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               ) : (
                 <>
-                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="Diamonds" items={ML_DIAMONDS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="Diamonds" items={ML_DIAMONDS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               )}
             </div>
@@ -2861,15 +2861,15 @@ export default function MonkeyTopup() {
 
               {mcServer === "global" ? (
                 <>
-                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_GLOBAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               ) : (
                 <>
-                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Mcgg Pass" items={MC_PASSES_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="2x Diamonds" items={MC_BONUS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="3" title="Other Diamonds" items={MC_DIAMONDS_RU} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               )}
             </div>
@@ -2901,10 +2901,10 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="WOW Coins" items={PUBG_WOW} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Special Packs" items={PUBG_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="4" title="Prime" items={PUBG_PRIME} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="2" title="WOW Coins" items={PUBG_WOW} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="3" title="Special Packs" items={PUBG_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="4" title="Prime" items={PUBG_PRIME} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -2955,8 +2955,8 @@ export default function MonkeyTopup() {
                 const bundles = items.filter((it) => !isGemsLabel(it.label));
                 return (
                   <>
-                    <PkgSection num="1" title="Gems" items={gems} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                    <PkgSection num="2" title="Passes & Bundles" items={bundles} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                    <PkgSection num="1" title="Gems" items={gems} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                    <PkgSection num="2" title="Passes & Bundles" items={bundles} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                   </>
                 );
               })()}
@@ -2988,7 +2988,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Candy" items={SAUSAGE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Candy" items={SAUSAGE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3015,7 +3015,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Steam Wallet" items={STEAM_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Steam Wallet" items={STEAM_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3044,7 +3044,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="CapCut Pro" items={CAPCUT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="CapCut Pro" items={CAPCUT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3089,9 +3089,9 @@ export default function MonkeyTopup() {
               </div>
 
               {telegramTab === "stars" ? (
-                <PkgSection num="1" title="Stars" items={TELEGRAM_STARS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                <PkgSection num="1" title="Stars" items={TELEGRAM_STARS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
               ) : (
-                <PkgSection num="1" title="Premium" items={TELEGRAM_PREMIUM} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                <PkgSection num="1" title="Premium" items={TELEGRAM_PREMIUM} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
               )}
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
@@ -3121,8 +3121,8 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Tokens" items={HOK_TOKENS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Special Items" items={HOK_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Tokens" items={HOK_TOKENS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="2" title="Special Items" items={HOK_SPECIAL} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3151,7 +3151,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Candles & Season Pass" items={SKY_COTL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Candles & Season Pass" items={SKY_COTL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3181,9 +3181,9 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="BC" items={BLOODSTRIKE_PACKAGES.filter((it) => /BC$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Special Deals" items={BLOODSTRIKE_PACKAGES.filter((it) => /DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="3" title="Special Items" items={BLOODSTRIKE_PACKAGES.filter((it) => !/BC$|DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="BC" items={BLOODSTRIKE_PACKAGES.filter((it) => /BC$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="2" title="Special Deals" items={BLOODSTRIKE_PACKAGES.filter((it) => /DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="3" title="Special Items" items={BLOODSTRIKE_PACKAGES.filter((it) => !/BC$|DEAL$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3212,8 +3212,8 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Echo" items={WWM_ECHO} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-              <PkgSection num="2" title="Pass" items={WWM_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="Echo" items={WWM_ECHO} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <PkgSection num="2" title="Pass" items={WWM_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3259,13 +3259,13 @@ export default function MonkeyTopup() {
 
               {ffServer === "global" ? (
                 <>
-                  <PkgSection num="1" title="Diamonds" items={FF_GLOBAL_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="Membership" items={FF_GLOBAL_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Diamonds" items={FF_GLOBAL_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="Membership" items={FF_GLOBAL_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               ) : (
                 <>
-                  <PkgSection num="1" title="Diamonds" items={FF_THAILAND_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
-                  <PkgSection num="2" title="Membership" items={FF_THAILAND_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="1" title="Diamonds" items={FF_THAILAND_DIAMONDS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+                  <PkgSection num="2" title="Membership" items={FF_THAILAND_PASSES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
                 </>
               )}
             </div>
@@ -3296,7 +3296,7 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="NC" items={NEWSTATE_NC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+              <PkgSection num="1" title="NC" items={NEWSTATE_NC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3575,7 +3575,7 @@ export default function MonkeyTopup() {
         <DesktopGamesHome onPickGame={goToGameDetail} />
       ) : (
         <div className="flex justify-center py-10 px-4">
-          <div className="rounded-[2.5rem] border-8 border-[#1b1638] shadow-2xl shadow-black/50 overflow-hidden">
+          <div className="w-full rounded-3xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden">
             {appShell}
           </div>
         </div>
@@ -3601,7 +3601,7 @@ function isGemsLabel(rawLabel) {
   return /Gems$/i.test(displayLabel(rawLabel));
 }
 
-function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }) {
+function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, wide = false }) {
   const currencyLabel = currency === "mmk" ? "ကျပ်" : "ဘတ်";
   return (
     <div>
@@ -3609,7 +3609,7 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
         <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center">{num}</span>
         <span className="text-white font-bold drop-shadow">{title}</span>
       </div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className={wide ? "grid grid-cols-4 lg:grid-cols-5 gap-3" : "grid grid-cols-3 gap-2"}>
         {items.map((it) => {
           const rawPrice = it[currency][0];
           const priceVal = applyResellerDiscount(rawPrice, discountPercent, it, currency);
@@ -3617,7 +3617,7 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
           const label = displayLabel(rawLabel);
           const showBonusBadge = isBonusLabel(rawLabel);
           return (
-            <button key={it.id} onClick={() => onPick(it)} className="relative bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
+            <button key={it.id} onClick={() => onPick(it)} className={`relative bg-white rounded-lg overflow-hidden text-center shadow transition ${wide ? "hover:-translate-y-0.5 hover:shadow-lg" : "active:scale-95"}`}>
               {showBonusBadge && (
                 <span className="absolute top-1 right-1 z-10 bg-[#c05b58] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow">2X</span>
               )}
@@ -3625,17 +3625,17 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick }
                 <img
                   src={it.image}
                   alt={label}
-                  className={`w-full h-20 ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
+                  className={`w-full ${wide ? "h-28" : "h-20"} ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
                 />
               ) : (
-                <div className="h-20 bg-slate-100" />
+                <div className={wide ? "h-28 bg-slate-100" : "h-20 bg-slate-100"} />
               )}
-              <div className="p-2">
-                <div className="text-[11px] font-bold leading-tight mb-1">{label}</div>
+              <div className={wide ? "p-3" : "p-2"}>
+                <div className={`font-bold leading-tight mb-1 ${wide ? "text-sm" : "text-[11px]"}`}>{label}</div>
                 {priceVal < rawPrice && (
                   <div className="text-[10px] text-rose-500 line-through leading-none">{fmt(rawPrice)} {currencyLabel}</div>
                 )}
-                <div className="text-sm font-bold text-amber-500">{fmt(priceVal)} {currencyLabel}</div>
+                <div className={`font-bold text-amber-500 ${wide ? "text-base" : "text-sm"}`}>{fmt(priceVal)} {currencyLabel}</div>
               </div>
             </button>
           );
