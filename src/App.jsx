@@ -2219,6 +2219,7 @@ export default function MonkeyTopup() {
   const [respinSaving, setRespinSaving] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [activeUserCount, setActiveUserCount] = useState(null);
+  const [activeUserIds, setActiveUserIds] = useState(() => new Set());
   const [userCounts, setUserCounts] = useState(null);
   const [usersLoading, setUsersLoading] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
@@ -2826,7 +2827,11 @@ export default function MonkeyTopup() {
     function poll() {
       api
         .getActiveUsers(telegramId, 5)
-        .then((r) => { if (!cancelled) setActiveUserCount(r.count); })
+        .then((r) => {
+          if (cancelled) return;
+          setActiveUserCount(r.count);
+          setActiveUserIds(new Set(r.users.map((u) => String(u.telegram_id))));
+        })
         .catch(() => {});
     }
     poll();
@@ -3390,7 +3395,10 @@ export default function MonkeyTopup() {
                   {allUsers.map((u) => (
                     <div key={u.telegram_id} className="flex justify-between items-center py-2 text-sm">
                       <div>
-                        <div className="font-semibold text-slate-800">
+                        <div className="font-semibold text-slate-800 flex items-center gap-1.5">
+                          {activeUserIds.has(String(u.telegram_id)) && (
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" title="Active now" />
+                          )}
                           Telegram ID: {u.telegram_id}
                           {u.username && <span className="text-slate-400 text-xs ml-1">@{u.username}</span>}
                           {u.is_reseller && <span className="text-emerald-600 text-[10px] font-bold ml-1">RESELLER</span>}
