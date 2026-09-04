@@ -402,14 +402,14 @@ const GAMES = [
   { id: "hok", name: "Honor of Kings", tag: "New!", grad: "from-yellow-600 to-red-800", icon: "👑" },
   { id: "skycotl", name: "Sky: Children of the Light", tag: "New!", grad: "from-indigo-500 to-purple-900", icon: "🕊️" },
   { id: "valorant", name: "Valorant", tag: "New!", grad: "from-red-600 to-rose-900", icon: "🎯" },
-  { id: "lol_th", name: "League of Legends (TH)", tag: "New!", grad: "from-blue-600 to-cyan-800", icon: "⚔️" },
-  { id: "codm_sgmy", name: "Call of Duty Mobile (SG/MY)", tag: "New!", grad: "from-neutral-700 to-black", icon: "🔫" },
+  { id: "lol_th", name: "League of Legends", tag: "New!", grad: "from-blue-600 to-cyan-800", icon: "⚔️" },
+  { id: "codm_sgmy", name: "Call of Duty Mobile (Garena)", tag: "New!", grad: "from-neutral-700 to-black", icon: "🔫" },
   { id: "genshin", name: "Genshin Impact (Global)", tag: "New!", grad: "from-amber-500 to-orange-800", icon: "⭐" },
-  { id: "hsr", name: "Honkai: Star Rail (Global)", tag: "New!", grad: "from-sky-500 to-indigo-900", icon: "🚂" },
+  { id: "hsr", name: "Honkai: Star Rail", tag: "New!", grad: "from-sky-500 to-indigo-900", icon: "🚂" },
   { id: "hi3rd", name: "Honkai Impact 3rd", tag: "New!", grad: "from-pink-500 to-fuchsia-900", icon: "💫" },
   { id: "arenabreakout", name: "Arena Breakout", tag: "New!", grad: "from-stone-600 to-neutral-900", icon: "🎯" },
   { id: "deltaforce", name: "Delta Force", tag: "New!", grad: "from-slate-600 to-zinc-900", icon: "🪖" },
-  { id: "eafc", name: "EAFC Mobile (MY)", tag: "New!", grad: "from-green-600 to-emerald-900", icon: "⚽" },
+  { id: "eafc", name: "EAFC Mobile", tag: "New!", grad: "from-green-600 to-emerald-900", icon: "⚽" },
   { id: "identityv", name: "Identity V", tag: "New!", grad: "from-violet-700 to-black", icon: "🎭" },
   { id: "lordsmobile", name: "Lords Mobile", tag: "New!", grad: "from-amber-700 to-yellow-900", icon: "🏰" },
   { id: "stumbleguys", name: "Stumble Guys", tag: "New!", grad: "from-lime-500 to-green-800", icon: "🏃" },
@@ -418,8 +418,8 @@ const GAMES = [
   { id: "blockmango", name: "Blockman Go", tag: "New!", grad: "from-cyan-500 to-blue-800", icon: "🧱" },
   { id: "growtopia", name: "Growtopia", tag: "New!", grad: "from-teal-500 to-emerald-900", icon: "🌱" },
   { id: "eggyparty", name: "Eggy Party", tag: "New!", grad: "from-yellow-400 to-orange-600", icon: "🥚" },
-  { id: "r6mobile", name: "Rainbow Six Mobile (Global)", tag: "New!", grad: "from-gray-700 to-black", icon: "🔰" },
-  { id: "tftth", name: "TFT Mobile (TH)", tag: "New!", grad: "from-indigo-600 to-blue-950", icon: "♟️" },
+  { id: "r6mobile", name: "Rainbow Six Mobile", tag: "New!", grad: "from-gray-700 to-black", icon: "🔰" },
+  { id: "tftth", name: "TFT Mobile", tag: "New!", grad: "from-indigo-600 to-blue-950", icon: "♟️" },
 ];
 
 // ---- PUBG New State ----
@@ -699,33 +699,104 @@ const VALORANT_VN_PACKAGES = [
 
 // ✅ Full FazerCards catalog (category_id: lol_th), 7% margin, 2569-09-05
 // pricing. Single "Riot ID" field.
+const LOL_ID_PACKAGES = [
+  { id: "lol-id-575_rp", label: "ID 575 RP", mmk: [14400], thb: [114] },
+  { id: "lol-id-1380_rp", label: "ID 1380 RP", mmk: [33600], thb: [265] },
+  { id: "lol-id-2800_rp", label: "ID 2800 RP", mmk: [67300], thb: [530] },
+  { id: "lol-id-4500_rp", label: "ID 4500 RP", mmk: [105700], thb: [832] },
+  { id: "lol-id-6500_rp", label: "ID 6500 RP", mmk: [148900], thb: [1173] },
+  { id: "lol-id-13500_rp", label: "ID 13500 RP", mmk: [288300], thb: [2271] },
+];
+
+const LOL_KH_PACKAGES = [
+  { id: "lol-kh-575_rp", label: "KH 575 RP", mmk: [21000], thb: [165] },
+  { id: "lol-kh-1380_rp", label: "KH 1380 RP", mmk: [46200], thb: [364] },
+  { id: "lol-kh-2800_rp", label: "KH 2800 RP", mmk: [92400], thb: [728] },
+  { id: "lol-kh-4500_rp", label: "KH 4500 RP", mmk: [147000], thb: [1158] },
+  { id: "lol-kh-6500_rp", label: "KH 6500 RP", mmk: [210000], thb: [1654] },
+  { id: "lol-kh-13500_rp", label: "KH 13500 RP", mmk: [420000], thb: [3309] },
+];
+
+const LOL_MY_PACKAGES = [
+  { id: "lol-my-575_rp", label: "MY 575 RP", mmk: [19100], thb: [151] },
+  { id: "lol-my-1380_rp", label: "MY 1380 RP", mmk: [42500], thb: [334] },
+  { id: "lol-my-2800_rp", label: "MY 2800 RP", mmk: [84000], thb: [662] },
+  { id: "lol-my-4500_rp", label: "MY 4500 RP", mmk: [133600], thb: [1053] },
+  { id: "lol-my-6500_rp", label: "MY 6500 RP", mmk: [192400], thb: [1516] },
+  { id: "lol-my-13500_rp", label: "MY 13500 RP", mmk: [383900], thb: [3024] },
+];
+
+const LOL_PH_PACKAGES = [
+  { id: "lol-ph-575_rp", label: "PH 575 RP", mmk: [13300], thb: [105] },
+  { id: "lol-ph-1380_rp", label: "PH 1380 RP", mmk: [30100], thb: [237] },
+  { id: "lol-ph-2800_rp", label: "PH 2800 RP", mmk: [60200], thb: [474] },
+  { id: "lol-ph-4500_rp", label: "PH 4500 RP", mmk: [93600], thb: [738] },
+  { id: "lol-ph-6500_rp", label: "PH 6500 RP", mmk: [133800], thb: [1054] },
+  { id: "lol-ph-13500_rp", label: "PH 13500 RP", mmk: [267700], thb: [2109] },
+];
+
+const LOL_SG_PACKAGES = [
+  { id: "lol-sg-575_rp", label: "SG 575 RP", mmk: [21600], thb: [170] },
+  { id: "lol-sg-1380_rp", label: "SG 1380 RP", mmk: [48100], thb: [379] },
+  { id: "lol-sg-2800_rp", label: "SG 2800 RP", mmk: [96100], thb: [757] },
+  { id: "lol-sg-4500_rp", label: "SG 4500 RP", mmk: [154200], thb: [1215] },
+  { id: "lol-sg-6500_rp", label: "SG 6500 RP", mmk: [220500], thb: [1737] },
+  { id: "lol-sg-13500_rp", label: "SG 13500 RP", mmk: [444300], thb: [3500] },
+];
+
 const LOL_TH_PACKAGES = [
-  { id: "lol_th-575_rp", label: "575 RP", mmk: [16600], thb: [131] },
-  { id: "lol_th-1380_rp", label: "1380 RP", mmk: [37000], thb: [291] },
-  { id: "lol_th-2800_rp", label: "2800 RP", mmk: [71400], thb: [563] },
-  { id: "lol_th-4500_rp", label: "4500 RP", mmk: [113500], thb: [894] },
-  { id: "lol_th-6500_rp", label: "6500 RP", mmk: [159400], thb: [1256] },
-  { id: "lol_th-13500_rp", label: "13500 RP", mmk: [325200], thb: [2562] },
+  { id: "lol-th-575_rp", label: "TH 575 RP", mmk: [16600], thb: [131] },
+  { id: "lol-th-1380_rp", label: "TH 1380 RP", mmk: [37000], thb: [291] },
+  { id: "lol-th-2800_rp", label: "TH 2800 RP", mmk: [71400], thb: [563] },
+  { id: "lol-th-4500_rp", label: "TH 4500 RP", mmk: [113500], thb: [894] },
+  { id: "lol-th-6500_rp", label: "TH 6500 RP", mmk: [159400], thb: [1256] },
+  { id: "lol-th-13500_rp", label: "TH 13500 RP", mmk: [325200], thb: [2562] },
+];
+
+const LOL_VN_PACKAGES = [
+  { id: "lol-vn-340_rp", label: "VN 340 RP", mmk: [9000], thb: [71] },
+  { id: "lol-vn-690_rp", label: "VN 690 RP", mmk: [18200], thb: [143] },
+  { id: "lol-vn-1400_rp", label: "VN 1400 RP", mmk: [36300], thb: [286] },
+  { id: "lol-vn-3550_rp", label: "VN 3550 RP", mmk: [90700], thb: [715] },
+  { id: "lol-vn-7250_rp", label: "VN 7250 RP", mmk: [181500], thb: [1430] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: codm_garena_sgmy), 7% margin,
 // 2569-09-05 pricing. Single "Player ID" field.
 const CODM_SGMY_PACKAGES = [
-  { id: "codm_garena_sgmy-114_cp", label: "114 CP", mmk: [5400], thb: [43] },
-  { id: "codm_garena_sgmy-115_cp", label: "115 CP", mmk: [5300], thb: [42] },
-  { id: "codm_garena_sgmy-253_cp", label: "253 CP", mmk: [10600], thb: [84] },
-  { id: "codm_garena_sgmy-529_cp", label: "529 CP", mmk: [21300], thb: [167] },
-  { id: "codm_garena_sgmy-794_cp", label: "794 CP", mmk: [31900], thb: [251] },
-  { id: "codm_garena_sgmy-1053_cp", label: "1053 CP", mmk: [42500], thb: [335] },
-  { id: "codm_garena_sgmy-1323_cp", label: "1323 CP", mmk: [53200], thb: [419] },
-  { id: "codm_garena_sgmy-2760_cp", label: "2760 CP", mmk: [106300], thb: [838] },
-  { id: "codm_garena_sgmy-6440_cp", label: "6440 CP", mmk: [212700], thb: [1675] },
-  { id: "codm_garena_sgmy-9200_cp", label: "9200 CP", mmk: [319000], thb: [2513] },
-  { id: "codm_garena_sgmy-9602_cp", label: "6858 + 2744 CP", mmk: [325900], thb: [2567] },
-  { id: "codm_garena_sgmy-12880_cp", label: "12880 CP", mmk: [425300], thb: [3350] },
-  { id: "codm_garena_sgmy-15640_cp", label: "15640 CP", mmk: [531600], thb: [4188] },
-  { id: "codm_garena_sgmy-16001_cp", label: "11429 + 4572 CP", mmk: [543100], thb: [4278] },
-  { id: "codm_garena_sgmy-19320_cp", label: "19320 CP", mmk: [638000], thb: [5025] },
+  { id: "codm-sgmy-114_cp", label: "SGMY 114 CP", mmk: [5400], thb: [43] },
+  { id: "codm-sgmy-115_cp", label: "SGMY 115 CP", mmk: [5300], thb: [42] },
+  { id: "codm-sgmy-253_cp", label: "SGMY 253 CP", mmk: [10600], thb: [84] },
+  { id: "codm-sgmy-529_cp", label: "SGMY 529 CP", mmk: [21300], thb: [167] },
+  { id: "codm-sgmy-794_cp", label: "SGMY 794 CP", mmk: [31900], thb: [251] },
+  { id: "codm-sgmy-1053_cp", label: "SGMY 1053 CP", mmk: [42500], thb: [335] },
+  { id: "codm-sgmy-1323_cp", label: "SGMY 1323 CP", mmk: [53200], thb: [419] },
+  { id: "codm-sgmy-2760_cp", label: "SGMY 2760 CP", mmk: [106300], thb: [838] },
+  { id: "codm-sgmy-6440_cp", label: "SGMY 6440 CP", mmk: [212700], thb: [1675] },
+  { id: "codm-sgmy-9200_cp", label: "SGMY 9200 CP", mmk: [319000], thb: [2513] },
+  { id: "codm-sgmy-9602_cp", label: "SGMY 6858 + 2744 CP", mmk: [325900], thb: [2567] },
+  { id: "codm-sgmy-12880_cp", label: "SGMY 12880 CP", mmk: [425300], thb: [3350] },
+  { id: "codm-sgmy-15640_cp", label: "SGMY 15640 CP", mmk: [531600], thb: [4188] },
+  { id: "codm-sgmy-16001_cp", label: "SGMY 11429 + 4572 CP", mmk: [543100], thb: [4278] },
+  { id: "codm-sgmy-19320_cp", label: "SGMY 19320 CP", mmk: [638000], thb: [5025] },
+];
+
+const CODM_INDONESIA_PACKAGES = [
+  { id: "codm-indonesia-31_cp", label: "Indonesia 31 CP", mmk: [1100], thb: [9] },
+  { id: "codm-indonesia-63_cp", label: "Indonesia 63 CP", mmk: [2400], thb: [19] },
+  { id: "codm-indonesia-128_cp", label: "Indonesia 128 CP", mmk: [4700], thb: [37] },
+  { id: "codm-indonesia-321_cp", label: "Indonesia 321 CP", mmk: [11800], thb: [93] },
+  { id: "codm-indonesia-645_cp", label: "Indonesia 645 CP", mmk: [23700], thb: [187] },
+  { id: "codm-indonesia-800_cp", label: "Indonesia 800 CP", mmk: [26500], thb: [209] },
+  { id: "codm-indonesia-1373_cp", label: "Indonesia 1373 CP", mmk: [47400], thb: [373] },
+  { id: "codm-indonesia-2060_cp", label: "Indonesia 2060 CP", mmk: [71000], thb: [559] },
+  { id: "codm-indonesia-2750_cp", label: "Indonesia 2750 CP", mmk: [83800], thb: [660] },
+  { id: "codm-indonesia-3564_cp", label: "Indonesia 3564 CP", mmk: [118400], thb: [933] },
+  { id: "codm-indonesia-5618_cp", label: "Indonesia 5618 CP", mmk: [160400], thb: [1264] },
+  { id: "codm-indonesia-7656_cp", label: "Indonesia 7656 CP", mmk: [236800], thb: [1865] },
+  { id: "codm-indonesia-15312_cp", label: "Indonesia 15312 CP", mmk: [439500], thb: [3462] },
+  { id: "codm-indonesia-38280_cp", label: "Indonesia 38280 CP", mmk: [1098800], thb: [8655] },
+  { id: "codm-indonesia-76560_cp", label: "Indonesia 76560 CP", mmk: [2197500], thb: [17311] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: genshin_impact_global), 7%
@@ -744,14 +815,24 @@ const GENSHIN_GLOBAL_PACKAGES = [
 // ✅ Full FazerCards catalog (category_id: honkai_star_rail_global), 7%
 // margin, 2569-09-05 pricing. Fields: Player ID + Server (hardcoded to
 // "asia", same as Genshin above).
-const HONKAI_STAR_RAIL_GLOBAL_PACKAGES = [
-  { id: "honkai_star_rail_global-60_oneiric_shard", label: "60 Oneiric Shard", mmk: [4300], thb: [34] },
-  { id: "honkai_star_rail_global-300_30_oneiric_shard", label: "300 + 30 Oneiric Shard", mmk: [21200], thb: [167] },
-  { id: "honkai_star_rail_global-980_110_oneiric_shard", label: "980 + 110 Oneiric Shard", mmk: [66200], thb: [521] },
-  { id: "honkai_star_rail_global-1980_260_oneiric_shard", label: "1980 + 260 Oneiric Shard", mmk: [127900], thb: [1007] },
-  { id: "honkai_star_rail_global-3280_600_oneiric_shard", label: "3280 + 600 Oneiric Shard", mmk: [213300], thb: [1680] },
-  { id: "honkai_star_rail_global-6480_1600_oneiric_shard", label: "6480 + 1600 Oneiric Shard", mmk: [426900], thb: [3363] },
-  { id: "honkai_star_rail_global-express_supply_pass", label: "Express Supply Pass", mmk: [21200], thb: [167] },
+const HSR_GLOBAL_PACKAGES = [
+  { id: "hsr-global-60_oneiric_shard", label: "Global 60 Oneiric Shard", mmk: [4300], thb: [34] },
+  { id: "hsr-global-300_30_oneiric_shard", label: "Global 300 + 30 Oneiric Shard", mmk: [21200], thb: [167] },
+  { id: "hsr-global-980_110_oneiric_shard", label: "Global 980 + 110 Oneiric Shard", mmk: [66200], thb: [521] },
+  { id: "hsr-global-1980_260_oneiric_shard", label: "Global 1980 + 260 Oneiric Shard", mmk: [127900], thb: [1007] },
+  { id: "hsr-global-3280_600_oneiric_shard", label: "Global 3280 + 600 Oneiric Shard", mmk: [213300], thb: [1680] },
+  { id: "hsr-global-6480_1600_oneiric_shard", label: "Global 6480 + 1600 Oneiric Shard", mmk: [426900], thb: [3363] },
+  { id: "hsr-global-express_supply_pass", label: "Global Express Supply Pass", mmk: [21200], thb: [167] },
+];
+
+const HSR_US_PACKAGES = [
+  { id: "hsr-us-60_oneiric_shard", label: "US 60 Oneiric Shard", mmk: [4100], thb: [32] },
+  { id: "hsr-us-300_30_oneiric_shard", label: "US 300 + 30 Oneiric Shard", mmk: [20800], thb: [164] },
+  { id: "hsr-us-express_supply_pass", label: "US Express Supply Pass", mmk: [20800], thb: [164] },
+  { id: "hsr-us-980_110_oneiric_shard", label: "US 980 + 110 Oneiric Shard", mmk: [62400], thb: [491] },
+  { id: "hsr-us-1980_260_oneiric_shard", label: "US 1980 + 260 Oneiric Shard", mmk: [124800], thb: [983] },
+  { id: "hsr-us-3280_600_oneiric_shard", label: "US 3280 + 600 Oneiric Shard", mmk: [207900], thb: [1638] },
+  { id: "hsr-us-6480_1600_oneiric_shard", label: "US 6480 + 1600 Oneiric Shard", mmk: [415900], thb: [3276] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: honkai_impact_3rd_asia), 7%
@@ -902,41 +983,128 @@ const ARENA_BREAKOUT_PACKAGES = [
 
 // ✅ Full FazerCards catalog (category_id: delta_force), 7% margin,
 // 2569-09-05 pricing. Single "Player ID" field.
-const DELTA_FORCE_PACKAGES = [
-  { id: "delta_force-18_delta_coins", label: "18 Delta Coins", mmk: [1000], thb: [8] },
-  { id: "delta_force-30_delta_coins", label: "30 Delta Coins", mmk: [1700], thb: [13] },
-  { id: "delta_force-60_delta_coins", label: "60 Delta Coins", mmk: [3400], thb: [27] },
-  { id: "delta_force-320_delta_coins", label: "320 Delta Coins", mmk: [17000], thb: [134] },
-  { id: "delta_force-460_delta_coins", label: "460 Delta Coins", mmk: [24700], thb: [195] },
-  { id: "delta_force-750_delta_coins", label: "750 Delta Coins", mmk: [34100], thb: [268] },
-  { id: "delta_force-1480_delta_coins", label: "1480 Delta Coins", mmk: [68200], thb: [537] },
-  { id: "delta_force-1980_delta_coins", label: "1980 Delta Coins", mmk: [85200], thb: [671] },
-  { id: "delta_force-3950_delta_coins", label: "3950 Delta Coins", mmk: [170400], thb: [1342] },
-  { id: "delta_force-8100_delta_coins", label: "8100 Delta Coins", mmk: [340800], thb: [2684] },
-  { id: "delta_force-16200_delta_coins", label: "16200 Delta Coins", mmk: [707100], thb: [5570] },
-  { id: "delta_force-24300_delta_coins", label: "24300 Delta Coins", mmk: [1060700], thb: [8355] },
-  { id: "delta_force-season_pass_operations_special", label: "Season Pass Operations Special", mmk: [19100], thb: [151] },
-  { id: "delta_force-season_pass_warfare_special", label: "Season Pass Warfare Special", mmk: [19100], thb: [151] },
-  { id: "delta_force-season_pass_delta_force_deluxe", label: "Season Pass Delta Force Deluxe", mmk: [26500], thb: [209] },
+const DELTA_GLOBAL_PACKAGES = [
+  { id: "delta-global-18_delta_coins", label: "Global 18 Delta Coins", mmk: [1000], thb: [8] },
+  { id: "delta-global-30_delta_coins", label: "Global 30 Delta Coins", mmk: [1700], thb: [13] },
+  { id: "delta-global-60_delta_coins", label: "Global 60 Delta Coins", mmk: [3400], thb: [27] },
+  { id: "delta-global-320_delta_coins", label: "Global 320 Delta Coins", mmk: [17000], thb: [134] },
+  { id: "delta-global-460_delta_coins", label: "Global 460 Delta Coins", mmk: [24700], thb: [195] },
+  { id: "delta-global-750_delta_coins", label: "Global 750 Delta Coins", mmk: [34100], thb: [268] },
+  { id: "delta-global-1480_delta_coins", label: "Global 1480 Delta Coins", mmk: [68200], thb: [537] },
+  { id: "delta-global-1980_delta_coins", label: "Global 1980 Delta Coins", mmk: [85200], thb: [671] },
+  { id: "delta-global-3950_delta_coins", label: "Global 3950 Delta Coins", mmk: [170400], thb: [1342] },
+  { id: "delta-global-8100_delta_coins", label: "Global 8100 Delta Coins", mmk: [340800], thb: [2684] },
+  { id: "delta-global-16200_delta_coins", label: "Global 16200 Delta Coins", mmk: [707100], thb: [5570] },
+  { id: "delta-global-24300_delta_coins", label: "Global 24300 Delta Coins", mmk: [1060700], thb: [8355] },
+  { id: "delta-global-season_pass_operations_special", label: "Global Season Pass Operations Special", mmk: [19100], thb: [151] },
+  { id: "delta-global-season_pass_warfare_special", label: "Global Season Pass Warfare Special", mmk: [19100], thb: [151] },
+  { id: "delta-global-season_pass_delta_force_deluxe", label: "Global Season Pass Delta Force Deluxe", mmk: [26500], thb: [209] },
+];
+
+const DELTA_INDONESIA_PACKAGES = [
+  { id: "delta-indonesia-19_delta_coins", label: "Indonesia 19 Delta Coins", mmk: [1300], thb: [10] },
+  { id: "delta-indonesia-32_delta_coins", label: "Indonesia 32 Delta Coins", mmk: [2000], thb: [16] },
+  { id: "delta-indonesia-blaze_supplies", label: "Indonesia Blaze Supplies", mmk: [2200], thb: [17] },
+  { id: "delta-indonesia-63_delta_coins", label: "Indonesia 63 Delta Coins", mmk: [3900], thb: [31] },
+  { id: "delta-indonesia-blaze_supplies_advanced", label: "Indonesia Blaze Supplies - Advanced", mmk: [6200], thb: [49] },
+  { id: "delta-indonesia-336_delta_coins", label: "Indonesia 336 Delta Coins", mmk: [19300], thb: [152] },
+  { id: "delta-indonesia-482_delta_coins", label: "Indonesia 482 Delta Coins", mmk: [26500], thb: [209] },
+  { id: "delta-indonesia-785_delta_coins", label: "Indonesia 785 Delta Coins", mmk: [37200], thb: [293] },
+  { id: "delta-indonesia-1544_delta_coins", label: "Indonesia 1544 Delta Coins", mmk: [74400], thb: [586] },
+  { id: "delta-indonesia-2065_delta_coins", label: "Indonesia 2065 Delta Coins", mmk: [92900], thb: [732] },
+  { id: "delta-indonesia-4114_delta_coins", label: "Indonesia 4114 Delta Coins", mmk: [185800], thb: [1464] },
+  { id: "delta-indonesia-8424_delta_coins", label: "Indonesia 8424 Delta Coins", mmk: [371600], thb: [2927] },
+  { id: "delta-indonesia-16848_delta_coins", label: "Indonesia 16848 Delta Coins", mmk: [743200], thb: [5855] },
+  { id: "delta-indonesia-25272_delta_coins", label: "Indonesia 25272 Delta Coins", mmk: [1114900], thb: [8782] },
+];
+
+const DELTA_MY_PACKAGES = [
+  { id: "delta-my-19_delta_coins", label: "MY 19 Delta Coins", mmk: [1200], thb: [9] },
+  { id: "delta-my-32_delta_coins", label: "MY 32 Delta Coins", mmk: [2000], thb: [16] },
+  { id: "delta-my-63_delta_coins", label: "MY 63 Delta Coins", mmk: [4200], thb: [33] },
+  { id: "delta-my-336_delta_coins", label: "MY 336 Delta Coins", mmk: [21000], thb: [165] },
+  { id: "delta-my-785_delta_coins", label: "MY 785 Delta Coins", mmk: [41900], thb: [330] },
+  { id: "delta-my-482_delta_coins", label: "MY 482 Delta Coins", mmk: [29400], thb: [231] },
+  { id: "delta-my-1544_delta_coins", label: "MY 1544 Delta Coins", mmk: [82900], thb: [653] },
+  { id: "delta-my-2065_delta_coins", label: "MY 2065 Delta Coins", mmk: [104400], thb: [822] },
+  { id: "delta-my-4114_delta_coins", label: "MY 4114 Delta Coins", mmk: [209700], thb: [1652] },
+  { id: "delta-my-8424_delta_coins", label: "MY 8424 Delta Coins", mmk: [419600], thb: [3305] },
+  { id: "delta-my-16848_delta_coins", label: "MY 16848 Delta Coins", mmk: [839400], thb: [6612] },
+  { id: "delta-my-25272_delta_coins", label: "MY 25272 Delta Coins", mmk: [1259100], thb: [9918] },
+  { id: "delta-my-silent_sentinel_supplies", label: "MY Silent Sentinel Supplies", mmk: [4200], thb: [33] },
+  { id: "delta-my-black_hawk_down_genesis", label: "MY Black Hawk Down - Genesis", mmk: [4200], thb: [33] },
+  { id: "delta-my-black_hawk_down_reshape", label: "MY Black Hawk Down - Reshape", mmk: [12600], thb: [99] },
+  { id: "delta-my-silent_sentinel_supplies_advanced", label: "MY Silent Sentinel Supplies - Advanced", mmk: [12600], thb: [99] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: eafc_mobile_my), 7% margin,
 // 2569-09-05 pricing. Single "Player ID" field.
-const EAFC_MOBILE_MY_PACKAGES = [
-  { id: "eafc_mobile_my-40_fc_points", label: "40 FC Points", mmk: [2200], thb: [17] },
-  { id: "eafc_mobile_my-100_fc_points", label: "100 FC Points", mmk: [5300], thb: [42] },
-  { id: "eafc_mobile_my-520_fc_points", label: "520 FC Points", mmk: [25900], thb: [204] },
-  { id: "eafc_mobile_my-1070_fc_points", label: "1070 FC Points", mmk: [48600], thb: [383] },
-  { id: "eafc_mobile_my-2200_fc_points", label: "2200 FC Points", mmk: [102700], thb: [809] },
-  { id: "eafc_mobile_my-5750_fc_points", label: "5750 FC Points", mmk: [259700], thb: [2045] },
-  { id: "eafc_mobile_my-12000_fc_points", label: "12000 FC Points", mmk: [519400], thb: [4092] },
-  { id: "eafc_mobile_my-39_silver", label: "39 Silver", mmk: [2200], thb: [17] },
-  { id: "eafc_mobile_my-99_silver", label: "99 Silver", mmk: [5300], thb: [42] },
-  { id: "eafc_mobile_my-499_silver", label: "499 Silver", mmk: [25900], thb: [204] },
-  { id: "eafc_mobile_my-999_silver", label: "999 Silver", mmk: [48600], thb: [383] },
-  { id: "eafc_mobile_my-1999_silver", label: "1999 Silver", mmk: [102700], thb: [809] },
-  { id: "eafc_mobile_my-4999_silver", label: "4999 Silver", mmk: [259700], thb: [2045] },
-  { id: "eafc_mobile_my-9999_silver", label: "9999 Silver", mmk: [519400], thb: [4092] },
+const EAFC_ID_PACKAGES = [
+  { id: "eafc-id-40_fc_points", label: "ID 40 FC Points", mmk: [1600], thb: [12] },
+  { id: "eafc-id-100_fc_points", label: "ID 100 FC Points", mmk: [3900], thb: [31] },
+  { id: "eafc-id-520_fc_points", label: "ID 520 FC Points", mmk: [19200], thb: [151] },
+  { id: "eafc-id-1070_fc_points", label: "ID 1070 FC Points", mmk: [38600], thb: [304] },
+  { id: "eafc-id-2200_fc_points", label: "ID 2200 FC Points", mmk: [79900], thb: [629] },
+  { id: "eafc-id-5750_fc_points", label: "ID 5750 FC Points", mmk: [194000], thb: [1528] },
+  { id: "eafc-id-12000_fc_points", label: "ID 12000 FC Points", mmk: [388200], thb: [3058] },
+  { id: "eafc-id-39_silver", label: "ID 39 Silver", mmk: [1600], thb: [12] },
+  { id: "eafc-id-99_silver", label: "ID 99 Silver", mmk: [3900], thb: [31] },
+  { id: "eafc-id-499_silver", label: "ID 499 Silver", mmk: [19200], thb: [151] },
+  { id: "eafc-id-999_silver", label: "ID 999 Silver", mmk: [38600], thb: [304] },
+  { id: "eafc-id-1999_silver", label: "ID 1999 Silver", mmk: [79900], thb: [629] },
+  { id: "eafc-id-4999_silver", label: "ID 4999 Silver", mmk: [194000], thb: [1528] },
+  { id: "eafc-id-9999_silver", label: "ID 9999 Silver", mmk: [388200], thb: [3058] },
+];
+
+const EAFC_KH_PACKAGES = [
+  { id: "eafc-kh-40_fc_points", label: "KH 40 FC Points", mmk: [1700], thb: [13] },
+  { id: "eafc-kh-100_fc_points", label: "KH 100 FC Points", mmk: [4300], thb: [34] },
+  { id: "eafc-kh-520_fc_points", label: "KH 520 FC Points", mmk: [21900], thb: [172] },
+  { id: "eafc-kh-1070_fc_points", label: "KH 1070 FC Points", mmk: [43700], thb: [344] },
+  { id: "eafc-kh-2200_fc_points", label: "KH 2200 FC Points", mmk: [87500], thb: [689] },
+  { id: "eafc-kh-5750_fc_points", label: "KH 5750 FC Points", mmk: [218800], thb: [1724] },
+  { id: "eafc-kh-12000_fc_points", label: "KH 12000 FC Points", mmk: [437700], thb: [3448] },
+  { id: "eafc-kh-39_silver", label: "KH 39 Silver", mmk: [1700], thb: [13] },
+  { id: "eafc-kh-99_silver", label: "KH 99 Silver", mmk: [4300], thb: [34] },
+  { id: "eafc-kh-499_silver", label: "KH 499 Silver", mmk: [21900], thb: [172] },
+  { id: "eafc-kh-999_silver", label: "KH 999 Silver", mmk: [43700], thb: [344] },
+  { id: "eafc-kh-1999_silver", label: "KH 1999 Silver", mmk: [87500], thb: [689] },
+  { id: "eafc-kh-4999_silver", label: "KH 4999 Silver", mmk: [218800], thb: [1724] },
+  { id: "eafc-kh-9999_silver", label: "KH 9999 Silver", mmk: [437700], thb: [3448] },
+];
+
+const EAFC_MY_PACKAGES = [
+  { id: "eafc-my-40_fc_points", label: "MY 40 FC Points", mmk: [2200], thb: [17] },
+  { id: "eafc-my-100_fc_points", label: "MY 100 FC Points", mmk: [5300], thb: [42] },
+  { id: "eafc-my-520_fc_points", label: "MY 520 FC Points", mmk: [25900], thb: [204] },
+  { id: "eafc-my-1070_fc_points", label: "MY 1070 FC Points", mmk: [48600], thb: [383] },
+  { id: "eafc-my-2200_fc_points", label: "MY 2200 FC Points", mmk: [102700], thb: [809] },
+  { id: "eafc-my-5750_fc_points", label: "MY 5750 FC Points", mmk: [259700], thb: [2045] },
+  { id: "eafc-my-12000_fc_points", label: "MY 12000 FC Points", mmk: [519400], thb: [4092] },
+  { id: "eafc-my-39_silver", label: "MY 39 Silver", mmk: [2200], thb: [17] },
+  { id: "eafc-my-99_silver", label: "MY 99 Silver", mmk: [5300], thb: [42] },
+  { id: "eafc-my-499_silver", label: "MY 499 Silver", mmk: [25900], thb: [204] },
+  { id: "eafc-my-999_silver", label: "MY 999 Silver", mmk: [48600], thb: [383] },
+  { id: "eafc-my-1999_silver", label: "MY 1999 Silver", mmk: [102700], thb: [809] },
+  { id: "eafc-my-4999_silver", label: "MY 4999 Silver", mmk: [259700], thb: [2045] },
+  { id: "eafc-my-9999_silver", label: "MY 9999 Silver", mmk: [519400], thb: [4092] },
+];
+
+const EAFC_SG_PACKAGES = [
+  { id: "eafc-sg-40_fc_points", label: "SG 40 FC Points", mmk: [2000], thb: [16] },
+  { id: "eafc-sg-100_fc_points", label: "SG 100 FC Points", mmk: [5100], thb: [40] },
+  { id: "eafc-sg-520_fc_points", label: "SG 520 FC Points", mmk: [24100], thb: [190] },
+  { id: "eafc-sg-1070_fc_points", label: "SG 1070 FC Points", mmk: [51800], thb: [408] },
+  { id: "eafc-sg-2200_fc_points", label: "SG 2200 FC Points", mmk: [100100], thb: [789] },
+  { id: "eafc-sg-5750_fc_points", label: "SG 5750 FC Points", mmk: [238400], thb: [1878] },
+  { id: "eafc-sg-12000_fc_points", label: "SG 12000 FC Points", mmk: [514900], thb: [4056] },
+  { id: "eafc-sg-39_silver", label: "SG 39 Silver", mmk: [2000], thb: [16] },
+  { id: "eafc-sg-99_silver", label: "SG 99 Silver", mmk: [5100], thb: [40] },
+  { id: "eafc-sg-499_silver", label: "SG 499 Silver", mmk: [24100], thb: [190] },
+  { id: "eafc-sg-999_silver", label: "SG 999 Silver", mmk: [51800], thb: [408] },
+  { id: "eafc-sg-1999_silver", label: "SG 1999 Silver", mmk: [100100], thb: [789] },
+  { id: "eafc-sg-4999_silver", label: "SG 4999 Silver", mmk: [238400], thb: [1878] },
+  { id: "eafc-sg-9999_silver", label: "SG 9999 Silver", mmk: [514900], thb: [4056] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: identity_v), 7% margin,
@@ -1080,32 +1248,162 @@ const EGGY_PARTY_PACKAGES = [
   { id: "eggy_party-golden_autumn_ltd_pack_2", label: "Golden Autumn LTD Pack 2", mmk: [441500], thb: [3478] },
 ];
 
-const R6_MOBILE_GLOBAL_PACKAGES = [
-  { id: "r6_mobile_global-250_first_purchase_only", label: "250 (FIRST PURCHASE ONLY)", mmk: [3100], thb: [24] },
-  { id: "r6_mobile_global-50_platinum", label: "50 Platinum", mmk: [3100], thb: [24] },
-  { id: "r6_mobile_global-250_first_purchase", label: "250 (First Purchase)", mmk: [3100], thb: [25] },
-  { id: "r6_mobile_global-110_platinum", label: "110 Platinum", mmk: [4100], thb: [33] },
-  { id: "r6_mobile_global-300_platinum", label: "300 Platinum", mmk: [11800], thb: [93] },
-  { id: "r6_mobile_global-600_first_purchase_only", label: "600 (FIRST PURCHASE ONLY)", mmk: [14800], thb: [116] },
-  { id: "r6_mobile_global-600_first_purchase", label: "600 (First Purchase)", mmk: [15000], thb: [118] },
-  { id: "r6_mobile_global-650_platinum", label: "650 Platinum", mmk: [22500], thb: [177] },
-  { id: "r6_mobile_global-1350_platinum", label: "1350 Platinum", mmk: [44600], thb: [352] },
-  { id: "r6_mobile_global-2700_first_purchase_only", label: "2700 (FIRST PURCHASE ONLY)", mmk: [58100], thb: [458] },
-  { id: "r6_mobile_global-2700_first_purchase", label: "2700 (First Purchase)", mmk: [59200], thb: [466] },
-  { id: "r6_mobile_global-3500_platinum", label: "3500 Platinum", mmk: [115900], thb: [913] },
-  { id: "r6_mobile_global-7000_first_purchase_only", label: "7000 (FIRST PURCHASE ONLY)", mmk: [144900], thb: [1141] },
-  { id: "r6_mobile_global-7000_first_purchase", label: "7000 (First Purchase)", mmk: [147400], thb: [1161] },
-  { id: "r6_mobile_global-7250_platinum", label: "7250 Platinum", mmk: [241400], thb: [1902] },
-  { id: "r6_mobile_global-11250_platinum", label: "11250 Platinum", mmk: [357000], thb: [2812] },
+const R6_GLOBAL_PACKAGES = [
+  { id: "r6-global-250_first_purchase_only", label: "Global 250 (FIRST PURCHASE ONLY)", mmk: [3100], thb: [24] },
+  { id: "r6-global-50_platinum", label: "Global 50 Platinum", mmk: [3100], thb: [24] },
+  { id: "r6-global-250_first_purchase", label: "Global 250 (First Purchase)", mmk: [3100], thb: [25] },
+  { id: "r6-global-110_platinum", label: "Global 110 Platinum", mmk: [4100], thb: [33] },
+  { id: "r6-global-300_platinum", label: "Global 300 Platinum", mmk: [11800], thb: [93] },
+  { id: "r6-global-600_first_purchase_only", label: "Global 600 (FIRST PURCHASE ONLY)", mmk: [14800], thb: [116] },
+  { id: "r6-global-600_first_purchase", label: "Global 600 (First Purchase)", mmk: [15000], thb: [118] },
+  { id: "r6-global-650_platinum", label: "Global 650 Platinum", mmk: [22500], thb: [177] },
+  { id: "r6-global-1350_platinum", label: "Global 1350 Platinum", mmk: [44600], thb: [352] },
+  { id: "r6-global-2700_first_purchase_only", label: "Global 2700 (FIRST PURCHASE ONLY)", mmk: [58100], thb: [458] },
+  { id: "r6-global-2700_first_purchase", label: "Global 2700 (First Purchase)", mmk: [59200], thb: [466] },
+  { id: "r6-global-3500_platinum", label: "Global 3500 Platinum", mmk: [115900], thb: [913] },
+  { id: "r6-global-7000_first_purchase_only", label: "Global 7000 (FIRST PURCHASE ONLY)", mmk: [144900], thb: [1141] },
+  { id: "r6-global-7000_first_purchase", label: "Global 7000 (First Purchase)", mmk: [147400], thb: [1161] },
+  { id: "r6-global-7250_platinum", label: "Global 7250 Platinum", mmk: [241400], thb: [1902] },
+  { id: "r6-global-11250_platinum", label: "Global 11250 Platinum", mmk: [357000], thb: [2812] },
 ];
 
-const TFT_MOBILE_TH_PACKAGES = [
-  { id: "tft_mobile_th-575_tft_coins", label: "575 TFT Coins", mmk: [16600], thb: [131] },
-  { id: "tft_mobile_th-1380_tft_coins", label: "1380 TFT Coins", mmk: [37000], thb: [291] },
-  { id: "tft_mobile_th-2800_tft_coins", label: "2800 TFT Coins", mmk: [71400], thb: [563] },
-  { id: "tft_mobile_th-4500_tft_coins", label: "4500 TFT Coins", mmk: [113500], thb: [894] },
-  { id: "tft_mobile_th-6500_tft_coins", label: "6500 TFT Coins", mmk: [159400], thb: [1256] },
-  { id: "tft_mobile_th-13500_tft_coins", label: "13500 TFT Coins", mmk: [325200], thb: [2562] },
+const R6_ID_PACKAGES = [
+  { id: "r6-id-250_first_purchase_only", label: "ID 250 (FIRST PURCHASE ONLY)", mmk: [2700], thb: [21] },
+  { id: "r6-id-50_platinum", label: "ID 50 Platinum", mmk: [2700], thb: [21] },
+  { id: "r6-id-110_platinum", label: "ID 110 Platinum", mmk: [5300], thb: [42] },
+  { id: "r6-id-300_platinum", label: "ID 300 Platinum", mmk: [13100], thb: [103] },
+  { id: "r6-id-600_first_purchase_only", label: "ID 600 (FIRST PURCHASE ONLY)", mmk: [13100], thb: [103] },
+  { id: "r6-id-650_platinum", label: "ID 650 Platinum", mmk: [26000], thb: [205] },
+  { id: "r6-id-1350_platinum", label: "ID 1350 Platinum", mmk: [52700], thb: [415] },
+  { id: "r6-id-2700_first_purchase_only", label: "ID 2700 (FIRST PURCHASE ONLY)", mmk: [52700], thb: [415] },
+  { id: "r6-id-3500_platinum", label: "ID 3500 Platinum", mmk: [130900], thb: [1032] },
+  { id: "r6-id-7000_first_purchase_only", label: "ID 7000 (FIRST PURCHASE ONLY)", mmk: [130900], thb: [1032] },
+  { id: "r6-id-7250_platinum", label: "ID 7250 Platinum", mmk: [262200], thb: [2065] },
+  { id: "r6-id-11250_platinum", label: "ID 11250 Platinum", mmk: [398000], thb: [3136] },
+];
+
+const R6_MY_PACKAGES = [
+  { id: "r6-my-250_first_purchase_only", label: "MY 250 (FIRST PURCHASE ONLY)", mmk: [3600], thb: [28] },
+  { id: "r6-my-50_platinum", label: "MY 50 Platinum", mmk: [3600], thb: [28] },
+  { id: "r6-my-110_platinum", label: "MY 110 Platinum", mmk: [7000], thb: [55] },
+  { id: "r6-my-300_platinum", label: "MY 300 Platinum", mmk: [16800], thb: [132] },
+  { id: "r6-my-600_first_purchase_only", label: "MY 600 (FIRST PURCHASE ONLY)", mmk: [16800], thb: [132] },
+  { id: "r6-my-650_platinum", label: "MY 650 Platinum", mmk: [33400], thb: [263] },
+  { id: "r6-my-1350_platinum", label: "MY 1350 Platinum", mmk: [65900], thb: [520] },
+  { id: "r6-my-2700_first_purchase_only", label: "MY 2700 (FIRST PURCHASE ONLY)", mmk: [65900], thb: [520] },
+  { id: "r6-my-3500_platinum", label: "MY 3500 Platinum", mmk: [167500], thb: [1320] },
+  { id: "r6-my-7000_first_purchase_only", label: "MY 7000 (FIRST PURCHASE ONLY)", mmk: [167500], thb: [1320] },
+  { id: "r6-my-7250_platinum", label: "MY 7250 Platinum", mmk: [335100], thb: [2640] },
+  { id: "r6-my-11250_platinum", label: "MY 11250 Platinum", mmk: [507800], thb: [4000] },
+];
+
+const R6_PH_PACKAGES = [
+  { id: "r6-ph-250_first_purchase_only", label: "PH 250 (FIRST PURCHASE ONLY)", mmk: [2800], thb: [22] },
+  { id: "r6-ph-50_platinum", label: "PH 50 Platinum", mmk: [2800], thb: [22] },
+  { id: "r6-ph-110_platinum", label: "PH 110 Platinum", mmk: [5500], thb: [43] },
+  { id: "r6-ph-300_platinum", label: "PH 300 Platinum", mmk: [13700], thb: [108] },
+  { id: "r6-ph-600_first_purchase_only", label: "PH 600 (FIRST PURCHASE ONLY)", mmk: [13700], thb: [108] },
+  { id: "r6-ph-650_platinum", label: "PH 650 Platinum", mmk: [27300], thb: [215] },
+  { id: "r6-ph-1350_platinum", label: "PH 1350 Platinum", mmk: [54700], thb: [431] },
+  { id: "r6-ph-2700_first_purchase_only", label: "PH 2700 (FIRST PURCHASE ONLY)", mmk: [54700], thb: [431] },
+  { id: "r6-ph-3500_platinum", label: "PH 3500 Platinum", mmk: [136400], thb: [1074] },
+  { id: "r6-ph-7000_first_purchase_only", label: "PH 7000 (FIRST PURCHASE ONLY)", mmk: [136400], thb: [1074] },
+  { id: "r6-ph-7250_platinum", label: "PH 7250 Platinum", mmk: [273400], thb: [2154] },
+  { id: "r6-ph-11250_platinum", label: "PH 11250 Platinum", mmk: [341900], thb: [2693] },
+];
+
+const R6_SG_PACKAGES = [
+  { id: "r6-sg-250_first_purchase_only", label: "SG 250 (FIRST PURCHASE ONLY)", mmk: [5000], thb: [39] },
+  { id: "r6-sg-50_platinum", label: "SG 50 Platinum", mmk: [5000], thb: [39] },
+  { id: "r6-sg-250_first_purchase", label: "SG 250 (First Purchase)", mmk: [5100], thb: [40] },
+  { id: "r6-sg-110_platinum", label: "SG 110 Platinum", mmk: [10000], thb: [79] },
+  { id: "r6-sg-300_platinum", label: "SG 300 Platinum", mmk: [23400], thb: [185] },
+  { id: "r6-sg-600_first_purchase_only", label: "SG 600 (FIRST PURCHASE ONLY)", mmk: [23400], thb: [185] },
+  { id: "r6-sg-600_first_purchase", label: "SG 600 (First Purchase)", mmk: [24200], thb: [191] },
+  { id: "r6-sg-650_platinum", label: "SG 650 Platinum", mmk: [50300], thb: [396] },
+  { id: "r6-sg-1350_platinum", label: "SG 1350 Platinum", mmk: [100700], thb: [794] },
+  { id: "r6-sg-2700_first_purchase_only", label: "SG 2700 (FIRST PURCHASE ONLY)", mmk: [100700], thb: [794] },
+  { id: "r6-sg-2700_first_purchase", label: "SG 2700 (First Purchase)", mmk: [104100], thb: [820] },
+  { id: "r6-sg-3500_platinum", label: "SG 3500 Platinum", mmk: [248500], thb: [1958] },
+  { id: "r6-sg-7000_first_purchase_only", label: "SG 7000 (FIRST PURCHASE ONLY)", mmk: [248500], thb: [1958] },
+  { id: "r6-sg-7000_first_purchase", label: "SG 7000 (First Purchase)", mmk: [256700], thb: [2022] },
+  { id: "r6-sg-7250_platinum", label: "SG 7250 Platinum", mmk: [503800], thb: [3969] },
+  { id: "r6-sg-11250_platinum", label: "SG 11250 Platinum", mmk: [671800], thb: [5292] },
+];
+
+const R6_TH_PACKAGES = [
+  { id: "r6-th-250_first_purchase_only", label: "TH 250 (FIRST PURCHASE ONLY)", mmk: [3100], thb: [25] },
+  { id: "r6-th-50_platinum", label: "TH 50 Platinum", mmk: [3100], thb: [25] },
+  { id: "r6-th-110_platinum", label: "TH 110 Platinum", mmk: [6200], thb: [49] },
+  { id: "r6-th-300_platinum", label: "TH 300 Platinum", mmk: [16100], thb: [127] },
+  { id: "r6-th-600_first_purchase_only", label: "TH 600 (FIRST PURCHASE ONLY)", mmk: [16100], thb: [127] },
+  { id: "r6-th-650_platinum", label: "TH 650 Platinum", mmk: [31100], thb: [245] },
+  { id: "r6-th-1350_platinum", label: "TH 1350 Platinum", mmk: [62200], thb: [490] },
+  { id: "r6-th-2700_first_purchase_only", label: "TH 2700 (FIRST PURCHASE ONLY)", mmk: [62200], thb: [490] },
+  { id: "r6-th-3500_platinum", label: "TH 3500 Platinum", mmk: [155900], thb: [1228] },
+  { id: "r6-th-7000_first_purchase_only", label: "TH 7000 (FIRST PURCHASE ONLY)", mmk: [155900], thb: [1228] },
+  { id: "r6-th-7250_platinum", label: "TH 7250 Platinum", mmk: [330600], thb: [2604] },
+  { id: "r6-th-11250_platinum", label: "TH 11250 Platinum", mmk: [497800], thb: [3921] },
+];
+
+const R6_US_PACKAGES = [
+  { id: "r6-us-250_first_purchase_only", label: "US 250 (FIRST PURCHASE ONLY)", mmk: [4100], thb: [32] },
+  { id: "r6-us-50_platinum", label: "US 50 Platinum", mmk: [4100], thb: [32] },
+  { id: "r6-us-110_platinum", label: "US 110 Platinum", mmk: [8200], thb: [64] },
+  { id: "r6-us-300_platinum", label: "US 300 Platinum", mmk: [20500], thb: [162] },
+  { id: "r6-us-600_first_purchase_only", label: "US 600 (FIRST PURCHASE ONLY)", mmk: [20500], thb: [162] },
+  { id: "r6-us-650_platinum", label: "US 650 Platinum", mmk: [41100], thb: [324] },
+  { id: "r6-us-1350_platinum", label: "US 1350 Platinum", mmk: [82200], thb: [647] },
+  { id: "r6-us-2700_first_purchase_only", label: "US 2700 (FIRST PURCHASE ONLY)", mmk: [82200], thb: [647] },
+  { id: "r6-us-3500_platinum", label: "US 3500 Platinum", mmk: [205400], thb: [1618] },
+  { id: "r6-us-7000_first_purchase_only", label: "US 7000 (FIRST PURCHASE ONLY)", mmk: [205400], thb: [1618] },
+  { id: "r6-us-7250_platinum", label: "US 7250 Platinum", mmk: [410900], thb: [3237] },
+  { id: "r6-us-11250_platinum", label: "US 11250 Platinum", mmk: [616400], thb: [4855] },
+];
+
+const TFT_ID_PACKAGES = [
+  { id: "tft-id-575_tft_coins", label: "ID 575 TFT Coins", mmk: [14400], thb: [114] },
+  { id: "tft-id-1380_tft_coins", label: "ID 1380 TFT Coins", mmk: [33600], thb: [265] },
+  { id: "tft-id-2800_tft_coins", label: "ID 2800 TFT Coins", mmk: [67300], thb: [530] },
+  { id: "tft-id-4500_tft_coins", label: "ID 4500 TFT Coins", mmk: [105700], thb: [832] },
+  { id: "tft-id-6500_tft_coins", label: "ID 6500 TFT Coins", mmk: [148900], thb: [1173] },
+  { id: "tft-id-13500_tft_coins", label: "ID 13500 TFT Coins", mmk: [288300], thb: [2271] },
+];
+
+const TFT_MY_PACKAGES = [
+  { id: "tft-my-575_tft_coins", label: "MY 575 TFT Coins", mmk: [19100], thb: [151] },
+  { id: "tft-my-1380_tft_coins", label: "MY 1380 TFT Coins", mmk: [42500], thb: [334] },
+  { id: "tft-my-2800_tft_coins", label: "MY 2800 TFT Coins", mmk: [84000], thb: [662] },
+  { id: "tft-my-4500_tft_coins", label: "MY 4500 TFT Coins", mmk: [133600], thb: [1053] },
+  { id: "tft-my-6500_tft_coins", label: "MY 6500 TFT Coins", mmk: [192400], thb: [1516] },
+  { id: "tft-my-13500_tft_coins", label: "MY 13500 TFT Coins", mmk: [383900], thb: [3024] },
+];
+
+const TFT_PH_PACKAGES = [
+  { id: "tft-ph-575_tft_coins", label: "PH 575 TFT Coins", mmk: [13300], thb: [105] },
+  { id: "tft-ph-1380_tft_coins", label: "PH 1380 TFT Coins", mmk: [30100], thb: [237] },
+  { id: "tft-ph-2800_tft_coins", label: "PH 2800 TFT Coins", mmk: [60200], thb: [474] },
+  { id: "tft-ph-4500_tft_coins", label: "PH 4500 TFT Coins", mmk: [93600], thb: [738] },
+  { id: "tft-ph-6500_tft_coins", label: "PH 6500 TFT Coins", mmk: [133800], thb: [1054] },
+  { id: "tft-ph-13500_tft_coins", label: "PH 13500 TFT Coins", mmk: [267700], thb: [2109] },
+];
+
+const TFT_SG_PACKAGES = [
+  { id: "tft-sg-575_tft_coins", label: "SG 575 TFT Coins", mmk: [22000], thb: [173] },
+  { id: "tft-sg-1380_tft_coins", label: "SG 1380 TFT Coins", mmk: [49100], thb: [387] },
+  { id: "tft-sg-2800_tft_coins", label: "SG 2800 TFT Coins", mmk: [98300], thb: [774] },
+  { id: "tft-sg-4500_tft_coins", label: "SG 4500 TFT Coins", mmk: [157600], thb: [1242] },
+  { id: "tft-sg-6500_tft_coins", label: "SG 6500 TFT Coins", mmk: [225400], thb: [1776] },
+  { id: "tft-sg-13500_tft_coins", label: "SG 13500 TFT Coins", mmk: [454200], thb: [3578] },
+];
+
+const TFT_TH_PACKAGES = [
+  { id: "tft-th-575_tft_coins", label: "TH 575 TFT Coins", mmk: [16600], thb: [131] },
+  { id: "tft-th-1380_tft_coins", label: "TH 1380 TFT Coins", mmk: [37000], thb: [291] },
+  { id: "tft-th-2800_tft_coins", label: "TH 2800 TFT Coins", mmk: [71400], thb: [563] },
+  { id: "tft-th-4500_tft_coins", label: "TH 4500 TFT Coins", mmk: [113500], thb: [894] },
+  { id: "tft-th-6500_tft_coins", label: "TH 6500 TFT Coins", mmk: [159400], thb: [1256] },
+  { id: "tft-th-13500_tft_coins", label: "TH 13500 TFT Coins", mmk: [325200], thb: [2562] },
 ];
 
 // ---- Sausage Man ----
@@ -1836,6 +2134,13 @@ export default function MonkeyTopup() {
   const [mlServer, setMlServer] = useState("global");
   const [valorantServer, setValorantServer] = useState("th");
   const [hi3rdServer, setHi3rdServer] = useState("asia");
+  const [lolServer, setLolServer] = useState("th");
+  const [codmServer, setCodmServer] = useState("sgmy");
+  const [hsrServer, setHsrServer] = useState("global");
+  const [deltaServer, setDeltaServer] = useState("global");
+  const [eafcServer, setEafcServer] = useState("my");
+  const [r6Server, setR6Server] = useState("global");
+  const [tftServer, setTftServer] = useState("th");
   const [telegramTab, setTelegramTab] = useState("stars");
   const [mcServer, setMcServer] = useState("global");
   const [server, setServer] = useState("Global");
@@ -2139,7 +2444,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile (Global)", "TFT Mobile (TH)"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends", "Call of Duty Mobile (Garena)", "Genshin Impact (Global)", "Honkai: Star Rail", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile", "TFT Mobile"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -2147,7 +2452,7 @@ export default function MonkeyTopup() {
       // server value sent to FazerCards even though no picker is shown --
       // see the same note in handleBuy().
       const hardcodedServerId =
-        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)"
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail"
           ? "asia"
           : gName === "Identity V"
             ? "Asia"
@@ -2177,7 +2482,7 @@ export default function MonkeyTopup() {
       // a server picker to the customer -- everyone here is SEA/MM, so it's
       // hardcoded to "asia" rather than adding UI for it.
       const hardcodedServerId =
-        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)"
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail"
           ? "asia"
           : gName === "Identity V"
             ? "Asia"
@@ -2236,14 +2541,14 @@ export default function MonkeyTopup() {
     if (HOK_TOKENS.includes(pkg) || HOK_SPECIAL.includes(pkg)) return "Honor of Kings";
     if (SKY_COTL_PACKAGES.includes(pkg)) return "Sky: Children of the Light";
     if ([VALORANT_ID_PACKAGES, VALORANT_KH_PACKAGES, VALORANT_MY_PACKAGES, VALORANT_PH_PACKAGES, VALORANT_SG_PACKAGES, VALORANT_TH_PACKAGES, VALORANT_VN_PACKAGES].some((arr) => arr.includes(pkg))) return "Valorant";
-    if (LOL_TH_PACKAGES.includes(pkg)) return "League of Legends (TH)";
-    if (CODM_SGMY_PACKAGES.includes(pkg)) return "Call of Duty Mobile (SG/MY)";
+    if ([LOL_ID_PACKAGES, LOL_KH_PACKAGES, LOL_MY_PACKAGES, LOL_PH_PACKAGES, LOL_SG_PACKAGES, LOL_TH_PACKAGES, LOL_VN_PACKAGES].some((arr) => arr.includes(pkg))) return "League of Legends";
+    if ([CODM_SGMY_PACKAGES, CODM_INDONESIA_PACKAGES].some((arr) => arr.includes(pkg))) return "Call of Duty Mobile (Garena)";
     if (GENSHIN_GLOBAL_PACKAGES.includes(pkg)) return "Genshin Impact (Global)";
-    if (HONKAI_STAR_RAIL_GLOBAL_PACKAGES.includes(pkg)) return "Honkai: Star Rail (Global)";
+    if ([HSR_GLOBAL_PACKAGES, HSR_US_PACKAGES].some((arr) => arr.includes(pkg))) return "Honkai: Star Rail";
     if ([HI3RD_ASIA_PACKAGES, HI3RD_ID_PACKAGES, HI3RD_KH_PACKAGES, HI3RD_MY_PACKAGES, HI3RD_PH_PACKAGES, HI3RD_SG_PACKAGES, HI3RD_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "Honkai Impact 3rd";
     if (ARENA_BREAKOUT_PACKAGES.includes(pkg)) return "Arena Breakout";
-    if (DELTA_FORCE_PACKAGES.includes(pkg)) return "Delta Force";
-    if (EAFC_MOBILE_MY_PACKAGES.includes(pkg)) return "EAFC Mobile (MY)";
+    if ([DELTA_GLOBAL_PACKAGES, DELTA_INDONESIA_PACKAGES, DELTA_MY_PACKAGES].some((arr) => arr.includes(pkg))) return "Delta Force";
+    if ([EAFC_ID_PACKAGES, EAFC_KH_PACKAGES, EAFC_MY_PACKAGES, EAFC_SG_PACKAGES].some((arr) => arr.includes(pkg))) return "EAFC Mobile";
     if (IDENTITY_V_PACKAGES.includes(pkg)) return "Identity V";
     if (LORDS_MOBILE_PACKAGES.includes(pkg)) return "Lords Mobile";
     if (STUMBLE_GUYS_PACKAGES.includes(pkg)) return "Stumble Guys";
@@ -2252,8 +2557,8 @@ export default function MonkeyTopup() {
     if (BLOCKMAN_GO_PACKAGES.includes(pkg)) return "Blockman Go";
     if (GROWTOPIA_PACKAGES.includes(pkg)) return "Growtopia";
     if (EGGY_PARTY_PACKAGES.includes(pkg)) return "Eggy Party";
-    if (R6_MOBILE_GLOBAL_PACKAGES.includes(pkg)) return "Rainbow Six Mobile (Global)";
-    if (TFT_MOBILE_TH_PACKAGES.includes(pkg)) return "TFT Mobile (TH)";
+    if ([R6_GLOBAL_PACKAGES, R6_ID_PACKAGES, R6_MY_PACKAGES, R6_PH_PACKAGES, R6_SG_PACKAGES, R6_TH_PACKAGES, R6_US_PACKAGES].some((arr) => arr.includes(pkg))) return "Rainbow Six Mobile";
+    if ([TFT_ID_PACKAGES, TFT_MY_PACKAGES, TFT_PH_PACKAGES, TFT_SG_PACKAGES, TFT_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "TFT Mobile";
     return "Unknown";
   }
 
@@ -3849,11 +4154,11 @@ export default function MonkeyTopup() {
           </>
         )}
 
-        {view === "lolThDetail" && (
+                {view === "lolThDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="League of Legends (TH)" />
+              <DetailThumbnail label="League of Legends" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -3872,17 +4177,55 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Riot Points" items={LOL_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["id", "🇮🇩 Indonesia"],
+                  ["kh", "🇰🇭 Cambodia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["ph", "🇵🇭 Philippines"],
+                  ["sg", "🇸🇬 Singapore"],
+                  ["th", "🇹🇭 Thailand"],
+                  ["vn", "🇻🇳 Vietnam"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setLolServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${lolServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Riot Points"
+                items={
+                  {
+                    id: LOL_ID_PACKAGES,
+                    kh: LOL_KH_PACKAGES,
+                    my: LOL_MY_PACKAGES,
+                    ph: LOL_PH_PACKAGES,
+                    sg: LOL_SG_PACKAGES,
+                    th: LOL_TH_PACKAGES,
+                    vn: LOL_VN_PACKAGES,
+                  }[lolServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
-        {view === "codmSgmyDetail" && (
+                {view === "codmSgmyDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Call of Duty Mobile (SG/MY)" />
+              <DetailThumbnail label="Call of Duty Mobile (Garena)" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -3901,7 +4244,35 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="CP (Credit Points)" items={CODM_SGMY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["sgmy", "🇸🇬🇲🇾 SG/MY"],
+                  ["indonesia", "🇮🇩 Indonesia"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setCodmServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${codmServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="CP (Credit Points)"
+                items={
+                  {
+                    sgmy: CODM_SGMY_PACKAGES,
+                    indonesia: CODM_INDONESIA_PACKAGES,
+                  }[codmServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3939,14 +4310,11 @@ export default function MonkeyTopup() {
           </>
         )}
 
-        {view === "hsrDetail" && (
+                {view === "hsrDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Honkai: Star Rail (Global)" />
-              <div className="bg-[#E3F2FD] text-[#0D47A1] text-xs rounded-lg p-3 text-center leading-relaxed">
-                Asia Server အတွက်ပဲ ဝန်ဆောင်မှုပေးပါသည် — Player ID (UID) ကို ရိုက်ထည့်ပါ
-              </div>
+              <DetailThumbnail label="Honkai: Star Rail" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -3965,7 +4333,35 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Oneiric Shard" items={HONKAI_STAR_RAIL_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["global", "🌍 Global"],
+                  ["us", "🇺🇸 US"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setHsrServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${hsrServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Oneiric Shard"
+                items={
+                  {
+                    global: HSR_GLOBAL_PACKAGES,
+                    us: HSR_US_PACKAGES,
+                  }[hsrServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -4066,7 +4462,7 @@ export default function MonkeyTopup() {
           </>
         )}
 
-        {view === "deltaForceDetail" && (
+                {view === "deltaForceDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
@@ -4089,17 +4485,47 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Delta Coins & Season Pass" items={DELTA_FORCE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["global", "🌍 Global"],
+                  ["indonesia", "🇮🇩 Indonesia"],
+                  ["my", "🇲🇾 Malaysia"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setDeltaServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${deltaServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Delta Coins & Season Pass"
+                items={
+                  {
+                    global: DELTA_GLOBAL_PACKAGES,
+                    indonesia: DELTA_INDONESIA_PACKAGES,
+                    my: DELTA_MY_PACKAGES,
+                  }[deltaServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
-        {view === "eafcDetail" && (
+                {view === "eafcDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="EAFC Mobile (MY)" />
+              <DetailThumbnail label="EAFC Mobile" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -4118,7 +4544,39 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="FC Points & Silver" items={EAFC_MOBILE_MY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["id", "🇮🇩 Indonesia"],
+                  ["kh", "🇰🇭 Cambodia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["sg", "🇸🇬 Singapore"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setEafcServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${eafcServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="FC Points & Silver"
+                items={
+                  {
+                    id: EAFC_ID_PACKAGES,
+                    kh: EAFC_KH_PACKAGES,
+                    my: EAFC_MY_PACKAGES,
+                    sg: EAFC_SG_PACKAGES,
+                  }[eafcServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -4358,11 +4816,11 @@ export default function MonkeyTopup() {
           </>
         )}
 
-        {view === "r6MobileDetail" && (
+                {view === "r6MobileDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Rainbow Six Mobile (Global)" />
+              <DetailThumbnail label="Rainbow Six Mobile" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -4381,17 +4839,55 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Platinum" items={R6_MOBILE_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["global", "🌍 Global"],
+                  ["id", "🇮🇩 Indonesia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["ph", "🇵🇭 Philippines"],
+                  ["sg", "🇸🇬 Singapore"],
+                  ["th", "🇹🇭 Thailand"],
+                  ["us", "🇺🇸 US"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setR6Server(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${r6Server === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Platinum"
+                items={
+                  {
+                    global: R6_GLOBAL_PACKAGES,
+                    id: R6_ID_PACKAGES,
+                    my: R6_MY_PACKAGES,
+                    ph: R6_PH_PACKAGES,
+                    sg: R6_SG_PACKAGES,
+                    th: R6_TH_PACKAGES,
+                    us: R6_US_PACKAGES,
+                  }[r6Server]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
 
-        {view === "tftThDetail" && (
+                {view === "tftThDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="TFT Mobile (TH)" />
+              <DetailThumbnail label="TFT Mobile" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -4410,7 +4906,41 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="TFT Coins" items={TFT_MOBILE_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["id", "🇮🇩 Indonesia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["ph", "🇵🇭 Philippines"],
+                  ["sg", "🇸🇬 Singapore"],
+                  ["th", "🇹🇭 Thailand"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setTftServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${tftServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="TFT Coins"
+                items={
+                  {
+                    id: TFT_ID_PACKAGES,
+                    my: TFT_MY_PACKAGES,
+                    ph: TFT_PH_PACKAGES,
+                    sg: TFT_SG_PACKAGES,
+                    th: TFT_TH_PACKAGES,
+                  }[tftServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -4605,14 +5135,14 @@ export default function MonkeyTopup() {
                     gName === "Honor of Kings" ||
                     gName === "Sky: Children of the Light" ||
                     gName === "Valorant" ||
-                    gName === "League of Legends (TH)" ||
-                    gName === "Call of Duty Mobile (SG/MY)" ||
+                    gName === "League of Legends" ||
+                    gName === "Call of Duty Mobile (Garena)" ||
                     gName === "Genshin Impact (Global)" ||
-                    gName === "Honkai: Star Rail (Global)" ||
+                    gName === "Honkai: Star Rail" ||
                     gName === "Honkai Impact 3rd" ||
                     gName === "Arena Breakout" ||
                     gName === "Delta Force" ||
-                    gName === "EAFC Mobile (MY)" ||
+                    gName === "EAFC Mobile" ||
                     gName === "Identity V" ||
                     gName === "Lords Mobile" ||
                     gName === "Stumble Guys" ||
@@ -4620,18 +5150,18 @@ export default function MonkeyTopup() {
                     gName === "Blockman Go" ||
                     gName === "Growtopia" ||
                     gName === "Eggy Party" ||
-                    gName === "Rainbow Six Mobile (Global)" ||
-                    gName === "TFT Mobile (TH)";
+                    gName === "Rainbow Six Mobile" ||
+                    gName === "TFT Mobile";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile (MY)" || gName === "Identity V" || gName === "Lords Mobile" || gName === "Blockman Go" || gName === "Rainbow Six Mobile (Global)"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (Garena)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile" || gName === "Identity V" || gName === "Lords Mobile" || gName === "Blockman Go" || gName === "Rainbow Six Mobile"
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
-                          : gName === "Valorant" || gName === "League of Legends (TH)" || gName === "TFT Mobile (TH)"
+                          : gName === "Valorant" || gName === "League of Legends" || gName === "TFT Mobile"
                             ? "Riot Id"
-                            : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd"
+                            : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail" || gName === "Honkai Impact 3rd"
                               ? "Player Id (UID)"
                               : gName === "Stumble Guys" || gName === "State of Survival" || gName === "Eggy Party"
                                 ? "User Id"
