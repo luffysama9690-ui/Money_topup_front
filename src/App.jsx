@@ -401,6 +401,9 @@ const GAMES = [
   { id: "telegram", name: "Telegram", tag: "New!", grad: "from-sky-500 to-blue-700", icon: "✈️", image: PKG_IMAGES.imgTelegramLogo, imgFit: "contain" },
   { id: "hok", name: "Honor of Kings", tag: "New!", grad: "from-yellow-600 to-red-800", icon: "👑" },
   { id: "skycotl", name: "Sky: Children of the Light", tag: "New!", grad: "from-indigo-500 to-purple-900", icon: "🕊️" },
+  { id: "valorant_th", name: "Valorant (TH)", tag: "New!", grad: "from-red-600 to-rose-900", icon: "🎯" },
+  { id: "lol_th", name: "League of Legends (TH)", tag: "New!", grad: "from-blue-600 to-cyan-800", icon: "⚔️" },
+  { id: "codm_sgmy", name: "Call of Duty Mobile (SG/MY)", tag: "New!", grad: "from-neutral-700 to-black", icon: "🔫" },
 ];
 
 // ---- PUBG New State ----
@@ -609,6 +612,48 @@ const SKY_COTL_PACKAGES = [
   { id: "sky-72_season_candles", label: "72 Season Candles", mmk: [86200], thb: [679] },
   { id: "sky-season_pass_pack", label: "Season Pass Pack", mmk: [86200], thb: [679] },
   { id: "sky-190_season_candles", label: "190 Season Candles", mmk: [218100], thb: [1718] },
+];
+
+// ✅ Full FazerCards catalog (category_id: valorant_th), 7% margin, 2569-09-05
+// pricing. Single "Riot ID" field.
+const VALORANT_TH_PACKAGES = [
+  { id: "valorant_th-475_vp", label: "475 VP", mmk: [16600], thb: [131] },
+  { id: "valorant_th-1000_vp", label: "1000 VP", mmk: [33200], thb: [261] },
+  { id: "valorant_th-2050_vp", label: "2050 VP", mmk: [66300], thb: [522] },
+  { id: "valorant_th-3650_vp", label: "3650 VP", mmk: [117300], thb: [924] },
+  { id: "valorant_th-5350_vp", label: "5350 VP", mmk: [168300], thb: [1326] },
+  { id: "valorant_th-11000_vp", label: "11000 VP", mmk: [336700], thb: [2652] },
+];
+
+// ✅ Full FazerCards catalog (category_id: lol_th), 7% margin, 2569-09-05
+// pricing. Single "Riot ID" field.
+const LOL_TH_PACKAGES = [
+  { id: "lol_th-575_rp", label: "575 RP", mmk: [16600], thb: [131] },
+  { id: "lol_th-1380_rp", label: "1380 RP", mmk: [37000], thb: [291] },
+  { id: "lol_th-2800_rp", label: "2800 RP", mmk: [71400], thb: [563] },
+  { id: "lol_th-4500_rp", label: "4500 RP", mmk: [113500], thb: [894] },
+  { id: "lol_th-6500_rp", label: "6500 RP", mmk: [159400], thb: [1256] },
+  { id: "lol_th-13500_rp", label: "13500 RP", mmk: [325200], thb: [2562] },
+];
+
+// ✅ Full FazerCards catalog (category_id: codm_garena_sgmy), 7% margin,
+// 2569-09-05 pricing. Single "Player ID" field.
+const CODM_SGMY_PACKAGES = [
+  { id: "codm_garena_sgmy-114_cp", label: "114 CP", mmk: [5400], thb: [43] },
+  { id: "codm_garena_sgmy-115_cp", label: "115 CP", mmk: [5300], thb: [42] },
+  { id: "codm_garena_sgmy-253_cp", label: "253 CP", mmk: [10600], thb: [84] },
+  { id: "codm_garena_sgmy-529_cp", label: "529 CP", mmk: [21300], thb: [167] },
+  { id: "codm_garena_sgmy-794_cp", label: "794 CP", mmk: [31900], thb: [251] },
+  { id: "codm_garena_sgmy-1053_cp", label: "1053 CP", mmk: [42500], thb: [335] },
+  { id: "codm_garena_sgmy-1323_cp", label: "1323 CP", mmk: [53200], thb: [419] },
+  { id: "codm_garena_sgmy-2760_cp", label: "2760 CP", mmk: [106300], thb: [838] },
+  { id: "codm_garena_sgmy-6440_cp", label: "6440 CP", mmk: [212700], thb: [1675] },
+  { id: "codm_garena_sgmy-9200_cp", label: "9200 CP", mmk: [319000], thb: [2513] },
+  { id: "codm_garena_sgmy-9602_cp", label: "6858 + 2744 CP", mmk: [325900], thb: [2567] },
+  { id: "codm_garena_sgmy-12880_cp", label: "12880 CP", mmk: [425300], thb: [3350] },
+  { id: "codm_garena_sgmy-15640_cp", label: "15640 CP", mmk: [531600], thb: [4188] },
+  { id: "codm_garena_sgmy-16001_cp", label: "11429 + 4572 CP", mmk: [543100], thb: [4278] },
+  { id: "codm_garena_sgmy-19320_cp", label: "19320 CP", mmk: [638000], thb: [5025] },
 ];
 
 // ---- Sausage Man ----
@@ -1572,7 +1617,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -1648,6 +1693,9 @@ export default function MonkeyTopup() {
     if (TELEGRAM_STARS.includes(pkg) || TELEGRAM_PREMIUM.includes(pkg)) return "Telegram";
     if (HOK_TOKENS.includes(pkg) || HOK_SPECIAL.includes(pkg)) return "Honor of Kings";
     if (SKY_COTL_PACKAGES.includes(pkg)) return "Sky: Children of the Light";
+    if (VALORANT_TH_PACKAGES.includes(pkg)) return "Valorant (TH)";
+    if (LOL_TH_PACKAGES.includes(pkg)) return "League of Legends (TH)";
+    if (CODM_SGMY_PACKAGES.includes(pkg)) return "Call of Duty Mobile (SG/MY)";
     return "Unknown";
   }
 
@@ -1798,6 +1846,9 @@ export default function MonkeyTopup() {
     if (gameId === "telegram") setView("telegramDetail");
     if (gameId === "hok") setView("hokDetail");
     if (gameId === "skycotl") setView("skyCotlDetail");
+    if (gameId === "valorant_th") setView("valorantThDetail");
+    if (gameId === "lol_th") setView("lolThDetail");
+    if (gameId === "codm_sgmy") setView("codmSgmyDetail");
   }
 
   async function handleSetBanned(banned) {
@@ -3157,6 +3208,93 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "valorantThDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Valorant (TH)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Valorant Points" items={VALORANT_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "lolThDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="League of Legends (TH)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Riot Points" items={LOL_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "codmSgmyDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Call of Duty Mobile (SG/MY)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="CP (Credit Points)" items={CODM_SGMY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
 
         {view === "bloodstrikeDetail" && (
           <>
@@ -3344,15 +3482,20 @@ export default function MonkeyTopup() {
                     gName === "Blood Strike" ||
                     gName === "Free Fire" ||
                     gName === "Honor of Kings" ||
-                    gName === "Sky: Children of the Light";
+                    gName === "Sky: Children of the Light" ||
+                    gName === "Valorant (TH)" ||
+                    gName === "League of Legends (TH)" ||
+                    gName === "Call of Duty Mobile (SG/MY)";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)"
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
-                          : "Game Id";
+                          : gName === "Valorant (TH)" || gName === "League of Legends (TH)"
+                            ? "Riot Id"
+                            : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
