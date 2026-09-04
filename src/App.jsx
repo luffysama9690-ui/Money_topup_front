@@ -3367,7 +3367,9 @@ export default function MonkeyTopup() {
                       <div>
                         <div className="font-semibold text-slate-800">
                           Telegram ID: {u.telegram_id}
+                          {u.username && <span className="text-slate-400 text-xs ml-1">@{u.username}</span>}
                           {u.is_reseller && <span className="text-emerald-600 text-[10px] font-bold ml-1">RESELLER</span>}
+                          {u.is_banned && <span className="text-white bg-red-500 text-[10px] font-bold ml-1 px-1.5 py-0.5 rounded">🚫 BANNED</span>}
                         </div>
                       </div>
                       <div className="text-right">
