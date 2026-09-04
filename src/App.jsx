@@ -368,6 +368,7 @@ const GAMES = [
   { id: "capcut", name: "CapCut", tag: "New!", grad: "from-violet-500 to-fuchsia-700", icon: "✂️", image: PKG_IMAGES.imgCapcutLogo, imgFit: "contain" },
   { id: "telegram", name: "Telegram", tag: "New!", grad: "from-sky-500 to-blue-700", icon: "✈️", image: PKG_IMAGES.imgTelegramLogo, imgFit: "contain" },
   { id: "hok", name: "Honor of Kings", tag: "New!", grad: "from-yellow-600 to-red-800", icon: "👑" },
+  { id: "skycotl", name: "Sky: Children of the Light", tag: "New!", grad: "from-indigo-500 to-purple-900", icon: "🕊️" },
 ];
 
 // ---- PUBG New State ----
@@ -557,6 +558,25 @@ const HOK_SPECIAL = [
   { id: "hok-weekly", label: "Weekly Card", mmk: [4300], thb: [34] },
   { id: "hok-premiumrebate", label: "Premium Purchase Rebate Pack", mmk: [5300], thb: [42] },
   { id: "hok-weeklyplus", label: "Weekly Card Plus", mmk: [12700], thb: [100] },
+];
+
+// ---- Sky: Children of the Light ----
+// ✅ Full FazerCards catalog (category_id: sky_children_of_light), 7%
+// margin over FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB
+// (2569-09-04 pricing, GET /api/v2/topups/offers?category_id=
+// sky_children_of_light). MMK rounded to the nearest 100. Single "Sky ID"
+// field -- no server ID. Item labels match FazerCards' offer names exactly.
+const SKY_COTL_PACKAGES = [
+  { id: "sky-15_regular_candles", label: "15 Regular Candles", mmk: [21900], thb: [172] },
+  { id: "sky-15_season_candles", label: "15 Season Candles", mmk: [21900], thb: [172] },
+  { id: "sky-35_regular_candles", label: "35 Regular Candles", mmk: [43200], thb: [341] },
+  { id: "sky-35_season_candles", label: "35 Season Candles", mmk: [43200], thb: [341] },
+  { id: "sky-gift_season_pass", label: "Gift Season Pass", mmk: [43200], thb: [341] },
+  { id: "sky-season_pass_regular", label: "Season Pass Regular", mmk: [43200], thb: [341] },
+  { id: "sky-72_regular_candles", label: "72 Regular Candles", mmk: [86200], thb: [679] },
+  { id: "sky-72_season_candles", label: "72 Season Candles", mmk: [86200], thb: [679] },
+  { id: "sky-season_pass_pack", label: "Season Pass Pack", mmk: [86200], thb: [679] },
+  { id: "sky-190_season_candles", label: "190 Season Candles", mmk: [218100], thb: [1718] },
 ];
 
 // ---- Sausage Man ----
@@ -1368,7 +1388,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -1443,6 +1463,7 @@ export default function MonkeyTopup() {
     if (CAPCUT_PACKAGES.includes(pkg)) return "CapCut";
     if (TELEGRAM_STARS.includes(pkg) || TELEGRAM_PREMIUM.includes(pkg)) return "Telegram";
     if (HOK_TOKENS.includes(pkg) || HOK_SPECIAL.includes(pkg)) return "Honor of Kings";
+    if (SKY_COTL_PACKAGES.includes(pkg)) return "Sky: Children of the Light";
     return "Unknown";
   }
 
@@ -1852,6 +1873,7 @@ export default function MonkeyTopup() {
                           if (g.id === "capcut") setView("capcutDetail");
                           if (g.id === "telegram") setView("telegramDetail");
                           if (g.id === "hok") setView("hokDetail");
+                          if (g.id === "skycotl") setView("skyCotlDetail");
                         }}
                         className={`rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left ${
                           isComingSoon ? "opacity-40 grayscale cursor-not-allowed" : ""
@@ -2909,6 +2931,35 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "skyCotlDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Sky: Children of the Light" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Candles & Season Pass" items={SKY_COTL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
 
         {view === "bloodstrikeDetail" && (
           <>
@@ -3095,13 +3146,16 @@ export default function MonkeyTopup() {
                     gName === "Where Winds Meet" ||
                     gName === "Blood Strike" ||
                     gName === "Free Fire" ||
-                    gName === "Honor of Kings";
+                    gName === "Honor of Kings" ||
+                    gName === "Sky: Children of the Light";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
                       : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings"
                         ? "Player Id"
-                        : "Game Id";
+                        : gName === "Sky: Children of the Light"
+                          ? "Sky Id"
+                          : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
