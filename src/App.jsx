@@ -1110,6 +1110,20 @@ function copyText(text, onDone) {
 
 // ---------- Small UI atoms ----------
 function TopBar({ title, onBack, onHome }) {
+  // On the desktop website, DesktopChrome's own header already has the
+  // logo/Home/Deposit/Profile buttons -- this phone-style gradient bar
+  // would just duplicate that chrome and look like a phone screenshot
+  // pasted onto a webpage. So it's replaced with a plain "← Back" link
+  // sitting directly on the page background instead.
+  if (!isTelegramContext()) {
+    return onBack ? (
+      <div className="px-1 pb-4">
+        <button onClick={onBack} className="text-[#b7aee0] hover:text-white text-sm font-semibold transition">
+          ← နောက်သို့
+        </button>
+      </div>
+    ) : null;
+  }
   return (
     <div className="sticky top-0 z-20 bg-gradient-to-b from-[#352a63] to-[#3f3272] text-white px-4 py-3 relative flex items-center justify-center shadow-md">
       {onBack && (
@@ -1184,6 +1198,11 @@ function DetailThumbnail({ label, image, images }) {
 }
 
 function BottomNav({ active, onNavigate, unreadCount = 0, isAdmin = false, pendingCount = 0 }) {
+  // On the desktop website, this navigation lives in DesktopChrome's top
+  // header instead (see the nav row there) -- a second, bottom-fixed phone
+  // tab bar would be redundant and is exactly the kind of "looks like a
+  // phone app" chrome this redesign is meant to remove.
+  if (!isTelegramContext()) return null;
   const items = [
     { key: "shop", label: "Home", icon: "🏠" },
     { key: "message", label: "MESSAGE", icon: "📄" },
@@ -1408,7 +1427,15 @@ function AuthScreen({ onAuthSuccess }) {
 // branch in MonkeyTopup below, which renders the original phone-width app
 // completely unchanged. This is only for someone opening the Vercel URL in
 // a plain desktop/mobile browser.
-function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, onProfile, children }) {
+function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, onDeposit, onProfile, onNavigate, unreadCount = 0, isAdmin = false, pendingCount = 0, children }) {
+  const navItems = [
+    { key: "shop", label: "Home", icon: "🏠" },
+    { key: "message", label: "Message", icon: "📄", badge: unreadCount },
+    { key: "spin", label: "ကံစမ်းမဲ", icon: "🎡" },
+    { key: "profile", label: "Profile", icon: "👤" },
+    ...(isAdmin ? [{ key: "approve", label: "အတည်ပြုရန်", icon: "✅", badge: pendingCount }] : []),
+    ...(isAdmin ? [{ key: "admin", label: "Admin", icon: "🛠️" }] : []),
+  ];
   return (
     <div className="min-h-screen w-full bg-[#0d0a1f] font-sans">
       <style>{`
@@ -1422,6 +1449,26 @@ function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, o
           <button onClick={onLogo} className="mt-display text-lg font-bold text-white shrink-0">
             🐒 {APP_NAME}
           </button>
+
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((it) => (
+              <button
+                key={it.key}
+                onClick={() => onNavigate(it.key)}
+                className={`relative px-3 py-1.5 rounded-full text-sm font-semibold transition flex items-center gap-1.5 ${
+                  activeView === it.key ? "bg-white/10 text-white" : "text-[#8f88ad] hover:text-white"
+                }`}
+              >
+                <span>{it.icon}</span> {it.label}
+                {it.badge > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[16px] h-[16px] px-1 flex items-center justify-center">
+                    {it.badge}
+                  </span>
+                )}
+              </button>
+            ))}
+          </nav>
+
           <div className="flex items-center gap-4">
             <div className="text-right text-xs leading-tight hidden sm:block">
               <div className="text-amber-400 font-bold">MMK · {fmt(balance)}</div>
@@ -1436,7 +1483,7 @@ function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, o
             </button>
             <button
               onClick={onProfile}
-              className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition overflow-hidden"
+              className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition overflow-hidden md:hidden"
               title="Profile"
             >
               {telegramUser?.photoUrl ? (
@@ -1446,6 +1493,27 @@ function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, o
               )}
             </button>
           </div>
+        </div>
+
+        {/* Same nav row, wrapped for narrower browser windows where the
+           inline row above is hidden (md:hidden vs md:flex above). */}
+        <div className="md:hidden flex items-center gap-1 overflow-x-auto px-4 pb-2 -mt-1">
+          {navItems.map((it) => (
+            <button
+              key={it.key}
+              onClick={() => onNavigate(it.key)}
+              className={`relative shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition flex items-center gap-1 ${
+                activeView === it.key ? "bg-white/10 text-white" : "text-[#8f88ad]"
+              }`}
+            >
+              <span>{it.icon}</span> {it.label}
+              {it.badge > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[14px] h-[14px] px-1 flex items-center justify-center">
+                  {it.badge}
+                </span>
+              )}
+            </button>
+          ))}
         </div>
       </header>
 
@@ -2366,7 +2434,7 @@ export default function MonkeyTopup() {
   }
 
   const appShell = (
-    <div className={`w-full ${isTelegramContext() ? "max-w-sm" : "max-w-none sm:max-w-3xl lg:max-w-5xl"} bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative`}>
+    <div className={`w-full mx-auto ${isTelegramContext() ? "max-w-sm" : "max-w-none sm:max-w-3xl lg:max-w-5xl px-4 sm:px-6 py-8"} bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative`}>
       <style>{`
           @keyframes marqueeScroll {
             from { transform: translateX(0); }
@@ -4543,19 +4611,16 @@ export default function MonkeyTopup() {
       balance={balance}
       balanceThb={balanceThb}
       telegramUser={telegramUser}
+      activeView={view}
       onLogo={() => setView("shop")}
       onDeposit={() => setView("topup")}
       onProfile={() => setView("profile")}
+      onNavigate={handleNavClick}
+      unreadCount={unreadCount}
+      isAdmin={isAdmin}
+      pendingCount={pendingCount}
     >
-      {view === "shop" ? (
-        <DesktopGamesHome onPickGame={goToGameDetail} />
-      ) : (
-        <div className="flex justify-center py-10 px-4">
-          <div className="w-full rounded-3xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden">
-            {appShell}
-          </div>
-        </div>
-      )}
+      {view === "shop" ? <DesktopGamesHome onPickGame={goToGameDetail} /> : appShell}
     </DesktopChrome>
   );
 }
