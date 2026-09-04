@@ -1069,28 +1069,12 @@ function AuthScreen({ onAuthSuccess }) {
   );
 }
 
-// ---------- Marketing site chrome (desktop/website visitors only) ----------
-// Wraps the exact same app (unchanged) in a proper website shell -- header,
-// hero, feature pitch, footer -- so a visitor who opens the Vercel URL in a
-// plain browser (not the Telegram Mini App) gets an actual website instead
-// of the bare phone-width app floating on grey. Telegram Mini App users
-// never see this (see the isTelegramContext() branch in MonkeyTopup below).
-function MarketingSite({ children }) {
-  const pillars = [
-    {
-      title: "စျေးအသက်သာဆုံး",
-      body: "Market ထဲက တခြားနေရာတွေထက် Diamond/UC ဈေးနှုန်း အသက်သာဆုံးဖြစ်အောင် ထားရှိပါတယ်။",
-    },
-    {
-      title: "Reseller အထူးစျေးနှုန်း",
-      body: "Reseller အဖြစ် လျှောက်ထားလိုက်ရင် app ထဲက item အားလုံးအတွက် ထပ်ပိုသက်သာတဲ့ စျေးနှုန်းနဲ့ ဝယ်ယူနိုင်ပါတယ်။",
-    },
-    {
-      title: "24/7 Auto Delivery",
-      body: "Admin စောင့်ရန် မလိုအပ်ဘဲ ည/နေ့ မရွေး Order တင်တာနဲ့ စက္ကန့်ပိုင်းအတွင်း ရောက်ရှိပါမယ်။",
-    },
-  ];
-
+// ---------- Desktop website chrome (non-Telegram browser visitors only) ----------
+// Telegram Mini App users never see any of this -- see the isTelegramContext()
+// branch in MonkeyTopup below, which renders the original phone-width app
+// completely unchanged. This is only for someone opening the Vercel URL in
+// a plain desktop/mobile browser.
+function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, onProfile, children }) {
   return (
     <div className="min-h-screen w-full bg-[#0d0a1f] font-sans">
       <style>{`
@@ -1099,65 +1083,71 @@ function MarketingSite({ children }) {
         @keyframes mtMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       `}</style>
 
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0d0a1f]/90 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="mt-display text-lg font-bold text-white">🐒 {APP_NAME}</span>
-          <a
-            href="#app"
-            className="text-sm font-semibold text-[#ff3d9a] hover:text-white transition"
-          >
-            App ကို ဖွင့်မည် ↓
-          </a>
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0d0a1f]/95 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+          <button onClick={onLogo} className="mt-display text-lg font-bold text-white shrink-0">
+            🐒 {APP_NAME}
+          </button>
+          <div className="flex items-center gap-4">
+            <div className="text-right text-xs leading-tight hidden sm:block">
+              <div className="text-amber-400 font-bold">MMK · {fmt(balance)}</div>
+              <div className="text-amber-400/70 font-semibold">THB · {fmt(balanceThb)}</div>
+            </div>
+            <button
+              onClick={onDeposit}
+              className="w-9 h-9 rounded-full bg-emerald-500 text-white text-xl font-bold flex items-center justify-center hover:brightness-110 transition"
+              title="ငွေဖြည့်မည်"
+            >
+              +
+            </button>
+            <button
+              onClick={onProfile}
+              className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition overflow-hidden"
+              title="Profile"
+            >
+              {telegramUser?.photoUrl ? (
+                <img src={telegramUser.photoUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                "👤"
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-20 grid md:grid-cols-2 gap-14 items-center">
-        <div>
-          <h1 className="mt-display text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-            ဂိမ်း Diamond တွေကို
-            <br />
-            <span className="text-[#ff3d9a]">24/7</span> ချက်ချင်းဖြည့်ပေးတဲ့
-            <br />
-            Monkey Topup
-          </h1>
-          <p className="mt-5 text-[#b7aee0] text-base leading-relaxed max-w-md">
-            Mobile Legends, PUBG, Free Fire အစရှိတဲ့ ဂိမ်းတွေအတွက် Diamond/UC ကို market ထဲမှာ
-            အသက်သာဆုံးဈေးနဲ့ စက္ကန့်ပိုင်းအတွင်း ဝယ်ယူနိုင်ပါတယ်။
-          </p>
-          <a
-            href="#app"
-            className="inline-block mt-8 bg-[#ff3d9a] text-white font-bold px-7 py-3 rounded-full shadow-lg shadow-[#ff3d9a]/20 hover:brightness-110 transition"
-          >
-            အခုပဲ စတင်ဝယ်ယူမယ်
-          </a>
-          <div className="mt-10 flex gap-8 text-sm">
-            <div>
-              <div className="mt-display text-2xl font-bold text-white">10,000+</div>
-              <div className="text-[#8f88ad]">Order ပြီးမြောက်ပြီး</div>
-            </div>
-            <div>
-              <div className="mt-display text-2xl font-bold text-white">24/7</div>
-              <div className="text-[#8f88ad]">Auto Delivery</div>
-            </div>
-            <div>
-              <div className="mt-display text-2xl font-bold text-white">2-5 မိနစ်</div>
-              <div className="text-[#8f88ad]">ပျမ်းမျှ ပို့ချိန်</div>
-            </div>
-          </div>
-        </div>
+      {children}
 
-        {/* Live app, framed like a phone -- doubles as the hero visual */}
-        <div id="app" className="flex justify-center md:justify-end scroll-mt-24">
-          <div className="rounded-[2.5rem] border-8 border-[#1b1638] shadow-2xl shadow-black/50 overflow-hidden">
-            {children}
-          </div>
+      <footer className="border-t border-white/10 bg-[#0a0818] py-8 mt-16">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-3 text-sm text-[#6f6790]">
+          <span>🐒 {APP_NAME} — Telegram Mini App ကနေလည်း တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
+          <span>ပြဿနာရှိရင် "Contact to Admin" ကနေ ဆက်သွယ်ပါ</span>
         </div>
+      </footer>
+    </div>
+  );
+}
+
+// The actual homepage content for the desktop chrome above (view === "shop"
+// only) -- a hero strip + games grid, using the exact same GAMES data and
+// goToGameDetail() navigation as the phone app's own Games grid, just laid
+// out for a wide screen instead of a 3-column phone grid.
+function DesktopGamesHome({ onPickGame }) {
+  return (
+    <>
+      <section className="max-w-6xl mx-auto px-6 pt-12 pb-8 text-center">
+        <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 text-xs font-bold text-[#b7aee0] mb-6">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> LIVE ·{" "}
+          <span className="text-white">24/7 AUTO DELIVERY</span>
+        </div>
+        <h1 className="mt-display text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+          ဂိမ်း Diamond/UC ကို <span className="text-[#ff3d9a]">market ထဲက အသက်သာဆုံးဈေး</span>နဲ့
+        </h1>
+        <p className="mt-3 text-[#b7aee0] max-w-xl mx-auto">
+          Order တင်တာနဲ့ Admin စောင့်ရန် မလိုအပ်ဘဲ စက္ကန့်ပိုင်းအတွင်း ရောက်ရှိပါမယ်
+        </p>
       </section>
 
-      {/* Game logo marquee */}
-      <section className="border-y border-white/10 bg-[#120f24] py-5 overflow-hidden">
+      <section className="border-y border-white/10 bg-[#120f24] py-4 overflow-hidden">
         <div className="flex gap-10 whitespace-nowrap" style={{ animation: "mtMarquee 28s linear infinite", width: "max-content" }}>
           {[...GAMES, ...GAMES].map((g, i) => (
             <span key={i} className="text-[#8f88ad] text-sm font-medium flex items-center gap-2">
@@ -1167,26 +1157,43 @@ function MarketingSite({ children }) {
         </div>
       </section>
 
-      {/* Pillars */}
-      <section className="max-w-4xl mx-auto px-6 py-20">
-        <div className="divide-y divide-white/10">
-          {pillars.map((p) => (
-            <div key={p.title} className="py-7 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8">
-              <h3 className="mt-display text-white font-bold text-lg sm:w-56 shrink-0">{p.title}</h3>
-              <p className="text-[#b7aee0] leading-relaxed">{p.body}</p>
-            </div>
-          ))}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <h2 className="mt-display text-white font-bold text-xl mb-5">Games</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {GAMES.map((g) => {
+            const isComingSoon = g.id === "coc";
+            return (
+              <button
+                key={g.id}
+                disabled={isComingSoon}
+                onClick={() => onPickGame(g.id)}
+                className={`rounded-2xl overflow-hidden bg-black shadow-lg border border-white/10 text-left transition hover:-translate-y-1 hover:border-[#ff3d9a]/50 ${
+                  isComingSoon ? "opacity-40 grayscale cursor-not-allowed hover:translate-y-0" : ""
+                }`}
+              >
+                <div className={`h-32 relative overflow-hidden ${g.imgFit === "contain" ? "bg-[#0a0a0a] flex items-center justify-center" : ""}`}>
+                  {g.image ? (
+                    <img src={g.image} alt={g.name} className={`w-full h-full ${g.imgFit === "contain" ? "object-contain p-3" : "object-cover"}`} />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${g.grad} flex items-center justify-center`}>
+                      <div className="w-14 h-14 rounded-full bg-white/15 backdrop-blur flex items-center justify-center text-3xl shadow-inner border border-white/30">
+                        {g.icon}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="p-3">
+                  <div className="text-white text-sm font-semibold leading-tight">{g.name}</div>
+                  <div className={`text-xs font-bold mt-0.5 ${isComingSoon ? "text-slate-400" : "text-emerald-400"}`}>
+                    {isComingSoon ? "မကြာမီလာမည်" : g.tag}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 bg-[#0a0818] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-3 text-sm text-[#6f6790]">
-          <span>🐒 {APP_NAME} — Telegram Mini App ကနေ တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
-          <span>ပြဿနာရှိရင် app ထဲက "Contact to Admin" ကနေ ဆက်သွယ်ပါ</span>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }
 
@@ -1752,6 +1759,23 @@ export default function MonkeyTopup() {
       setResellerSaving(false);
     }
   }
+  function goToGameDetail(gameId) {
+    if (gameId === "ml") setView("mlDetail");
+    if (gameId === "mc") setView("mcDetail");
+    if (gameId === "pubg") setView("pubgDetail");
+    if (gameId === "newstate") setView("newstateDetail");
+    if (gameId === "racing") setView("racingDetail");
+    if (gameId === "sausage") setView("sausageDetail");
+    if (gameId === "bloodstrike") setView("bloodstrikeDetail");
+    if (gameId === "wwm") setView("wwmDetail");
+    if (gameId === "freefire") setView("freefireDetail");
+    if (gameId === "steam") setView("steamDetail");
+    if (gameId === "capcut") setView("capcutDetail");
+    if (gameId === "telegram") setView("telegramDetail");
+    if (gameId === "hok") setView("hokDetail");
+    if (gameId === "skycotl") setView("skyCotlDetail");
+  }
+
   async function handleSetBanned(banned) {
     const target = banTargetId.trim();
     if (!target || banSaving) return;
@@ -2011,22 +2035,7 @@ export default function MonkeyTopup() {
                       <button
                         key={g.id}
                         disabled={isComingSoon}
-                        onClick={() => {
-                          if (g.id === "ml") setView("mlDetail");
-                          if (g.id === "mc") setView("mcDetail");
-                          if (g.id === "pubg") setView("pubgDetail");
-                          if (g.id === "newstate") setView("newstateDetail");
-                          if (g.id === "racing") setView("racingDetail");
-                          if (g.id === "sausage") setView("sausageDetail");
-                          if (g.id === "bloodstrike") setView("bloodstrikeDetail");
-                          if (g.id === "wwm") setView("wwmDetail");
-                          if (g.id === "freefire") setView("freefireDetail");
-                          if (g.id === "steam") setView("steamDetail");
-                          if (g.id === "capcut") setView("capcutDetail");
-                          if (g.id === "telegram") setView("telegramDetail");
-                          if (g.id === "hok") setView("hokDetail");
-                          if (g.id === "skycotl") setView("skyCotlDetail");
-                        }}
+                        onClick={() => goToGameDetail(g.id)}
                         className={`rounded-xl overflow-hidden bg-black shadow border border-white/10 text-left ${
                           isComingSoon ? "opacity-40 grayscale cursor-not-allowed" : ""
                         }`}
@@ -3529,7 +3538,26 @@ export default function MonkeyTopup() {
     );
   }
 
-  return <MarketingSite>{appShell}</MarketingSite>;
+  return (
+    <DesktopChrome
+      balance={balance}
+      balanceThb={balanceThb}
+      telegramUser={telegramUser}
+      onLogo={() => setView("shop")}
+      onDeposit={() => setView("topup")}
+      onProfile={() => setView("profile")}
+    >
+      {view === "shop" ? (
+        <DesktopGamesHome onPickGame={goToGameDetail} />
+      ) : (
+        <div className="flex justify-center py-10 px-4">
+          <div className="rounded-[2.5rem] border-8 border-[#1b1638] shadow-2xl shadow-black/50 overflow-hidden">
+            {appShell}
+          </div>
+        </div>
+      )}
+    </DesktopChrome>
+  );
 }
 
 const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|BR|Thailand)\s+/;
