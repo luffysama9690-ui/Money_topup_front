@@ -413,6 +413,13 @@ const GAMES = [
   { id: "identityv", name: "Identity V", tag: "New!", grad: "from-violet-700 to-black", icon: "🎭" },
   { id: "lordsmobile", name: "Lords Mobile", tag: "New!", grad: "from-amber-700 to-yellow-900", icon: "🏰" },
   { id: "stumbleguys", name: "Stumble Guys", tag: "New!", grad: "from-lime-500 to-green-800", icon: "🏃" },
+  { id: "sos", name: "State of Survival", tag: "New!", grad: "from-red-800 to-neutral-900", icon: "🧟" },
+  { id: "wor", name: "Watcher of Realms", tag: "New!", grad: "from-purple-700 to-indigo-950", icon: "🐉" },
+  { id: "blockmango", name: "Blockman Go", tag: "New!", grad: "from-cyan-500 to-blue-800", icon: "🧱" },
+  { id: "growtopia", name: "Growtopia", tag: "New!", grad: "from-teal-500 to-emerald-900", icon: "🌱" },
+  { id: "eggyparty", name: "Eggy Party", tag: "New!", grad: "from-yellow-400 to-orange-600", icon: "🥚" },
+  { id: "r6mobile", name: "Rainbow Six Mobile (Global)", tag: "New!", grad: "from-gray-700 to-black", icon: "🔰" },
+  { id: "tftth", name: "TFT Mobile (TH)", tag: "New!", grad: "from-indigo-600 to-blue-950", icon: "♟️" },
 ];
 
 // ---- PUBG New State ----
@@ -809,6 +816,133 @@ const STUMBLE_GUYS_PACKAGES = [
   { id: "stumble_guys-1600_gems_75_tokens", label: "1600 Gems + 75 Tokens", mmk: [12300], thb: [97] },
   { id: "stumble_guys-5000_gems_275_tokens", label: "5000 Gems + 275 Tokens", mmk: [30600], thb: [241] },
   { id: "stumble_guys-1300_tokens", label: "1300 Tokens", mmk: [95300], thb: [751] },
+];
+
+const STATE_OF_SURVIVAL_PACKAGES = [
+  { id: "state_of_survival-100_diamonds", label: "100 Diamonds", mmk: [4100], thb: [32] },
+  { id: "state_of_survival-500_diamonds", label: "500 Diamonds", mmk: [20100], thb: [159] },
+  { id: "state_of_survival-1000_diamonds", label: "1000 Diamonds", mmk: [40300], thb: [318] },
+  { id: "state_of_survival-2000_diamonds", label: "2000 Diamonds", mmk: [80700], thb: [636] },
+  { id: "state_of_survival-5000_diamonds", label: "5000 Diamonds", mmk: [201600], thb: [1588] },
+  { id: "state_of_survival-10000_diamonds", label: "10000 Diamonds", mmk: [410100], thb: [3230] },
+  { id: "state_of_survival-20000_diamonds", label: "20000 Diamonds", mmk: [806500], thb: [6353] },
+  { id: "state_of_survival-50000_diamonds", label: "50000 Diamonds", mmk: [2016300], thb: [15883] },
+  { id: "state_of_survival-100000_diamonds", label: "100000 Diamonds", mmk: [4100900], thb: [32305] },
+];
+
+const WATCHER_OF_REALMS_PACKAGES = [
+  { id: "watcher_of_realms-499_w_gold", label: "499 W-Gold", mmk: [19500], thb: [154] },
+  { id: "watcher_of_realms-999_w_gold", label: "999 W-Gold", mmk: [38800], thb: [306] },
+  { id: "watcher_of_realms-exclusive_bonus_bundle", label: "Exclusive Bonus Bundle", mmk: [40700], thb: [321] },
+  { id: "watcher_of_realms-ancient_bonus_bundle", label: "Ancient Bonus Bundle", mmk: [39800], thb: [313] },
+  { id: "watcher_of_realms-1999_w_gold", label: "1999 W-Gold", mmk: [77800], thb: [613] },
+  { id: "watcher_of_realms-recasting_hammer_bundle", label: "Recasting Hammer Bundle", mmk: [81300], thb: [640] },
+  { id: "watcher_of_realms-2999_w_gold", label: "2999 W-Gold", mmk: [116900], thb: [921] },
+  { id: "watcher_of_realms-rare_summoning_discount_bundle", label: "Rare Summoning Discount Bundle", mmk: [122000], thb: [961] },
+  { id: "watcher_of_realms-4999_w_gold", label: "4999 W-Gold", mmk: [195700], thb: [1541] },
+  { id: "watcher_of_realms-legendary_summoning_skill_discount_bundle", label: "Legendary Summoning Skill Discount Bundle", mmk: [203300], thb: [1602] },
+  { id: "watcher_of_realms-artifact_forge_bundle", label: "Artifact Forge Bundle", mmk: [211200], thb: [1664] },
+  { id: "watcher_of_realms-9999_w_gold", label: "9999 W-Gold", mmk: [389800], thb: [3070] },
+  { id: "watcher_of_realms-ancient_summoning_discount_bundle", label: "Ancient Summoning Discount Bundle", mmk: [406600], thb: [3203] },
+  { id: "watcher_of_realms-29999_w_gold", label: "29999 W-Gold", mmk: [1173700], thb: [9245] },
+  { id: "watcher_of_realms-mega_mixed_summoning_bundle", label: "Mega Mixed Summoning Bundle", mmk: [1220100], thb: [9611] },
+  { id: "watcher_of_realms-mega_ancient_summoning_bundle", label: "Mega Ancient Summoning Bundle", mmk: [1220100], thb: [9611] },
+  { id: "watcher_of_realms-59999_w_gold", label: "59999 W-Gold", mmk: [2360600], thb: [18595] },
+];
+
+const BLOCKMAN_GO_PACKAGES = [
+  { id: "blockman_go-60_gcube", label: "60 GCube", mmk: [4700], thb: [37] },
+  { id: "blockman_go-jigsaw_puzzle_b", label: "Jigsaw Puzzle B", mmk: [4600], thb: [36] },
+  { id: "blockman_go-300_gcube", label: "300 GCube", mmk: [23300], thb: [183] },
+  { id: "blockman_go-premium_monthly_card", label: "Premium Monthly Card", mmk: [23300], thb: [183] },
+  { id: "blockman_go-subscription_lv_1", label: "Subscription LV.1", mmk: [21600], thb: [170] },
+  { id: "blockman_go-premium_pass", label: "Premium Pass", mmk: [32600], thb: [256] },
+  { id: "blockman_go-600_gcube", label: "600 GCube", mmk: [46500], thb: [366] },
+  { id: "blockman_go-luxury_monthly_card", label: "Luxury Monthly Card", mmk: [46500], thb: [366] },
+  { id: "blockman_go-subscription_lv_2", label: "Subscription LV.2", mmk: [42700], thb: [337] },
+  { id: "blockman_go-deluxe_pass", label: "Deluxe Pass", mmk: [60500], thb: [476] },
+  { id: "blockman_go-1650_gcube", label: "1650 GCube", mmk: [116200], thb: [916] },
+  { id: "blockman_go-subscription_lv_3", label: "Subscription LV.3", mmk: [106300], thb: [837] },
+  { id: "blockman_go-3600_gcube", label: "3600 GCube", mmk: [232400], thb: [1831] },
+  { id: "blockman_go-8400_gcube", label: "8400 GCube", mmk: [464800], thb: [3662] },
+];
+
+const GROWTOPIA_PACKAGES = [
+  { id: "growtopia-1_year_subscription_token", label: "1 - Year Subscription Token", mmk: [177600], thb: [1399] },
+  { id: "growtopia-bandages_value_pack", label: "Bandages Value Pack", mmk: [11000], thb: [87] },
+  { id: "growtopia-chest_o_gems", label: "Chest O' Gems", mmk: [7200], thb: [57] },
+  { id: "growtopia-dungeon_pass", label: "Dungeon Pass", mmk: [18400], thb: [145] },
+  { id: "growtopia-gem_abundance", label: "Gem Abundance", mmk: [177600], thb: [1399] },
+  { id: "growtopia-gem_bounty", label: "Gem Bounty", mmk: [112200], thb: [884] },
+  { id: "growtopia-gem_fountain", label: "Gem Fountain", mmk: [18700], thb: [147] },
+  { id: "growtopia-it_s_rainin_gems", label: "It's Rainin' Gems", mmk: [38000], thb: [299] },
+  { id: "growtopia-road_to_glory", label: "Road to Glory", mmk: [91900], thb: [724] },
+  { id: "growtopia-royal_grow_pass", label: "Royal Grow Pass", mmk: [35700], thb: [281] },
+  { id: "growtopia-scrolls_value_pack", label: "Scrolls Value Pack", mmk: [11000], thb: [87] },
+];
+
+const EGGY_PARTY_PACKAGES = [
+  { id: "eggy_party-10_egg_coins", label: "10 Egg Coins", mmk: [500], thb: [4] },
+  { id: "eggy_party-dance_of_the_century_benefit_bundle", label: "Dance of the Century Benefit Bundle", mmk: [3400], thb: [27] },
+  { id: "eggy_party-takoyaki_first_purchase_pack", label: "Takoyaki First Purchase Pack", mmk: [1100], thb: [8] },
+  { id: "eggy_party-new_year_pack", label: "New Year Pack", mmk: [1200], thb: [9] },
+  { id: "eggy_party-maple_sakura_benefit_bundle", label: "Maple Sakura Benefit Bundle", mmk: [1200], thb: [9] },
+  { id: "eggy_party-63_egg_coins", label: "63 Egg Coins", mmk: [3300], thb: [26] },
+  { id: "eggy_party-dazzling_leo", label: "Dazzling Leo", mmk: [3400], thb: [27] },
+  { id: "eggy_party-dreamy_aries", label: "Dreamy Aries", mmk: [3400], thb: [27] },
+  { id: "eggy_party-ebby_weekly_pack", label: "Ebby Weekly Pack", mmk: [3400], thb: [27] },
+  { id: "eggy_party-elegant_libra", label: "Elegant Libra", mmk: [3400], thb: [27] },
+  { id: "eggy_party-enchanted_pisces", label: "Enchanted Pisces", mmk: [3400], thb: [27] },
+  { id: "eggy_party-energetic_aquarius", label: "Energetic Aquarius", mmk: [3400], thb: [27] },
+  { id: "eggy_party-gentle_cancer", label: "Gentle Cancer", mmk: [3400], thb: [27] },
+  { id: "eggy_party-golden_taurus", label: "Golden Taurus", mmk: [3400], thb: [27] },
+  { id: "eggy_party-mysterious_scorpio", label: "Mysterious Scorpio", mmk: [3400], thb: [27] },
+  { id: "eggy_party-obsidian_capricorn", label: "Obsidian Capricorn", mmk: [3400], thb: [27] },
+  { id: "eggy_party-wandering_sagittarius", label: "Wandering Sagittarius", mmk: [3400], thb: [27] },
+  { id: "eggy_party-weekly_egg_coin_pack", label: "Weekly Egg Coin Pack", mmk: [3400], thb: [27] },
+  { id: "eggy_party-whimsical_gemini", label: "Whimsical Gemini", mmk: [3400], thb: [27] },
+  { id: "eggy_party-spring_egg_coin_pack_1", label: "Spring Egg Coin Pack 1", mmk: [3900], thb: [31] },
+  { id: "eggy_party-126_egg_coins", label: "126 Egg Coins", mmk: [6600], thb: [52] },
+  { id: "eggy_party-yoyo_membership", label: "Yoyo Membership", mmk: [6900], thb: [54] },
+  { id: "eggy_party-growth_fund", label: "Growth Fund", mmk: [10300], thb: [81] },
+  { id: "eggy_party-shiny_coin_jar", label: "Shiny Coin Jar", mmk: [10300], thb: [81] },
+  { id: "eggy_party-324_egg_coins", label: "324 Egg Coins", mmk: [16400], thb: [129] },
+  { id: "eggy_party-757_egg_coins", label: "757 Egg Coins", mmk: [38300], thb: [302] },
+  { id: "eggy_party-spring_egg_coin_pack_2", label: "Spring Egg Coin Pack 2", mmk: [38900], thb: [306] },
+  { id: "eggy_party-golden_autumn_ltd_pack_1", label: "Golden Autumn LTD Pack 1", mmk: [39000], thb: [307] },
+  { id: "eggy_party-1524_egg_coins", label: "1524 Egg Coins", mmk: [75500], thb: [595] },
+  { id: "eggy_party-2296_egg_coins", label: "2296 Egg Coins", mmk: [113800], thb: [896] },
+  { id: "eggy_party-3873_egg_coins", label: "3873 Egg Coins", mmk: [188800], thb: [1487] },
+  { id: "eggy_party-7783_egg_coins", label: "7783 Egg Coins", mmk: [376400], thb: [2965] },
+  { id: "eggy_party-golden_autumn_ltd_pack_2", label: "Golden Autumn LTD Pack 2", mmk: [441500], thb: [3478] },
+];
+
+const R6_MOBILE_GLOBAL_PACKAGES = [
+  { id: "r6_mobile_global-250_first_purchase_only", label: "250 (FIRST PURCHASE ONLY)", mmk: [3100], thb: [24] },
+  { id: "r6_mobile_global-50_platinum", label: "50 Platinum", mmk: [3100], thb: [24] },
+  { id: "r6_mobile_global-250_first_purchase", label: "250 (First Purchase)", mmk: [3100], thb: [25] },
+  { id: "r6_mobile_global-110_platinum", label: "110 Platinum", mmk: [4100], thb: [33] },
+  { id: "r6_mobile_global-300_platinum", label: "300 Platinum", mmk: [11800], thb: [93] },
+  { id: "r6_mobile_global-600_first_purchase_only", label: "600 (FIRST PURCHASE ONLY)", mmk: [14800], thb: [116] },
+  { id: "r6_mobile_global-600_first_purchase", label: "600 (First Purchase)", mmk: [15000], thb: [118] },
+  { id: "r6_mobile_global-650_platinum", label: "650 Platinum", mmk: [22500], thb: [177] },
+  { id: "r6_mobile_global-1350_platinum", label: "1350 Platinum", mmk: [44600], thb: [352] },
+  { id: "r6_mobile_global-2700_first_purchase_only", label: "2700 (FIRST PURCHASE ONLY)", mmk: [58100], thb: [458] },
+  { id: "r6_mobile_global-2700_first_purchase", label: "2700 (First Purchase)", mmk: [59200], thb: [466] },
+  { id: "r6_mobile_global-3500_platinum", label: "3500 Platinum", mmk: [115900], thb: [913] },
+  { id: "r6_mobile_global-7000_first_purchase_only", label: "7000 (FIRST PURCHASE ONLY)", mmk: [144900], thb: [1141] },
+  { id: "r6_mobile_global-7000_first_purchase", label: "7000 (First Purchase)", mmk: [147400], thb: [1161] },
+  { id: "r6_mobile_global-7250_platinum", label: "7250 Platinum", mmk: [241400], thb: [1902] },
+  { id: "r6_mobile_global-11250_platinum", label: "11250 Platinum", mmk: [357000], thb: [2812] },
+];
+
+const TFT_MOBILE_TH_PACKAGES = [
+  { id: "tft_mobile_th-575_tft_coins", label: "575 TFT Coins", mmk: [16600], thb: [131] },
+  { id: "tft_mobile_th-1380_tft_coins", label: "1380 TFT Coins", mmk: [37000], thb: [291] },
+  { id: "tft_mobile_th-2800_tft_coins", label: "2800 TFT Coins", mmk: [71400], thb: [563] },
+  { id: "tft_mobile_th-4500_tft_coins", label: "4500 TFT Coins", mmk: [113500], thb: [894] },
+  { id: "tft_mobile_th-6500_tft_coins", label: "6500 TFT Coins", mmk: [159400], thb: [1256] },
+  { id: "tft_mobile_th-13500_tft_coins", label: "13500 TFT Coins", mmk: [325200], thb: [2562] },
 ];
 
 // ---- Sausage Man ----
@@ -1772,7 +1906,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile (Global)", "TFT Mobile (TH)"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -1880,6 +2014,13 @@ export default function MonkeyTopup() {
     if (IDENTITY_V_PACKAGES.includes(pkg)) return "Identity V";
     if (LORDS_MOBILE_PACKAGES.includes(pkg)) return "Lords Mobile";
     if (STUMBLE_GUYS_PACKAGES.includes(pkg)) return "Stumble Guys";
+    if (STATE_OF_SURVIVAL_PACKAGES.includes(pkg)) return "State of Survival";
+    if (WATCHER_OF_REALMS_PACKAGES.includes(pkg)) return "Watcher of Realms";
+    if (BLOCKMAN_GO_PACKAGES.includes(pkg)) return "Blockman Go";
+    if (GROWTOPIA_PACKAGES.includes(pkg)) return "Growtopia";
+    if (EGGY_PARTY_PACKAGES.includes(pkg)) return "Eggy Party";
+    if (R6_MOBILE_GLOBAL_PACKAGES.includes(pkg)) return "Rainbow Six Mobile (Global)";
+    if (TFT_MOBILE_TH_PACKAGES.includes(pkg)) return "TFT Mobile (TH)";
     return "Unknown";
   }
 
@@ -2042,6 +2183,13 @@ export default function MonkeyTopup() {
     if (gameId === "identityv") setView("identityVDetail");
     if (gameId === "lordsmobile") setView("lordsMobileDetail");
     if (gameId === "stumbleguys") setView("stumbleGuysDetail");
+    if (gameId === "sos") setView("sosDetail");
+    if (gameId === "wor") setView("worDetail");
+    if (gameId === "blockmango") setView("blockmanGoDetail");
+    if (gameId === "growtopia") setView("growtopiaDetail");
+    if (gameId === "eggyparty") setView("eggyPartyDetail");
+    if (gameId === "r6mobile") setView("r6MobileDetail");
+    if (gameId === "tftth") setView("tftThDetail");
   }
 
   async function handleSetBanned(banned) {
@@ -3756,6 +3904,208 @@ export default function MonkeyTopup() {
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
+        {view === "sosDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="State of Survival" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Diamonds" items={STATE_OF_SURVIVAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "worDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Watcher of Realms" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="W-Gold & Bundles" items={WATCHER_OF_REALMS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "blockmanGoDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Blockman Go" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="GCube & Pass" items={BLOCKMAN_GO_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "growtopiaDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Growtopia" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Gems & Packs" items={GROWTOPIA_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "eggyPartyDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Eggy Party" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Egg Coins & Packs" items={EGGY_PARTY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "r6MobileDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Rainbow Six Mobile (Global)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Platinum" items={R6_MOBILE_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "tftThDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="TFT Mobile (TH)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="TFT Coins" items={TFT_MOBILE_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
 
 
         {view === "bloodstrikeDetail" && (
@@ -3956,21 +4306,29 @@ export default function MonkeyTopup() {
                     gName === "EAFC Mobile (MY)" ||
                     gName === "Identity V" ||
                     gName === "Lords Mobile" ||
-                    gName === "Stumble Guys";
+                    gName === "Stumble Guys" ||
+                    gName === "State of Survival" ||
+                    gName === "Blockman Go" ||
+                    gName === "Growtopia" ||
+                    gName === "Eggy Party" ||
+                    gName === "Rainbow Six Mobile (Global)" ||
+                    gName === "TFT Mobile (TH)";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile (MY)" || gName === "Identity V" || gName === "Lords Mobile"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (SG/MY)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile (MY)" || gName === "Identity V" || gName === "Lords Mobile" || gName === "Blockman Go" || gName === "Rainbow Six Mobile (Global)"
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
-                          : gName === "Valorant (TH)" || gName === "League of Legends (TH)"
+                          : gName === "Valorant (TH)" || gName === "League of Legends (TH)" || gName === "TFT Mobile (TH)"
                             ? "Riot Id"
                             : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd (Asia)"
                               ? "Player Id (UID)"
-                              : gName === "Stumble Guys"
+                              : gName === "Stumble Guys" || gName === "State of Survival" || gName === "Eggy Party"
                                 ? "User Id"
-                                : "Game Id";
+                                : gName === "Growtopia"
+                                  ? "GrowID"
+                                  : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
