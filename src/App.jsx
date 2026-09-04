@@ -401,12 +401,12 @@ const GAMES = [
   { id: "telegram", name: "Telegram", tag: "New!", grad: "from-sky-500 to-blue-700", icon: "✈️", image: PKG_IMAGES.imgTelegramLogo, imgFit: "contain" },
   { id: "hok", name: "Honor of Kings", tag: "New!", grad: "from-yellow-600 to-red-800", icon: "👑" },
   { id: "skycotl", name: "Sky: Children of the Light", tag: "New!", grad: "from-indigo-500 to-purple-900", icon: "🕊️" },
-  { id: "valorant_th", name: "Valorant (TH)", tag: "New!", grad: "from-red-600 to-rose-900", icon: "🎯" },
+  { id: "valorant", name: "Valorant", tag: "New!", grad: "from-red-600 to-rose-900", icon: "🎯" },
   { id: "lol_th", name: "League of Legends (TH)", tag: "New!", grad: "from-blue-600 to-cyan-800", icon: "⚔️" },
   { id: "codm_sgmy", name: "Call of Duty Mobile (SG/MY)", tag: "New!", grad: "from-neutral-700 to-black", icon: "🔫" },
   { id: "genshin", name: "Genshin Impact (Global)", tag: "New!", grad: "from-amber-500 to-orange-800", icon: "⭐" },
   { id: "hsr", name: "Honkai: Star Rail (Global)", tag: "New!", grad: "from-sky-500 to-indigo-900", icon: "🚂" },
-  { id: "hi3rd", name: "Honkai Impact 3rd (Asia)", tag: "New!", grad: "from-pink-500 to-fuchsia-900", icon: "💫" },
+  { id: "hi3rd", name: "Honkai Impact 3rd", tag: "New!", grad: "from-pink-500 to-fuchsia-900", icon: "💫" },
   { id: "arenabreakout", name: "Arena Breakout", tag: "New!", grad: "from-stone-600 to-neutral-900", icon: "🎯" },
   { id: "deltaforce", name: "Delta Force", tag: "New!", grad: "from-slate-600 to-zinc-900", icon: "🪖" },
   { id: "eafc", name: "EAFC Mobile (MY)", tag: "New!", grad: "from-green-600 to-emerald-900", icon: "⚽" },
@@ -630,15 +630,71 @@ const SKY_COTL_PACKAGES = [
   { id: "sky-190_season_candles", label: "190 Season Candles", mmk: [218100], thb: [1718] },
 ];
 
-// ✅ Full FazerCards catalog (category_id: valorant_th), 7% margin, 2569-09-05
-// pricing. Single "Riot ID" field.
+// ✅ Full FazerCards catalog for Valorant, region-split like Mobile Legends
+// (ID/KH/MY/PH/SG/TH/VN each a separate FazerCards category -- see
+// REGION_PREFIXES in the backend). 7% margin, 2569-09-05 pricing. Single
+// "Riot ID" field.
+const VALORANT_ID_PACKAGES = [
+  { id: "valorant-id-475_vp", label: "ID 475 VP", mmk: [13500], thb: [106] },
+  { id: "valorant-id-1000_vp", label: "ID 1000 VP", mmk: [26900], thb: [212] },
+  { id: "valorant-id-2050_vp", label: "ID 2050 VP", mmk: [53800], thb: [424] },
+  { id: "valorant-id-3650_vp", label: "ID 3650 VP", mmk: [93400], thb: [736] },
+  { id: "valorant-id-5350_vp", label: "ID 5350 VP", mmk: [134300], thb: [1058] },
+  { id: "valorant-id-11000_vp", label: "ID 11000 VP", mmk: [264000], thb: [2079] },
+];
+
+const VALORANT_KH_PACKAGES = [
+  { id: "valorant-kh-475_vp", label: "KH 475 VP", mmk: [21000], thb: [165] },
+  { id: "valorant-kh-1000_vp", label: "KH 1000 VP", mmk: [42000], thb: [331] },
+  { id: "valorant-kh-2050_vp", label: "KH 2050 VP", mmk: [84000], thb: [662] },
+  { id: "valorant-kh-3650_vp", label: "KH 3650 VP", mmk: [147000], thb: [1158] },
+  { id: "valorant-kh-5350_vp", label: "KH 5350 VP", mmk: [210000], thb: [1654] },
+  { id: "valorant-kh-11000_vp", label: "KH 11000 VP", mmk: [420000], thb: [3309] },
+];
+
+const VALORANT_MY_PACKAGES = [
+  { id: "valorant-my-475_vp", label: "MY 475 VP", mmk: [18400], thb: [145] },
+  { id: "valorant-my-1000_vp", label: "MY 1000 VP", mmk: [37900], thb: [298] },
+  { id: "valorant-my-2050_vp", label: "MY 2050 VP", mmk: [73500], thb: [579] },
+  { id: "valorant-my-3650_vp", label: "MY 3650 VP", mmk: [128300], thb: [1011] },
+  { id: "valorant-my-5350_vp", label: "MY 5350 VP", mmk: [183000], thb: [1442] },
+  { id: "valorant-my-11000_vp", label: "MY 11000 VP", mmk: [366900], thb: [2890] },
+];
+
+const VALORANT_PH_PACKAGES = [
+  { id: "valorant-ph-475_vp", label: "PH 475 VP", mmk: [13300], thb: [105] },
+  { id: "valorant-ph-1000_vp", label: "PH 1000 VP", mmk: [26800], thb: [211] },
+  { id: "valorant-ph-2050_vp", label: "PH 2050 VP", mmk: [53600], thb: [422] },
+  { id: "valorant-ph-3650_vp", label: "PH 3650 VP", mmk: [93800], thb: [739] },
+  { id: "valorant-ph-5350_vp", label: "PH 5350 VP", mmk: [134100], thb: [1056] },
+  { id: "valorant-ph-11000_vp", label: "PH 11000 VP", mmk: [268200], thb: [2113] },
+];
+
+const VALORANT_SG_PACKAGES = [
+  { id: "valorant-sg-475_vp", label: "SG 475 VP", mmk: [23100], thb: [182] },
+  { id: "valorant-sg-1000_vp", label: "SG 1000 VP", mmk: [46300], thb: [365] },
+  { id: "valorant-sg-2050_vp", label: "SG 2050 VP", mmk: [89500], thb: [705] },
+  { id: "valorant-sg-3650_vp", label: "SG 3650 VP", mmk: [155800], thb: [1227] },
+  { id: "valorant-sg-5350_vp", label: "SG 5350 VP", mmk: [222100], thb: [1750] },
+  { id: "valorant-sg-11000_vp", label: "SG 11000 VP", mmk: [447600], thb: [3526] },
+];
+
 const VALORANT_TH_PACKAGES = [
-  { id: "valorant_th-475_vp", label: "475 VP", mmk: [16600], thb: [131] },
-  { id: "valorant_th-1000_vp", label: "1000 VP", mmk: [33200], thb: [261] },
-  { id: "valorant_th-2050_vp", label: "2050 VP", mmk: [66300], thb: [522] },
-  { id: "valorant_th-3650_vp", label: "3650 VP", mmk: [117300], thb: [924] },
-  { id: "valorant_th-5350_vp", label: "5350 VP", mmk: [168300], thb: [1326] },
-  { id: "valorant_th-11000_vp", label: "11000 VP", mmk: [336700], thb: [2652] },
+  { id: "valorant-th-475_vp", label: "TH 475 VP", mmk: [16600], thb: [131] },
+  { id: "valorant-th-1000_vp", label: "TH 1000 VP", mmk: [33200], thb: [261] },
+  { id: "valorant-th-2050_vp", label: "TH 2050 VP", mmk: [66300], thb: [522] },
+  { id: "valorant-th-3650_vp", label: "TH 3650 VP", mmk: [117300], thb: [924] },
+  { id: "valorant-th-5350_vp", label: "TH 5350 VP", mmk: [168300], thb: [1326] },
+  { id: "valorant-th-11000_vp", label: "TH 11000 VP", mmk: [336700], thb: [2652] },
+];
+
+const VALORANT_VN_PACKAGES = [
+  { id: "valorant-vn-50_vp", label: "VN 50 VP", mmk: [1800], thb: [14] },
+  { id: "valorant-vn-105_vp", label: "VN 105 VP", mmk: [3600], thb: [28] },
+  { id: "valorant-vn-268_vp", label: "VN 268 VP", mmk: [9000], thb: [71] },
+  { id: "valorant-vn-535_vp", label: "VN 535 VP", mmk: [18100], thb: [142] },
+  { id: "valorant-vn-1100_vp", label: "VN 1100 VP", mmk: [36100], thb: [285] },
+  { id: "valorant-vn-2895_vp", label: "VN 2895 VP", mmk: [90300], thb: [711] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: lol_th), 7% margin, 2569-09-05
@@ -700,22 +756,129 @@ const HONKAI_STAR_RAIL_GLOBAL_PACKAGES = [
 
 // ✅ Full FazerCards catalog (category_id: honkai_impact_3rd_asia), 7%
 // margin, 2569-09-05 pricing. Single "Player ID" field.
-const HONKAI_IMPACT_3RD_ASIA_PACKAGES = [
-  { id: "honkai_impact_3rd_asia-30_b_chips", label: "30 B-Chips", mmk: [1900], thb: [15] },
-  { id: "honkai_impact_3rd_asia-65_b_chips", label: "65 B-Chips", mmk: [2100], thb: [17] },
-  { id: "honkai_impact_3rd_asia-65_crystals", label: "65 Crystals", mmk: [2100], thb: [17] },
-  { id: "honkai_impact_3rd_asia-330_b_chips", label: "330 B-Chips", mmk: [10000], thb: [79] },
-  { id: "honkai_impact_3rd_asia-330_crystals", label: "330 Crystals", mmk: [10000], thb: [79] },
-  { id: "honkai_impact_3rd_asia-monthly_card", label: "Monthly-Card", mmk: [10000], thb: [79] },
-  { id: "honkai_impact_3rd_asia-660_crystals", label: "660 Crystals", mmk: [20100], thb: [158] },
-  { id: "honkai_impact_3rd_asia-990_b_chips", label: "990 B-Chips", mmk: [30100], thb: [237] },
-  { id: "honkai_impact_3rd_asia-1320_b_chips", label: "1320 B-Chips", mmk: [40100], thb: [316] },
-  { id: "honkai_impact_3rd_asia-1320_crystals", label: "1320 Crystals", mmk: [40100], thb: [316] },
-  { id: "honkai_impact_3rd_asia-1980_b_chips", label: "1980 B-Chips", mmk: [60300], thb: [475] },
-  { id: "honkai_impact_3rd_asia-3300_b_chips", label: "3300 B-Chips", mmk: [100500], thb: [792] },
-  { id: "honkai_impact_3rd_asia-3300_crystals", label: "3300 Crystals", mmk: [100500], thb: [792] },
-  { id: "honkai_impact_3rd_asia-6600_b_chips", label: "6600 B-Chips", mmk: [201100], thb: [1584] },
-  { id: "honkai_impact_3rd_asia-6600_crystals", label: "6600 Crystals", mmk: [201100], thb: [1584] },
+// ✅ Full FazerCards catalog for Honkai Impact 3rd, region-split like
+// Mobile Legends (Asia/ID/KH/MY/PH/SG/TH each a separate FazerCards
+// category). 7% margin, 2569-09-05 pricing. Single "Player ID" field.
+const HI3RD_ASIA_PACKAGES = [
+  { id: "hi3rd-asia-30_b_chips", label: "Asia 30 B-Chips", mmk: [1900], thb: [15] },
+  { id: "hi3rd-asia-65_b_chips", label: "Asia 65 B-Chips", mmk: [2100], thb: [17] },
+  { id: "hi3rd-asia-65_crystals", label: "Asia 65 Crystals", mmk: [2100], thb: [17] },
+  { id: "hi3rd-asia-330_b_chips", label: "Asia 330 B-Chips", mmk: [10000], thb: [79] },
+  { id: "hi3rd-asia-330_crystals", label: "Asia 330 Crystals", mmk: [10000], thb: [79] },
+  { id: "hi3rd-asia-monthly_card", label: "Asia Monthly-Card", mmk: [10000], thb: [79] },
+  { id: "hi3rd-asia-660_crystals", label: "Asia 660 Crystals", mmk: [20100], thb: [158] },
+  { id: "hi3rd-asia-990_b_chips", label: "Asia 990 B-Chips", mmk: [30100], thb: [237] },
+  { id: "hi3rd-asia-1320_b_chips", label: "Asia 1320 B-Chips", mmk: [40100], thb: [316] },
+  { id: "hi3rd-asia-1320_crystals", label: "Asia 1320 Crystals", mmk: [40100], thb: [316] },
+  { id: "hi3rd-asia-1980_b_chips", label: "Asia 1980 B-Chips", mmk: [60300], thb: [475] },
+  { id: "hi3rd-asia-3300_b_chips", label: "Asia 3300 B-Chips", mmk: [100500], thb: [792] },
+  { id: "hi3rd-asia-3300_crystals", label: "Asia 3300 Crystals", mmk: [100500], thb: [792] },
+  { id: "hi3rd-asia-6600_b_chips", label: "Asia 6600 B-Chips", mmk: [201100], thb: [1584] },
+  { id: "hi3rd-asia-6600_crystals", label: "Asia 6600 Crystals", mmk: [201100], thb: [1584] },
+];
+
+const HI3RD_ID_PACKAGES = [
+  { id: "hi3rd-id-65_b_chips", label: "ID 65 B-Chips", mmk: [4000], thb: [31] },
+  { id: "hi3rd-id-65_crystals", label: "ID 65 Crystals", mmk: [4000], thb: [31] },
+  { id: "hi3rd-id-330_b_chips", label: "ID 330 B-Chips", mmk: [19600], thb: [155] },
+  { id: "hi3rd-id-330_crystals", label: "ID 330 Crystals", mmk: [19600], thb: [155] },
+  { id: "hi3rd-id-monthly_card", label: "ID Monthly-Card", mmk: [19600], thb: [155] },
+  { id: "hi3rd-id-660_crystals", label: "ID 660 Crystals", mmk: [39300], thb: [309] },
+  { id: "hi3rd-id-990_b_chips", label: "ID 990 B-Chips", mmk: [61800], thb: [487] },
+  { id: "hi3rd-id-1320_b_chips", label: "ID 1320 B-Chips", mmk: [81200], thb: [640] },
+  { id: "hi3rd-id-1320_crystals", label: "ID 1320 Crystals", mmk: [81200], thb: [640] },
+  { id: "hi3rd-id-1980_b_chips", label: "ID 1980 B-Chips", mmk: [118600], thb: [934] },
+  { id: "hi3rd-id-3300_b_chips", label: "ID 3300 B-Chips", mmk: [197600], thb: [1556] },
+  { id: "hi3rd-id-3300_crystals", label: "ID 3300 Crystals", mmk: [197600], thb: [1556] },
+  { id: "hi3rd-id-6600_b_chips", label: "ID 6600 B-Chips", mmk: [394900], thb: [3111] },
+  { id: "hi3rd-id-6600_crystals", label: "ID 6600 Crystals", mmk: [394900], thb: [3111] },
+];
+
+const HI3RD_KH_PACKAGES = [
+  { id: "hi3rd-kh-65_b_chips", label: "KH 65 B-Chips", mmk: [4600], thb: [36] },
+  { id: "hi3rd-kh-65_crystals", label: "KH 65 Crystals", mmk: [4600], thb: [36] },
+  { id: "hi3rd-kh-330_b_chips", label: "KH 330 B-Chips", mmk: [23200], thb: [183] },
+  { id: "hi3rd-kh-330_crystals", label: "KH 330 Crystals", mmk: [23200], thb: [183] },
+  { id: "hi3rd-kh-monthly_card", label: "KH Monthly-Card", mmk: [23200], thb: [183] },
+  { id: "hi3rd-kh-660_crystals", label: "KH 660 Crystals", mmk: [46500], thb: [366] },
+  { id: "hi3rd-kh-990_b_chips", label: "KH 990 B-Chips", mmk: [71900], thb: [567] },
+  { id: "hi3rd-kh-1320_b_chips", label: "KH 1320 B-Chips", mmk: [93100], thb: [733] },
+  { id: "hi3rd-kh-1320_crystals", label: "KH 1320 Crystals", mmk: [93100], thb: [733] },
+  { id: "hi3rd-kh-1980_b_chips", label: "KH 1980 B-Chips", mmk: [139600], thb: [1100] },
+  { id: "hi3rd-kh-3300_b_chips", label: "KH 3300 B-Chips", mmk: [232700], thb: [1833] },
+  { id: "hi3rd-kh-3300_crystals", label: "KH 3300 Crystals", mmk: [232700], thb: [1833] },
+  { id: "hi3rd-kh-6600_b_chips", label: "KH 6600 B-Chips", mmk: [465500], thb: [3667] },
+  { id: "hi3rd-kh-6600_crystals", label: "KH 6600 Crystals", mmk: [465500], thb: [3667] },
+];
+
+const HI3RD_MY_PACKAGES = [
+  { id: "hi3rd-my-30_b_chips", label: "MY 30 B-Chips", mmk: [2400], thb: [19] },
+  { id: "hi3rd-my-65_b_chips", label: "MY 65 B-Chips", mmk: [4800], thb: [38] },
+  { id: "hi3rd-my-65_crystals", label: "MY 65 Crystals", mmk: [4800], thb: [38] },
+  { id: "hi3rd-my-330_b_chips", label: "MY 330 B-Chips", mmk: [23400], thb: [184] },
+  { id: "hi3rd-my-330_crystals", label: "MY 330 Crystals", mmk: [23400], thb: [184] },
+  { id: "hi3rd-my-monthly_card", label: "MY Monthly-Card", mmk: [23400], thb: [184] },
+  { id: "hi3rd-my-660_crystals", label: "MY 660 Crystals", mmk: [43900], thb: [346] },
+  { id: "hi3rd-my-990_b_chips", label: "MY 990 B-Chips", mmk: [68300], thb: [538] },
+  { id: "hi3rd-my-1320_b_chips", label: "MY 1320 B-Chips", mmk: [92800], thb: [731] },
+  { id: "hi3rd-my-1320_crystals", label: "MY 1320 Crystals", mmk: [92800], thb: [731] },
+  { id: "hi3rd-my-1980_b_chips", label: "MY 1980 B-Chips", mmk: [141600], thb: [1116] },
+  { id: "hi3rd-my-3300_b_chips", label: "MY 3300 B-Chips", mmk: [234400], thb: [1847] },
+  { id: "hi3rd-my-3300_crystals", label: "MY 3300 Crystals", mmk: [234400], thb: [1847] },
+  { id: "hi3rd-my-6600_b_chips", label: "MY 6600 B-Chips", mmk: [469000], thb: [3694] },
+  { id: "hi3rd-my-6600_crystals", label: "MY 6600 Crystals", mmk: [469000], thb: [3694] },
+];
+
+const HI3RD_PH_PACKAGES = [
+  { id: "hi3rd-ph-65_b_chips", label: "PH 65 B-Chips", mmk: [3900], thb: [31] },
+  { id: "hi3rd-ph-65_crystals", label: "PH 65 Crystals", mmk: [3900], thb: [31] },
+  { id: "hi3rd-ph-330_b_chips", label: "PH 330 B-Chips", mmk: [19900], thb: [157] },
+  { id: "hi3rd-ph-330_crystals", label: "PH 330 Crystals", mmk: [19900], thb: [157] },
+  { id: "hi3rd-ph-monthly_card", label: "PH Monthly-Card", mmk: [19900], thb: [157] },
+  { id: "hi3rd-ph-660_crystals", label: "PH 660 Crystals", mmk: [39900], thb: [314] },
+  { id: "hi3rd-ph-990_b_chips", label: "PH 990 B-Chips", mmk: [59100], thb: [465] },
+  { id: "hi3rd-ph-1320_b_chips", label: "PH 1320 B-Chips", mmk: [79000], thb: [622] },
+  { id: "hi3rd-ph-1320_crystals", label: "PH 1320 Crystals", mmk: [79000], thb: [622] },
+  { id: "hi3rd-ph-1980_b_chips", label: "PH 1980 B-Chips", mmk: [118800], thb: [936] },
+  { id: "hi3rd-ph-3300_b_chips", label: "PH 3300 B-Chips", mmk: [199200], thb: [1570] },
+  { id: "hi3rd-ph-3300_crystals", label: "PH 3300 Crystals", mmk: [199200], thb: [1570] },
+  { id: "hi3rd-ph-6600_b_chips", label: "PH 6600 B-Chips", mmk: [391400], thb: [3083] },
+  { id: "hi3rd-ph-6600_crystals", label: "PH 6600 Crystals", mmk: [391400], thb: [3083] },
+];
+
+const HI3RD_SG_PACKAGES = [
+  { id: "hi3rd-sg-65_b_chips", label: "SG 65 B-Chips", mmk: [4900], thb: [38] },
+  { id: "hi3rd-sg-65_crystals", label: "SG 65 Crystals", mmk: [4900], thb: [38] },
+  { id: "hi3rd-sg-330_b_chips", label: "SG 330 B-Chips", mmk: [23100], thb: [182] },
+  { id: "hi3rd-sg-330_crystals", label: "SG 330 Crystals", mmk: [23100], thb: [182] },
+  { id: "hi3rd-sg-monthly_card", label: "SG Monthly-Card", mmk: [23100], thb: [182] },
+  { id: "hi3rd-sg-660_crystals", label: "SG 660 Crystals", mmk: [49500], thb: [390] },
+  { id: "hi3rd-sg-990_b_chips", label: "SG 990 B-Chips", mmk: [72600], thb: [572] },
+  { id: "hi3rd-sg-1320_b_chips", label: "SG 1320 B-Chips", mmk: [95700], thb: [754] },
+  { id: "hi3rd-sg-1320_crystals", label: "SG 1320 Crystals", mmk: [95700], thb: [754] },
+  { id: "hi3rd-sg-1980_b_chips", label: "SG 1980 B-Chips", mmk: [148500], thb: [1170] },
+  { id: "hi3rd-sg-3300_b_chips", label: "SG 3300 B-Chips", mmk: [227800], thb: [1795] },
+  { id: "hi3rd-sg-3300_crystals", label: "SG 3300 Crystals", mmk: [227800], thb: [1795] },
+  { id: "hi3rd-sg-6600_b_chips", label: "SG 6600 B-Chips", mmk: [492000], thb: [3876] },
+  { id: "hi3rd-sg-6600_crystals", label: "SG 6600 Crystals", mmk: [492000], thb: [3876] },
+];
+
+const HI3RD_TH_PACKAGES = [
+  { id: "hi3rd-th-30_b_chips", label: "TH 30 B-Chips", mmk: [3900], thb: [31] },
+  { id: "hi3rd-th-65_b_chips", label: "TH 65 B-Chips", mmk: [4200], thb: [33] },
+  { id: "hi3rd-th-65_crystals", label: "TH 65 Crystals", mmk: [4200], thb: [33] },
+  { id: "hi3rd-th-330_b_chips", label: "TH 330 B-Chips", mmk: [21700], thb: [171] },
+  { id: "hi3rd-th-330_crystals", label: "TH 330 Crystals", mmk: [21700], thb: [171] },
+  { id: "hi3rd-th-monthly_card", label: "TH Monthly-Card", mmk: [21700], thb: [171] },
+  { id: "hi3rd-th-660_crystals", label: "TH 660 Crystals", mmk: [42400], thb: [334] },
+  { id: "hi3rd-th-990_b_chips", label: "TH 990 B-Chips", mmk: [66600], thb: [525] },
+  { id: "hi3rd-th-1320_b_chips", label: "TH 1320 B-Chips", mmk: [88500], thb: [697] },
+  { id: "hi3rd-th-1320_crystals", label: "TH 1320 Crystals", mmk: [88500], thb: [697] },
+  { id: "hi3rd-th-1980_b_chips", label: "TH 1980 B-Chips", mmk: [133400], thb: [1051] },
+  { id: "hi3rd-th-3300_b_chips", label: "TH 3300 B-Chips", mmk: [218400], thb: [1720] },
+  { id: "hi3rd-th-3300_crystals", label: "TH 3300 Crystals", mmk: [218400], thb: [1720] },
+  { id: "hi3rd-th-6600_b_chips", label: "TH 6600 B-Chips", mmk: [448900], thb: [3536] },
+  { id: "hi3rd-th-6600_crystals", label: "TH 6600 Crystals", mmk: [448900], thb: [3536] },
 ];
 
 // ✅ Full FazerCards catalog (category_id: arena_breakout), 7% margin,
@@ -1671,6 +1834,8 @@ export default function MonkeyTopup() {
   const [ffServer, setFfServer] = useState("global");
   const [rmServer, setRmServer] = useState("sea");
   const [mlServer, setMlServer] = useState("global");
+  const [valorantServer, setValorantServer] = useState("th");
+  const [hi3rdServer, setHi3rdServer] = useState("asia");
   const [telegramTab, setTelegramTab] = useState("stars");
   const [mcServer, setMcServer] = useState("global");
   const [server, setServer] = useState("Global");
@@ -1974,7 +2139,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile (Global)", "TFT Mobile (TH)"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile (MY)", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile (Global)", "TFT Mobile (TH)"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -2070,12 +2235,12 @@ export default function MonkeyTopup() {
     if (TELEGRAM_STARS.includes(pkg) || TELEGRAM_PREMIUM.includes(pkg)) return "Telegram";
     if (HOK_TOKENS.includes(pkg) || HOK_SPECIAL.includes(pkg)) return "Honor of Kings";
     if (SKY_COTL_PACKAGES.includes(pkg)) return "Sky: Children of the Light";
-    if (VALORANT_TH_PACKAGES.includes(pkg)) return "Valorant (TH)";
+    if ([VALORANT_ID_PACKAGES, VALORANT_KH_PACKAGES, VALORANT_MY_PACKAGES, VALORANT_PH_PACKAGES, VALORANT_SG_PACKAGES, VALORANT_TH_PACKAGES, VALORANT_VN_PACKAGES].some((arr) => arr.includes(pkg))) return "Valorant";
     if (LOL_TH_PACKAGES.includes(pkg)) return "League of Legends (TH)";
     if (CODM_SGMY_PACKAGES.includes(pkg)) return "Call of Duty Mobile (SG/MY)";
     if (GENSHIN_GLOBAL_PACKAGES.includes(pkg)) return "Genshin Impact (Global)";
     if (HONKAI_STAR_RAIL_GLOBAL_PACKAGES.includes(pkg)) return "Honkai: Star Rail (Global)";
-    if (HONKAI_IMPACT_3RD_ASIA_PACKAGES.includes(pkg)) return "Honkai Impact 3rd (Asia)";
+    if ([HI3RD_ASIA_PACKAGES, HI3RD_ID_PACKAGES, HI3RD_KH_PACKAGES, HI3RD_MY_PACKAGES, HI3RD_PH_PACKAGES, HI3RD_SG_PACKAGES, HI3RD_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "Honkai Impact 3rd";
     if (ARENA_BREAKOUT_PACKAGES.includes(pkg)) return "Arena Breakout";
     if (DELTA_FORCE_PACKAGES.includes(pkg)) return "Delta Force";
     if (EAFC_MOBILE_MY_PACKAGES.includes(pkg)) return "EAFC Mobile (MY)";
@@ -2239,7 +2404,7 @@ export default function MonkeyTopup() {
     if (gameId === "telegram") setView("telegramDetail");
     if (gameId === "hok") setView("hokDetail");
     if (gameId === "skycotl") setView("skyCotlDetail");
-    if (gameId === "valorant_th") setView("valorantThDetail");
+    if (gameId === "valorant") setView("valorantDetail");
     if (gameId === "lol_th") setView("lolThDetail");
     if (gameId === "codm_sgmy") setView("codmSgmyDetail");
     if (gameId === "genshin") setView("genshinDetail");
@@ -3621,7 +3786,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Valorant (TH)" />
+              <DetailThumbnail label="Valorant" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -3640,7 +3805,45 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Valorant Points" items={VALORANT_TH_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["th", "🇹🇭 Thailand"],
+                  ["id", "🇮🇩 Indonesia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["ph", "🇵🇭 Philippines"],
+                  ["sg", "🇸🇬 Singapore"],
+                  ["vn", "🇻🇳 Vietnam"],
+                  ["kh", "🇰🇭 Cambodia"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setValorantServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${valorantServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Valorant Points"
+                items={
+                  {
+                    th: VALORANT_TH_PACKAGES,
+                    id: VALORANT_ID_PACKAGES,
+                    my: VALORANT_MY_PACKAGES,
+                    ph: VALORANT_PH_PACKAGES,
+                    sg: VALORANT_SG_PACKAGES,
+                    vn: VALORANT_VN_PACKAGES,
+                    kh: VALORANT_KH_PACKAGES,
+                  }[valorantServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -3772,7 +3975,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Honkai Impact 3rd (Asia)" />
+              <DetailThumbnail label="Honkai Impact 3rd" />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -3791,7 +3994,45 @@ export default function MonkeyTopup() {
                 </div>
               </div>
 
-              <PkgSection num="1" title="Crystals & B-Chips" items={HONKAI_IMPACT_3RD_ASIA_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["asia", "🌏 Asia"],
+                  ["id", "🇮🇩 Indonesia"],
+                  ["my", "🇲🇾 Malaysia"],
+                  ["ph", "🇵🇭 Philippines"],
+                  ["sg", "🇸🇬 Singapore"],
+                  ["th", "🇹🇭 Thailand"],
+                  ["kh", "🇰🇭 Cambodia"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setHi3rdServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${hi3rdServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Crystals & B-Chips"
+                items={
+                  {
+                    asia: HI3RD_ASIA_PACKAGES,
+                    id: HI3RD_ID_PACKAGES,
+                    my: HI3RD_MY_PACKAGES,
+                    ph: HI3RD_PH_PACKAGES,
+                    sg: HI3RD_SG_PACKAGES,
+                    th: HI3RD_TH_PACKAGES,
+                    kh: HI3RD_KH_PACKAGES,
+                  }[hi3rdServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
             </div>
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
@@ -4363,12 +4604,12 @@ export default function MonkeyTopup() {
                     gName === "Free Fire" ||
                     gName === "Honor of Kings" ||
                     gName === "Sky: Children of the Light" ||
-                    gName === "Valorant (TH)" ||
+                    gName === "Valorant" ||
                     gName === "League of Legends (TH)" ||
                     gName === "Call of Duty Mobile (SG/MY)" ||
                     gName === "Genshin Impact (Global)" ||
                     gName === "Honkai: Star Rail (Global)" ||
-                    gName === "Honkai Impact 3rd (Asia)" ||
+                    gName === "Honkai Impact 3rd" ||
                     gName === "Arena Breakout" ||
                     gName === "Delta Force" ||
                     gName === "EAFC Mobile (MY)" ||
@@ -4388,9 +4629,9 @@ export default function MonkeyTopup() {
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
-                          : gName === "Valorant (TH)" || gName === "League of Legends (TH)" || gName === "TFT Mobile (TH)"
+                          : gName === "Valorant" || gName === "League of Legends (TH)" || gName === "TFT Mobile (TH)"
                             ? "Riot Id"
-                            : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd (Asia)"
+                            : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd"
                               ? "Player Id (UID)"
                               : gName === "Stumble Guys" || gName === "State of Survival" || gName === "Eggy Party"
                                 ? "User Id"
@@ -4625,7 +4866,7 @@ export default function MonkeyTopup() {
   );
 }
 
-const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|BR|Thailand)\s+/;
+const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|BR|Thailand|ID|KH|MY|SG|TH|VN|Asia)\s+/;
 const BONUS_SUFFIX_RE = /\s*\([^)]*Bonus\)\s*$/i;
 
 /** Strips the region prefix and "(First Top-Up Bonus)" suffix for display only — the underlying `label` (used for orders) is untouched. */
