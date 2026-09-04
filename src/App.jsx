@@ -2219,6 +2219,7 @@ export default function MonkeyTopup() {
   const [respinSaving, setRespinSaving] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [activeUserCount, setActiveUserCount] = useState(null);
+  const [userCounts, setUserCounts] = useState(null);
   const [usersLoading, setUsersLoading] = useState(false);
   const pendingCount = pendingDeposits.length + pendingOrders.length;
 
@@ -2836,6 +2837,21 @@ export default function MonkeyTopup() {
     };
   }, [view, isAdmin, telegramId]);
 
+  // Total registered user count (Telegram + website), fetched once whenever
+  // the Admin Panel is opened -- this doesn't change fast enough to need
+  // the 15s auto-refresh the active-count card has.
+  useEffect(() => {
+    if (!(view === "admin" && isAdmin)) return;
+    let cancelled = false;
+    api
+      .getUserCounts(telegramId)
+      .then((r) => { if (!cancelled) setUserCounts(r); })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [view, isAdmin, telegramId]);
+
 
   async function loadSpinStatus() {
     setSpinStatus(null);
@@ -3339,12 +3355,21 @@ export default function MonkeyTopup() {
           <>
             <TopBar title="Admin Panel" onBack={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-5">
-              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 shadow text-white flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-semibold opacity-90">🟢 လက်ရှိ Active Users (last 5 min)</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 shadow text-white">
+                  <div className="text-xs font-semibold opacity-90">🟢 Active Users</div>
+                  <div className="text-[10px] opacity-70">(last 5 min)</div>
                   <div className="text-3xl font-extrabold mt-1">{activeUserCount === null ? "…" : activeUserCount}</div>
+                  <div className="text-[9px] opacity-70 mt-1">15 sec တိုင်း auto-refresh</div>
                 </div>
-                <div className="text-[10px] opacity-80 text-right">15 sec တိုင်း<br />auto-refresh</div>
+                <div className="bg-gradient-to-r from-[#3f3272] to-[#352a63] rounded-xl p-4 shadow text-white">
+                  <div className="text-xs font-semibold opacity-90">👥 Total Users</div>
+                  <div className="text-[10px] opacity-70">(Telegram + Website)</div>
+                  <div className="text-3xl font-extrabold mt-1">{userCounts === null ? "…" : userCounts.total}</div>
+                  <div className="text-[9px] opacity-70 mt-1">
+                    {userCounts === null ? "…" : `✈️ ${userCounts.telegramCount}  ·  🌐 ${userCounts.websiteCount}`}
+                  </div>
+                </div>
               </div>
 
               <div className="bg-white rounded-xl p-3 shadow space-y-2">
