@@ -1023,7 +1023,16 @@ export default function MonkeyTopup() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
 
-  const [view, setView] = useState("shop");
+  const [view, setView] = useState(() => {
+    // Lets a link (e.g. the "🎡 Lucky Spin" button on the Telegram bot's
+    // reply keyboard) open the Mini App straight into a specific screen,
+    // via a "?view=spin" query param on the Mini App URL.
+    try {
+      const requested = new URLSearchParams(window.location.search).get("view");
+      if (["shop", "spin", "profile"].includes(requested)) return requested;
+    } catch {}
+    return "shop";
+  });
   const [bannerSlide, setBannerSlide] = useState(0);
   const BANNER_COUNT = 3;
 
