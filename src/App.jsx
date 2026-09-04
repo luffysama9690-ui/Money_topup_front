@@ -404,6 +404,9 @@ const GAMES = [
   { id: "valorant_th", name: "Valorant (TH)", tag: "New!", grad: "from-red-600 to-rose-900", icon: "🎯" },
   { id: "lol_th", name: "League of Legends (TH)", tag: "New!", grad: "from-blue-600 to-cyan-800", icon: "⚔️" },
   { id: "codm_sgmy", name: "Call of Duty Mobile (SG/MY)", tag: "New!", grad: "from-neutral-700 to-black", icon: "🔫" },
+  { id: "genshin", name: "Genshin Impact (Global)", tag: "New!", grad: "from-amber-500 to-orange-800", icon: "⭐" },
+  { id: "hsr", name: "Honkai: Star Rail (Global)", tag: "New!", grad: "from-sky-500 to-indigo-900", icon: "🚂" },
+  { id: "hi3rd", name: "Honkai Impact 3rd (Asia)", tag: "New!", grad: "from-pink-500 to-fuchsia-900", icon: "💫" },
 ];
 
 // ---- PUBG New State ----
@@ -654,6 +657,52 @@ const CODM_SGMY_PACKAGES = [
   { id: "codm_garena_sgmy-15640_cp", label: "15640 CP", mmk: [531600], thb: [4188] },
   { id: "codm_garena_sgmy-16001_cp", label: "11429 + 4572 CP", mmk: [543100], thb: [4278] },
   { id: "codm_garena_sgmy-19320_cp", label: "19320 CP", mmk: [638000], thb: [5025] },
+];
+
+// ✅ Full FazerCards catalog (category_id: genshin_impact_global), 7%
+// margin, 2569-09-05 pricing. Fields: Player ID + Server (hardcoded to
+// "asia" in handleBuy/handleVerify -- no picker shown, see those comments).
+const GENSHIN_GLOBAL_PACKAGES = [
+  { id: "genshin_impact_global-60_genesis_crystals", label: "60 Genesis Crystals", mmk: [4400], thb: [35] },
+  { id: "genshin_impact_global-300_30_genesis_crystals", label: "300 + 30 Genesis Crystals", mmk: [22200], thb: [175] },
+  { id: "genshin_impact_global-980_110_genesis_crystals", label: "980 + 110 Genesis Crystals", mmk: [66600], thb: [525] },
+  { id: "genshin_impact_global-1980_260_genesis_crystals", label: "1980 + 260 Genesis Crystals", mmk: [133300], thb: [1050] },
+  { id: "genshin_impact_global-3280_600_genesis_crystals", label: "3280 + 600 Genesis Crystals", mmk: [222100], thb: [1750] },
+  { id: "genshin_impact_global-6480_1600_genesis_crystals", label: "6480 + 1600 Genesis Crystals", mmk: [444300], thb: [3500] },
+  { id: "genshin_impact_global-blessing_of_the_welkin_moon", label: "Blessing of the Welkin Moon", mmk: [22200], thb: [175] },
+];
+
+// ✅ Full FazerCards catalog (category_id: honkai_star_rail_global), 7%
+// margin, 2569-09-05 pricing. Fields: Player ID + Server (hardcoded to
+// "asia", same as Genshin above).
+const HONKAI_STAR_RAIL_GLOBAL_PACKAGES = [
+  { id: "honkai_star_rail_global-60_oneiric_shard", label: "60 Oneiric Shard", mmk: [4300], thb: [34] },
+  { id: "honkai_star_rail_global-300_30_oneiric_shard", label: "300 + 30 Oneiric Shard", mmk: [21200], thb: [167] },
+  { id: "honkai_star_rail_global-980_110_oneiric_shard", label: "980 + 110 Oneiric Shard", mmk: [66200], thb: [521] },
+  { id: "honkai_star_rail_global-1980_260_oneiric_shard", label: "1980 + 260 Oneiric Shard", mmk: [127900], thb: [1007] },
+  { id: "honkai_star_rail_global-3280_600_oneiric_shard", label: "3280 + 600 Oneiric Shard", mmk: [213300], thb: [1680] },
+  { id: "honkai_star_rail_global-6480_1600_oneiric_shard", label: "6480 + 1600 Oneiric Shard", mmk: [426900], thb: [3363] },
+  { id: "honkai_star_rail_global-express_supply_pass", label: "Express Supply Pass", mmk: [21200], thb: [167] },
+];
+
+// ✅ Full FazerCards catalog (category_id: honkai_impact_3rd_asia), 7%
+// margin, 2569-09-05 pricing. Single "Player ID" field.
+const HONKAI_IMPACT_3RD_ASIA_PACKAGES = [
+  { id: "honkai_impact_3rd_asia-30_b_chips", label: "30 B-Chips", mmk: [1900], thb: [15] },
+  { id: "honkai_impact_3rd_asia-65_b_chips", label: "65 B-Chips", mmk: [2100], thb: [17] },
+  { id: "honkai_impact_3rd_asia-65_crystals", label: "65 Crystals", mmk: [2100], thb: [17] },
+  { id: "honkai_impact_3rd_asia-330_b_chips", label: "330 B-Chips", mmk: [10000], thb: [79] },
+  { id: "honkai_impact_3rd_asia-330_crystals", label: "330 Crystals", mmk: [10000], thb: [79] },
+  { id: "honkai_impact_3rd_asia-monthly_card", label: "Monthly-Card", mmk: [10000], thb: [79] },
+  { id: "honkai_impact_3rd_asia-660_crystals", label: "660 Crystals", mmk: [20100], thb: [158] },
+  { id: "honkai_impact_3rd_asia-990_b_chips", label: "990 B-Chips", mmk: [30100], thb: [237] },
+  { id: "honkai_impact_3rd_asia-1320_b_chips", label: "1320 B-Chips", mmk: [40100], thb: [316] },
+  { id: "honkai_impact_3rd_asia-1320_crystals", label: "1320 Crystals", mmk: [40100], thb: [316] },
+  { id: "honkai_impact_3rd_asia-1980_b_chips", label: "1980 B-Chips", mmk: [60300], thb: [475] },
+  { id: "honkai_impact_3rd_asia-3300_b_chips", label: "3300 B-Chips", mmk: [100500], thb: [792] },
+  { id: "honkai_impact_3rd_asia-3300_crystals", label: "3300 Crystals", mmk: [100500], thb: [792] },
+  { id: "honkai_impact_3rd_asia-6600_b_chips", label: "6600 B-Chips", mmk: [201100], thb: [1584] },
+  { id: "honkai_impact_3rd_asia-6600_crystals", label: "6600 Crystals", mmk: [201100], thb: [1584] },
 ];
 
 // ---- Sausage Man ----
@@ -1617,11 +1666,16 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant (TH)", "League of Legends (TH)", "Call of Duty Mobile (SG/MY)", "Genshin Impact (Global)", "Honkai: Star Rail (Global)", "Honkai Impact 3rd (Asia)"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
-      const data = await api.verifyPlayer(gameId, needsServerId ? serverId : undefined, gName, selectedPkg.label || selectedPkg.name);
+      // Genshin Impact / Honkai: Star Rail need a hidden "asia" server value
+      // sent to FazerCards even though no server picker is shown -- see the
+      // same note in handleBuy().
+      const hardcodedServerId =
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" ? "asia" : null;
+      const data = await api.verifyPlayer(gameId, hardcodedServerId || (needsServerId ? serverId : undefined), gName, selectedPkg.label || selectedPkg.name);
       if (data.name) {
         setPlayerName(data.name);
       }
@@ -1640,12 +1694,19 @@ export default function MonkeyTopup() {
     }
     setBuying(true);
     try {
+      const gName = selectedGameName(selectedPkg);
+      // Genshin Impact / Honkai: Star Rail need a "Server" field on
+      // FazerCards' side (Player ID alone isn't enough), but we don't show
+      // a server picker to the customer -- everyone here is SEA/MM, so it's
+      // hardcoded to "asia" rather than adding UI for it.
+      const hardcodedServerId =
+        gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" ? "asia" : null;
       const order = await api.createOrder({
         telegramId,
-        game: selectedGameName(selectedPkg),
+        game: gName,
         item: selectedPkg.label || selectedPkg.name,
         gameId: gameId || null,
-        serverId: serverId || null,
+        serverId: hardcodedServerId || serverId || null,
         qty: qtyNum,
         price: total,
         currency,
@@ -1696,6 +1757,9 @@ export default function MonkeyTopup() {
     if (VALORANT_TH_PACKAGES.includes(pkg)) return "Valorant (TH)";
     if (LOL_TH_PACKAGES.includes(pkg)) return "League of Legends (TH)";
     if (CODM_SGMY_PACKAGES.includes(pkg)) return "Call of Duty Mobile (SG/MY)";
+    if (GENSHIN_GLOBAL_PACKAGES.includes(pkg)) return "Genshin Impact (Global)";
+    if (HONKAI_STAR_RAIL_GLOBAL_PACKAGES.includes(pkg)) return "Honkai: Star Rail (Global)";
+    if (HONKAI_IMPACT_3RD_ASIA_PACKAGES.includes(pkg)) return "Honkai Impact 3rd (Asia)";
     return "Unknown";
   }
 
@@ -1849,6 +1913,9 @@ export default function MonkeyTopup() {
     if (gameId === "valorant_th") setView("valorantThDetail");
     if (gameId === "lol_th") setView("lolThDetail");
     if (gameId === "codm_sgmy") setView("codmSgmyDetail");
+    if (gameId === "genshin") setView("genshinDetail");
+    if (gameId === "hsr") setView("hsrDetail");
+    if (gameId === "hi3rd") setView("hi3rdDetail");
   }
 
   async function handleSetBanned(banned) {
@@ -3295,6 +3362,99 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "genshinDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Genshin Impact (Global)" />
+              <div className="bg-[#E3F2FD] text-[#0D47A1] text-xs rounded-lg p-3 text-center leading-relaxed">
+                Asia Server အတွက်ပဲ ဝန်ဆောင်မှုပေးပါသည် — Player ID (UID) ကို ရိုက်ထည့်ပါ
+              </div>
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Genesis Crystals" items={GENSHIN_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "hsrDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Honkai: Star Rail (Global)" />
+              <div className="bg-[#E3F2FD] text-[#0D47A1] text-xs rounded-lg p-3 text-center leading-relaxed">
+                Asia Server အတွက်ပဲ ဝန်ဆောင်မှုပေးပါသည် — Player ID (UID) ကို ရိုက်ထည့်ပါ
+              </div>
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Oneiric Shard" items={HONKAI_STAR_RAIL_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "hi3rdDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Honkai Impact 3rd (Asia)" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Crystals & B-Chips" items={HONKAI_IMPACT_3RD_ASIA_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
 
         {view === "bloodstrikeDetail" && (
           <>
@@ -3485,7 +3645,10 @@ export default function MonkeyTopup() {
                     gName === "Sky: Children of the Light" ||
                     gName === "Valorant (TH)" ||
                     gName === "League of Legends (TH)" ||
-                    gName === "Call of Duty Mobile (SG/MY)";
+                    gName === "Call of Duty Mobile (SG/MY)" ||
+                    gName === "Genshin Impact (Global)" ||
+                    gName === "Honkai: Star Rail (Global)" ||
+                    gName === "Honkai Impact 3rd (Asia)";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
@@ -3495,7 +3658,9 @@ export default function MonkeyTopup() {
                           ? "Sky Id"
                           : gName === "Valorant (TH)" || gName === "League of Legends (TH)"
                             ? "Riot Id"
-                            : "Game Id";
+                            : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail (Global)" || gName === "Honkai Impact 3rd (Asia)"
+                              ? "Player Id (UID)"
+                              : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
