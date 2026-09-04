@@ -1118,9 +1118,33 @@ function DesktopChrome({ balance, balanceThb, telegramUser, onLogo, onDeposit, o
       {children}
 
       <footer className="border-t border-white/10 bg-[#0a0818] py-8 mt-16">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between gap-3 text-sm text-[#6f6790]">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-[#6f6790]">
           <span>🐒 {APP_NAME} — Telegram Mini App ကနေလည်း တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
-          <span>ပြဿနာရှိရင် "Contact to Admin" ကနေ ဆက်သွယ်ပါ</span>
+          <div className="flex items-center gap-5">
+            <a
+              href="https://t.me/coco279999"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 hover:text-white transition"
+            >
+              <svg viewBox="0 0 240 240" className="w-5 h-5 shrink-0" fill="none">
+                <circle cx="120" cy="120" r="120" fill="#29A9EA" />
+                <path d="M53 118l125-48c6-2 11 1 9 10l-21 100c-2 8-7 10-14 6l-38-28-18 17c-2 2-4 4-8 4l3-40 74-67c3-3-1-4-4-2l-92 58-40-13c-8-3-8-9 2-13z" fill="#fff" />
+              </svg>
+              @coco279999
+            </a>
+            <a
+              href="https://www.facebook.com/myat.k.khaing.96742/?rdid=nlEKF3Xe4xpGw4Kg"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 hover:text-white transition"
+            >
+              <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="#1877F2">
+                <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z" />
+              </svg>
+              Facebook
+            </a>
+          </div>
         </div>
       </footer>
     </div>
