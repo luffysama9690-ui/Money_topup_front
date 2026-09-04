@@ -2426,7 +2426,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Mobile Legends" images={[PKG_IMAGES.imgThumbMlD, PKG_IMAGES.imgThumbMlSwordsmen]} />
+              <DetailThumbnail label="Mobile Legends" images={[PKG_IMAGES.imgThumbMlD, PKG_IMAGES.imgThumbWwmSplash]} />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
@@ -2833,7 +2833,7 @@ export default function MonkeyTopup() {
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
-              <DetailThumbnail label="Where Winds Meet" images={[PKG_IMAGES.imgThumbWwmSplash, PKG_IMAGES.imgThumbWwmB]} />
+              <DetailThumbnail label="Where Winds Meet" images={[PKG_IMAGES.imgThumbMlSwordsmen, PKG_IMAGES.imgThumbWwmB]} />
 
               <div className="flex justify-end">
                 <div className="flex gap-2">
