@@ -3407,7 +3407,7 @@ export default function MonkeyTopup() {
   );
 }
 
-const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|Thailand)\s+/;
+const REGION_PREFIX_RE = /^(Global|PH|SEA|LATAM|RU|BR|Thailand)\s+/;
 const BONUS_SUFFIX_RE = /\s*\([^)]*Bonus\)\s*$/i;
 
 /** Strips the region prefix and "(First Top-Up Bonus)" suffix for display only — the underlying `label` (used for orders) is untouched. */
