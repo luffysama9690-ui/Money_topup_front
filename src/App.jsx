@@ -214,6 +214,42 @@ const ML_DIAMONDS_RU = [
   { id: "mlr11", label: "RU 6000 Diamonds", mmk: [410800], thb: [3236], image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
+// ✅ Full FazerCards catalog for Mobile Legends (Brazil), 7% margin over
+// FazerCards USD cost at 1 USD ≈ 4,193 MMK / 33.03 THB (2569-09-04 pricing,
+// GET /api/v2/topups/offers?category_id=mobile_legends_brazil). MMK rounded
+// to the nearest 100. Item labels ("BR 78 + 8 Diamonds", "BR Weekly Pass")
+// match FazerCards' real offer names exactly (after stripping the "BR "
+// region prefix) -- no NAME_OVERRIDES needed, same as Global/PH/RU.
+const ML_PASSES_BR = [
+  { id: "mlbr-weekly_pass", label: "BR Weekly Pass", mmk: [6100], thb: [48], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-twilight_pass", label: "BR Twilight Pass", mmk: [36500], thb: [288], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const ML_BONUS_BR = [
+  { id: "mlbr-50_5_diamonds_first_top_up_bonus", label: "BR 50 + 5 Diamonds (First Top-Up Bonus)", mmk: [3300], thb: [26], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-150_15_diamonds_first_top_up_bonus", label: "BR 150 + 15 Diamonds (First Top-Up Bonus)", mmk: [9800], thb: [77], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-250_25_diamonds_first_top_up_bonus", label: "BR 250 + 25 Diamonds (First Top-Up Bonus)", mmk: [16100], thb: [127], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-500_65_diamonds_first_top_up_bonus", label: "BR 500 + 65 Diamonds (First Top-Up Bonus)", mmk: [33000], thb: [260], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
+const ML_DIAMONDS_BR = [
+  { id: "mlbr-50_5_diamonds", label: "BR 50 + 5 Diamonds", mmk: [3600], thb: [28], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-78_8_diamonds", label: "BR 78 + 8 Diamonds", mmk: [4800], thb: [38], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-156_16_diamonds", label: "BR 156 + 16 Diamonds", mmk: [9700], thb: [76], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-150_15_diamonds", label: "BR 150 + 15 Diamonds", mmk: [10800], thb: [85], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-234_23_diamonds", label: "BR 234 + 23 Diamonds", mmk: [14500], thb: [114], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-310_34_diamonds", label: "BR 310 + 34 Diamonds", mmk: [15800], thb: [124], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-250_25_diamonds", label: "BR 250 + 25 Diamonds", mmk: [18000], thb: [142], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-482_diamonds", label: "BR 482 Diamonds", mmk: [22100], thb: [174], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-465_51_diamonds", label: "BR 465 + 51 Diamonds", mmk: [23700], thb: [187], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-500_65_diamonds", label: "BR 500 + 65 Diamonds", mmk: [36100], thb: [284], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-625_81_diamonds", label: "BR 625 + 81 Diamonds", mmk: [38700], thb: [305], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-1860_335_diamonds", label: "BR 1860 + 335 Diamonds", mmk: [116100], thb: [914], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-3099_589_diamonds", label: "BR 3099 + 589 Diamonds", mmk: [193500], thb: [1524], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-4649_883_diamonds", label: "BR 4649 + 883 Diamonds", mmk: [290200], thb: [2286], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlbr-7740_1548_diamonds", label: "BR 7740 + 1548 Diamonds", mmk: [483700], thb: [3810], image: PKG_IMAGES.imgDiamondTier1 },
+];
+
 // ---- Magic Chess GoGo ----
 // ✅ Full FazerCards catalog (Global + RU). Labels prefixed with region for
 // the same reason as ML (some amounts overlap between regions at different
@@ -1450,7 +1486,7 @@ export default function MonkeyTopup() {
   // order's "game" column) — falls back to "Unknown" if it can't tell.
   function selectedGameName(pkg) {
     if (!pkg) return "Unknown";
-    if (ML_PASSES_GLOBAL.includes(pkg) || ML_BONUS_GLOBAL.includes(pkg) || ML_DIAMONDS_GLOBAL.includes(pkg) || ML_PASSES_PH.includes(pkg) || ML_BONUS_PH.includes(pkg) || ML_DIAMONDS_PH.includes(pkg) || ML_PASSES_RU.includes(pkg) || ML_DIAMONDS_RU.includes(pkg)) return "Mobile Legends";
+    if (ML_PASSES_GLOBAL.includes(pkg) || ML_BONUS_GLOBAL.includes(pkg) || ML_DIAMONDS_GLOBAL.includes(pkg) || ML_PASSES_PH.includes(pkg) || ML_BONUS_PH.includes(pkg) || ML_DIAMONDS_PH.includes(pkg) || ML_PASSES_RU.includes(pkg) || ML_DIAMONDS_RU.includes(pkg) || ML_PASSES_BR.includes(pkg) || ML_BONUS_BR.includes(pkg) || ML_DIAMONDS_BR.includes(pkg)) return "Mobile Legends";
     if (MC_PASSES_GLOBAL.includes(pkg) || MC_BONUS_GLOBAL.includes(pkg) || MC_DIAMONDS_GLOBAL.includes(pkg) || MC_PASSES_RU.includes(pkg) || MC_BONUS_RU.includes(pkg) || MC_DIAMONDS_RU.includes(pkg)) return "Magic Chess GoGo";
     if (PUBG_UC.includes(pkg) || PUBG_WOW.includes(pkg) || PUBG_SPECIAL.includes(pkg) || PUBG_PRIME.includes(pkg)) return "PUBG Mobile";
     if (NEWSTATE_NC.includes(pkg)) return "PUBG New State";
@@ -2598,6 +2634,12 @@ export default function MonkeyTopup() {
                 >
                   🇷🇺 Russia
                 </button>
+                <button
+                  onClick={() => setMlServer("brazil")}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "brazil" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                >
+                  🇧🇷 Brazil
+                </button>
               </div>
 
               {mlServer === "global" ? (
@@ -2611,6 +2653,12 @@ export default function MonkeyTopup() {
                   <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
                   <PkgSection num="2" title="2x Diamonds" items={ML_BONUS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
                   <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_PH} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                </>
+              ) : mlServer === "brazil" ? (
+                <>
+                  <PkgSection num="1" title="Mobile Legends Pass" items={ML_PASSES_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="2" title="2x Diamonds (First Top-Up)" items={ML_BONUS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
+                  <PkgSection num="3" title="Diamonds" items={ML_DIAMONDS_BR} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} />
                 </>
               ) : (
                 <>
