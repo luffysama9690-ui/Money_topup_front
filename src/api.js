@@ -86,11 +86,13 @@ export const api = {
   getSpinStatus: (telegramId) => request(`/spin/status/${telegramId}`),
   spin: (telegramId) => request(`/spin`, { method: "POST", body: JSON.stringify({ telegramId }) }),
 
-  // Looks up a Mobile Legends player's real in-game nickname via the
-  // supplier bot's `.n` command (see backend routes/verify.js). Only
-  // wired up for Mobile Legends right now.
-  verifyPlayer: (gameId, serverId) =>
-    request(`/verify-player`, { method: "POST", body: JSON.stringify({ gameId, serverId }) }),
+  // Looks up a player's real in-game nickname (where FazerCards supports
+  // it) or at least confirms the Game ID/Server ID is real, via backend
+  // routes/verify.js -> validateGamePlayerId. `game` and `item` let the
+  // backend pick the right FazerCards category (e.g. which ML region);
+  // omit them only for the legacy Mobile-Legends-only fallback path.
+  verifyPlayer: (gameId, serverId, game, item) =>
+    request(`/verify-player`, { method: "POST", body: JSON.stringify({ gameId, serverId, game, item }) }),
 };
 
 // ---------------------------------------------------------------------

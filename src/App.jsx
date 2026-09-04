@@ -1357,26 +1357,22 @@ export default function MonkeyTopup() {
       return;
     }
 
-    // Real nickname lookup is only wired up for Mobile Legends right now
-    // (via the supplier bot's `.n` command). Other games fall back to a
-    // format-only check until their lookups are set up.
-    if (selectedGameName(selectedPkg) !== "Mobile Legends") {
-      try {
-        await verifyGameIdFormat(gameId);
-        setVerifyState("ok");
-      } catch (e) {
-        setVerifyState("error");
-        setVerifyError(e.message);
-      }
-      return;
-    }
-
+    // Real nickname lookup: FazerCards' own player-ID check covers every
+    // FazerCards-connected game already (ML all regions, MCGG, PUBG,
+    // Racing Master, Sausage Man, Where Winds Meet, Blood Strike, Free Fire
+    // TH, Honor of Kings) via routes/verify.js -> validateGamePlayerId.
+    // Games/regions it doesn't cover (ML RU, Clash of Clans, Free Fire
+    // Global) still get a real "does this Game ID look valid" check, just
+    // without a nickname -- the backend returns { name: null } for those
+    // rather than failing, so this one path works for every game.
     try {
       await verifyGameIdFormat(gameId);
-      if (!serverId || !/^\d+$/.test(serverId)) {
+      const gName = selectedGameName(selectedPkg);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings"].includes(gName);
+      if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
-      const data = await api.verifyPlayer(gameId, serverId);
+      const data = await api.verifyPlayer(gameId, needsServerId ? serverId : undefined, gName, selectedPkg.label || selectedPkg.name);
       if (data.name) {
         setPlayerName(data.name);
       }
