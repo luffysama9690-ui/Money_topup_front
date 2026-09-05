@@ -439,6 +439,7 @@ const GAMES = [
   { id: "blockmango", name: "Blockman Go", tag: "New!", grad: "from-cyan-500 to-blue-800", icon: "🧱", image: GAME_IMAGES.imgBlockmanGo, imgFit: "cover" },
   { id: "growtopia", name: "Growtopia", tag: "New!", grad: "from-teal-500 to-emerald-900", icon: "🌱", image: GAME_IMAGES.imgGrowtopia, imgFit: "contain" },
   { id: "eggyparty", name: "Eggy Party", tag: "New!", grad: "from-yellow-400 to-orange-600", icon: "🥚", image: GAME_IMAGES.imgEggyParty, imgFit: "cover" },
+  { id: "8ballpool", name: "8 Ball Pool", tag: "New!", grad: "from-blue-700 to-slate-900", icon: "🎱" },
   { id: "r6mobile", name: "Rainbow Six Mobile", tag: "New!", grad: "from-gray-700 to-black", icon: "🔰", image: GAME_IMAGES.imgRainbowSix, imgFit: "cover" },
   { id: "tftth", name: "TFT Mobile", tag: "New!", grad: "from-indigo-600 to-blue-950", icon: "♟️", image: GAME_IMAGES.imgTft, imgFit: "cover" },
 ];
@@ -1306,6 +1307,24 @@ const EGGY_PARTY_PACKAGES = [
   { id: "eggy_party-3873_egg_coins", label: "3873 Egg Coins", mmk: [188800], thb: [1487] },
   { id: "eggy_party-7783_egg_coins", label: "7783 Egg Coins", mmk: [376400], thb: [2965] },
   { id: "eggy_party-golden_autumn_ltd_pack_2", label: "Golden Autumn LTD Pack 2", mmk: [441500], thb: [3478] },
+];
+
+// ✅ Full FazerCards catalog (category_id: 8_ball_pool), 7% margin,
+// 2569-09-05 pricing. Single "Unique ID" field.
+const EIGHT_BALL_POOL_PACKAGES = [
+  { id: "8ball-golden_spin", label: "Golden Spin", mmk: [3400], thb: [27] },
+  { id: "8ball-5_scratchers", label: "5 Scratchers", mmk: [5100], thb: [40] },
+  { id: "8ball-20_000_coins", label: "20 000 Coins", mmk: [6800], thb: [54] },
+  { id: "8ball-20_cash", label: "20 Cash", mmk: [6800], thb: [54] },
+  { id: "8ball-3_golden_shots", label: "3 Golden Shots", mmk: [6800], thb: [54] },
+  { id: "8ball-15_scratchers", label: "15 Scratchers", mmk: [16500], thb: [130] },
+  { id: "8ball-pool_coda_bundle", label: "Pool Coda Bundle", mmk: [16500], thb: [130] },
+  { id: "8ball-50_cash", label: "50 Cash", mmk: [17000], thb: [134] },
+  { id: "8ball-52_000_coins", label: "52 000 Coins", mmk: [17000], thb: [134] },
+  { id: "8ball-110_cash", label: "110 Cash", mmk: [34000], thb: [268] },
+  { id: "8ball-112_000_coins", label: "112 000 Coins", mmk: [34000], thb: [268] },
+  { id: "8ball-250_cash", label: "250 Cash", mmk: [68100], thb: [536] },
+  { id: "8ball-256_000_coins", label: "256 000 Coins", mmk: [68100], thb: [536] },
 ];
 
 const R6_GLOBAL_PACKAGES = [
@@ -2538,7 +2557,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends", "Call of Duty Mobile (Garena)", "Genshin Impact (Global)", "Honkai: Star Rail", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile", "TFT Mobile"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends", "Call of Duty Mobile (Garena)", "Genshin Impact (Global)", "Honkai: Star Rail", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile", "TFT Mobile", "8 Ball Pool"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -2651,6 +2670,7 @@ export default function MonkeyTopup() {
     if (BLOCKMAN_GO_PACKAGES.includes(pkg)) return "Blockman Go";
     if (GROWTOPIA_PACKAGES.includes(pkg)) return "Growtopia";
     if (EGGY_PARTY_PACKAGES.includes(pkg)) return "Eggy Party";
+    if (EIGHT_BALL_POOL_PACKAGES.includes(pkg)) return "8 Ball Pool";
     if ([R6_GLOBAL_PACKAGES, R6_ID_PACKAGES, R6_MY_PACKAGES, R6_PH_PACKAGES, R6_SG_PACKAGES, R6_TH_PACKAGES, R6_US_PACKAGES].some((arr) => arr.includes(pkg))) return "Rainbow Six Mobile";
     if ([TFT_ID_PACKAGES, TFT_MY_PACKAGES, TFT_PH_PACKAGES, TFT_SG_PACKAGES, TFT_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "TFT Mobile";
     return "Unknown";
@@ -2820,6 +2840,7 @@ export default function MonkeyTopup() {
     if (gameId === "blockmango") setView("blockmanGoDetail");
     if (gameId === "growtopia") setView("growtopiaDetail");
     if (gameId === "eggyparty") setView("eggyPartyDetail");
+    if (gameId === "8ballpool") setView("eightBallPoolDetail");
     if (gameId === "r6mobile") setView("r6MobileDetail");
     if (gameId === "tftth") setView("tftThDetail");
   }
@@ -4973,6 +4994,35 @@ export default function MonkeyTopup() {
           </>
         )}
 
+        {view === "eightBallPoolDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="8 Ball Pool" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Cash & Coins" items={EIGHT_BALL_POOL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
                 {view === "r6MobileDetail" && (
           <>
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
@@ -5308,7 +5358,8 @@ export default function MonkeyTopup() {
                     gName === "Growtopia" ||
                     gName === "Eggy Party" ||
                     gName === "Rainbow Six Mobile" ||
-                    gName === "TFT Mobile";
+                    gName === "TFT Mobile" ||
+                    gName === "8 Ball Pool";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
@@ -5320,7 +5371,7 @@ export default function MonkeyTopup() {
                             ? "Riot Id"
                             : gName === "Genshin Impact (Global)" || gName === "Honkai: Star Rail" || gName === "Honkai Impact 3rd"
                               ? "Player Id (UID)"
-                              : gName === "Stumble Guys" || gName === "State of Survival" || gName === "Eggy Party"
+                              : gName === "Stumble Guys" || gName === "State of Survival" || gName === "Eggy Party" || gName === "8 Ball Pool"
                                 ? "User Id"
                                 : gName === "Growtopia"
                                   ? "GrowID"
