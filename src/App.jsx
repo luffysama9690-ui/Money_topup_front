@@ -2852,7 +2852,7 @@ export default function MonkeyTopup() {
       const result = await api.adjustBalance(telegramId, targetId, adjustCurrency, amt, adjustReason.trim());
       showToast({
         type: "ok",
-        msg: `Telegram ID ${targetId} ရဲ့ balance အသစ်: ${fmt(result.newBalance)} ${adjustCurrency.toUpperCase()}`,
+        msg: `${targetId} ရဲ့ balance အသစ်: ${fmt(result.newBalance)} ${adjustCurrency.toUpperCase()}`,
       });
       setAdjustTargetId("");
       setAdjustAmount("");
@@ -3588,10 +3588,9 @@ export default function MonkeyTopup() {
                 </p>
                 <input
                   type="text"
-                  inputMode="numeric"
                   value={adjustTargetId}
                   onChange={(e) => setAdjustTargetId(e.target.value)}
-                  placeholder="User ရဲ့ Telegram ID ထည့်ပါ"
+                  placeholder="User ရဲ့ Telegram ID (သို့) Telegram Name ထည့်ပါ"
                   className="w-full border rounded-lg p-2 text-sm"
                 />
                 <div className="flex gap-2">
