@@ -3435,8 +3435,7 @@ export default function MonkeyTopup() {
                           {activeUserIds.has(String(u.telegram_id)) && (
                             <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" title="Active now" />
                           )}
-                          Telegram ID: {u.telegram_id}
-                          {u.username && <span className="text-slate-400 text-xs ml-1">@{u.username}</span>}
+                          {u.username ? `@${u.username}` : `Telegram ID: ${u.telegram_id}`}
                           {u.is_reseller && <span className="text-emerald-600 text-[10px] font-bold ml-1">RESELLER</span>}
                           {u.is_banned && <span className="text-white bg-red-500 text-[10px] font-bold ml-1 px-1.5 py-0.5 rounded">🚫 BANNED</span>}
                         </div>
