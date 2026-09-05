@@ -1628,6 +1628,13 @@ function DetailThumbnail({ label, image, images }) {
   const [slide, setSlide] = useState(0);
   const count = images ? images.length : 0;
 
+  // The 16:7 aspect ratio below is sized for the Telegram Mini App's phone
+  // width -- on the desktop website the same ratio against a much wider
+  // container turns into a huge banner, which looks especially bare in the
+  // fallback (no-image) case below. Capping the height keeps it a
+  // reasonable banner size on any screen width.
+  const heightCap = isTelegramContext() ? "" : "max-h-64";
+
   useEffect(() => {
     if (count < 2) return;
     const timer = setInterval(() => setSlide((s) => (s + 1) % count), 4000);
@@ -1636,7 +1643,7 @@ function DetailThumbnail({ label, image, images }) {
 
   if (images && images.length > 0) {
     return (
-      <div className="relative w-full aspect-[16/7] rounded-xl bg-black overflow-hidden">
+      <div className={`relative w-full aspect-[16/7] ${heightCap} rounded-xl bg-black overflow-hidden`}>
         {images.map((src, i) => (
           <img
             key={i}
@@ -1661,13 +1668,37 @@ function DetailThumbnail({ label, image, images }) {
   }
   if (image) {
     return (
-      <div className="w-full aspect-[16/7] rounded-xl bg-black flex items-center justify-center overflow-hidden">
+      <div className={`w-full aspect-[16/7] ${heightCap} rounded-xl bg-black flex items-center justify-center overflow-hidden`}>
         <img src={image} alt={label} className="h-full object-contain" />
       </div>
     );
   }
+
+  // No image/images supplied for this game. On the website, look up the
+  // same logo already used for its card on the home grid (GAMES) instead
+  // of showing an empty dashed placeholder box -- there's no reason the
+  // desktop detail page should look less finished than the grid it came
+  // from. Telegram keeps the original lightweight placeholder since the
+  // phone-width box is small enough that it was never the eyesore this is
+  // fixing on desktop.
+  const game = !isTelegramContext() ? GAMES.find((g) => label.startsWith(g.name)) : null;
+  if (game) {
+    return (
+      <div className={`w-full aspect-[16/7] ${heightCap} rounded-xl overflow-hidden flex items-center gap-4 px-6 bg-gradient-to-br ${game.grad}`}>
+        <div className="w-16 h-16 rounded-2xl bg-black/20 shrink-0 overflow-hidden flex items-center justify-center">
+          {game.image ? (
+            <img src={game.image} alt={game.name} className={`w-full h-full ${game.imgFit === "contain" ? "object-contain p-1" : "object-cover"}`} />
+          ) : (
+            <span className="text-3xl">{game.icon}</span>
+          )}
+        </div>
+        <h2 className="mt-display text-white text-xl sm:text-2xl font-extrabold drop-shadow">{label}</h2>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full aspect-[16/7] rounded-xl bg-[#241d47]/60 border border-dashed border-white/15 flex items-center justify-center overflow-hidden">
+    <div className={`w-full aspect-[16/7] ${heightCap} rounded-xl bg-[#241d47]/60 border border-dashed border-white/15 flex items-center justify-center overflow-hidden`}>
       {/* TODO: ဒီနေရာမှာ ဂိမ်း thumbnail/banner ပုံ ထည့်ရန် */}
       <span className="text-white/20 text-xs">{label}</span>
     </div>
