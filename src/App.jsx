@@ -2043,10 +2043,10 @@ function DesktopGamesHome({ onPickGame }) {
           <span className="text-white">24/7 AUTO DELIVERY</span>
         </div>
         <h1 className="mt-display text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-          ဂိမ်း Diamond/UC ကို <span className="text-[#ff3d9a]">market ထဲက အသက်သာဆုံးဈေး</span>နဲ့
+          ဂိမ်း Diamond/UC ကို <span className="text-amber-400">market ထဲက အသက်သာဆုံးဈေး</span>နဲ့
         </h1>
         <p className="mt-3 text-[#b7aee0] max-w-xl mx-auto">
-          Order တင်တာနဲ့ Admin စောင့်ရန် မလိုအပ်ဘဲ စက္ကန့်ပိုင်းအတွင်း ရောက်ရှိပါမယ်
+          Reseller လုပ်ချင်ရင် admin Telegram ကိုလာပြောလို့ရပါတယ်
         </p>
       </section>
 
