@@ -440,6 +440,15 @@ const GAMES = [
   { id: "growtopia", name: "Growtopia", tag: "New!", grad: "from-teal-500 to-emerald-900", icon: "🌱", image: GAME_IMAGES.imgGrowtopia, imgFit: "contain" },
   { id: "eggyparty", name: "Eggy Party", tag: "New!", grad: "from-yellow-400 to-orange-600", icon: "🥚", image: GAME_IMAGES.imgEggyParty, imgFit: "cover" },
   { id: "8ballpool", name: "8 Ball Pool", tag: "New!", grad: "from-blue-700 to-slate-900", icon: "🎱" },
+  { id: "acecraft", name: "Acecraft", tag: "New!", grad: "from-amber-400 to-orange-700", icon: "⚒️" },
+  { id: "acerracer", name: "Ace Racer", tag: "New!", grad: "from-red-500 to-slate-900", icon: "🏎️" },
+  { id: "afkjourney", name: "AFK Journey", tag: "New!", grad: "from-sky-400 to-emerald-800", icon: "🗺️" },
+  { id: "aoempiremobile", name: "Age of Empire Mobile", tag: "New!", grad: "from-yellow-700 to-stone-900", icon: "🏛️" },
+  { id: "ballistichero", name: "Ballistic Hero VNG", tag: "New!", grad: "from-red-600 to-orange-900", icon: "🔥" },
+  { id: "azurlane", name: "Azur Lane", tag: "New!", grad: "from-blue-500 to-slate-800", icon: "⚓" },
+  { id: "badlanders", name: "Badlanders", tag: "New!", grad: "from-orange-700 to-neutral-900", icon: "🏜️" },
+  { id: "asphalt9", name: "Asphalt 9: Legends", tag: "New!", grad: "from-red-700 to-black", icon: "🏁" },
+  { id: "arenaofvalor", name: "Arena of Valor", tag: "New!", grad: "from-orange-600 to-red-900", icon: "⚔️" },
   { id: "r6mobile", name: "Rainbow Six Mobile", tag: "New!", grad: "from-gray-700 to-black", icon: "🔰", image: GAME_IMAGES.imgRainbowSix, imgFit: "cover" },
   { id: "tftth", name: "TFT Mobile", tag: "New!", grad: "from-indigo-600 to-blue-950", icon: "♟️", image: GAME_IMAGES.imgTft, imgFit: "cover" },
 ];
@@ -1325,6 +1334,166 @@ const EIGHT_BALL_POOL_PACKAGES = [
   { id: "8ball-112_000_coins", label: "112 000 Coins", mmk: [34000], thb: [268] },
   { id: "8ball-250_cash", label: "250 Cash", mmk: [68100], thb: [536] },
   { id: "8ball-256_000_coins", label: "256 000 Coins", mmk: [68100], thb: [536] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Single
+// "User ID" field.
+const ACECRAFT_PACKAGES = [
+  { id: "acecraft-recruit_ticket_5", label: "Recruit Ticket * 5", mmk: [4600], thb: [36] },
+  { id: "acecraft-80_diamonds", label: "80 Diamonds", mmk: [4500], thb: [36] },
+  { id: "acecraft-500_diamonds", label: "500 Diamonds", mmk: [22800], thb: [179] },
+  { id: "acecraft-499_25_m_cash", label: "499+25 M-cash", mmk: [22800], thb: [179] },
+  { id: "acecraft-999_50_m_cash", label: "999+50 M-cash", mmk: [45500], thb: [359] },
+  { id: "acecraft-1200_60_diamonds", label: "1200+60 Diamonds", mmk: [45500], thb: [359] },
+  { id: "acecraft-1499_75_m_cash", label: "1499+75 M-cash", mmk: [68300], thb: [538] },
+  { id: "acecraft-2500_125_diamonds", label: "2500+125 Diamonds", mmk: [91100], thb: [718] },
+  { id: "acecraft-1999_100_m_cash", label: "1999+100 M-cash", mmk: [91100], thb: [718] },
+  { id: "acecraft-2499_125_m_cash", label: "2499+125 M-cash", mmk: [113900], thb: [897] },
+  { id: "acecraft-4999_250_m_cash", label: "4999+250 M-cash", mmk: [227700], thb: [1794] },
+  { id: "acecraft-6500_325_diamonds", label: "6500+325 Diamonds", mmk: [227700], thb: [1794] },
+  { id: "acecraft-9999_500_m_cash", label: "9999+500 M-cash", mmk: [455500], thb: [3588] },
+  { id: "acecraft-14000_700_diamonds", label: "14000+700 Diamonds", mmk: [455500], thb: [3588] },
+  { id: "acecraft-19999_1000_m_cash", label: "19999+1000 M-cash", mmk: [911000], thb: [7176] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Fields:
+// "User ID" + "Server ID" (both visible, same shape as Mobile Legends).
+const ACE_RACER_PACKAGES = [
+  { id: "ace_racer-65_tokens", label: "65 Tokens", mmk: [4200], thb: [33] },
+  { id: "ace_racer-270_tokens", label: "270 Tokens", mmk: [16800], thb: [132] },
+  { id: "ace_racer-740_tokens", label: "740 Tokens", mmk: [42000], thb: [331] },
+  { id: "ace_racer-1300_tokens", label: "1300 Tokens", mmk: [75600], thb: [596] },
+  { id: "ace_racer-3180_tokens", label: "3180 Tokens", mmk: [193200], thb: [1522] },
+  { id: "ace_racer-6530_tokens", label: "6530 Tokens", mmk: [378100], thb: [2978] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Single
+// "Account ID" field.
+const AFK_JOURNEY_PACKAGES = [
+  { id: "afk_journey-21_dragon_crystals", label: "21 Dragon Crystals", mmk: [3900], thb: [31] },
+  { id: "afk_journey-126_dragon_crystals", label: "126 Dragon Crystals", mmk: [19100], thb: [151] },
+  { id: "afk_journey-esperia_monthly_classic_gazette", label: "Esperia Monthly - Classic Gazette", mmk: [19100], thb: [151] },
+  { id: "afk_journey-294_dragon_crystals", label: "294 Dragon Crystals", mmk: [38500], thb: [303] },
+  { id: "afk_journey-esperia_monthly_premium_gazette", label: "Esperia Monthly - Premium Gazette", mmk: [60300], thb: [475] },
+  { id: "afk_journey-588_dragon_crystals", label: "588 Dragon Crystals", mmk: [79600], thb: [627] },
+  { id: "afk_journey-growth_bundle", label: "Growth Bundle", mmk: [115900], thb: [913] },
+  { id: "afk_journey-1554_dragon_crystals", label: "1554 Dragon Crystals", mmk: [193400], thb: [1524] },
+  { id: "afk_journey-3150_dragon_crystals", label: "3150 Dragon Crystals", mmk: [387100], thb: [3049] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Fields:
+// "Player ID" + "Server ID" (both visible, ML-style two-field).
+const AGE_OF_EMPIRE_MOBILE_PACKAGES = [
+  { id: "age_of_empire_mobile-400_gems", label: "400 GEMS", mmk: [4000], thb: [31] },
+  { id: "age_of_empire_mobile-2100_gems", label: "2100 GEMS", mmk: [18700], thb: [147] },
+  { id: "age_of_empire_mobile-4400_gems", label: "4400 GEMS", mmk: [39600], thb: [312] },
+  { id: "age_of_empire_mobile-9200_gems", label: "9200 GEMS", mmk: [77000], thb: [607] },
+  { id: "age_of_empire_mobile-24000_gems", label: "24000 GEMS", mmk: [197800], thb: [1558] },
+  { id: "age_of_empire_mobile-50000_gems", label: "50000 GEMS", mmk: [395500], thb: [3116] },
+  { id: "age_of_empire_mobile-99_apex_coins", label: "99 Apex Coins", mmk: [4000], thb: [31] },
+  { id: "age_of_empire_mobile-499_apex_coins", label: "499 Apex Coins", mmk: [10300], thb: [81] },
+  { id: "age_of_empire_mobile-999_apex_coins", label: "999 Apex Coins", mmk: [20900], thb: [165] },
+  { id: "age_of_empire_mobile-1999_apex_coins", label: "1999 Apex Coins", mmk: [43300], thb: [341] },
+  { id: "age_of_empire_mobile-4999_apex_coins", label: "4999 Apex Coins", mmk: [121300], thb: [956] },
+  { id: "age_of_empire_mobile-9999_apex_coins", label: "9999 Apex Coins", mmk: [330500], thb: [2604] },
+  { id: "age_of_empire_mobile-safe_1m_resource_chest", label: "Safe 1M Resource Chest", mmk: [208800], thb: [1645] },
+  { id: "age_of_empire_mobile-60m_universal_speed_up", label: "60m Universal Speed-up", mmk: [208800], thb: [1645] },
+  { id: "age_of_empire_mobile-meteorite_steel", label: "Meteorite Steel", mmk: [417600], thb: [3289] },
+  { id: "age_of_empire_mobile-gem_chest", label: "Gem Chest", mmk: [417600], thb: [3289] },
+  { id: "age_of_empire_mobile-legendary_skill_scroll", label: "Legendary Skill Scroll", mmk: [417600], thb: [3289] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Single
+// "Role ID" field.
+const BALLISTIC_HERO_VNG_PACKAGES = [
+  { id: "ballistic_hero_vng-1_voucher", label: "1 Voucher", mmk: [3000], thb: [24] },
+  { id: "ballistic_hero_vng-5_voucher", label: "5 Voucher", mmk: [15400], thb: [121] },
+  { id: "ballistic_hero_vng-10_voucher", label: "10 Voucher", mmk: [30200], thb: [238] },
+  { id: "ballistic_hero_vng-20_voucher", label: "20 Voucher", mmk: [60300], thb: [475] },
+  { id: "ballistic_hero_vng-50_voucher", label: "50 Voucher", mmk: [150900], thb: [1189] },
+  { id: "ballistic_hero_vng-100_voucher", label: "100 Voucher", mmk: [301800], thb: [2377] },
+  { id: "ballistic_hero_vng-200_voucher", label: "200 Voucher", mmk: [603500], thb: [4754] },
+  { id: "ballistic_hero_vng-300_voucher", label: "300 Voucher", mmk: [905300], thb: [7132] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Fields:
+// "User ID" + "Server" -- Server is a fixed dropdown of named servers
+// (Amagi/Avrora/Lexington/Little Enterprise/Sandy/Washington), shown to
+// the customer and sent to FazerCards verbatim.
+const AZUR_LANE_PACKAGES = [
+  { id: "azur_lane-handful_of", label: "Handful of", mmk: [4100], thb: [33] },
+  { id: "azur_lane-pile_of", label: "Pile of", mmk: [20700], thb: [163] },
+  { id: "azur_lane-sack_of", label: "Sack of", mmk: [41400], thb: [327] },
+  { id: "azur_lane-box_of", label: "Box of", mmk: [85000], thb: [669] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Fields:
+// "User ID" + "Server" -- Server has only one real option ("global"), so
+// the frontend hardcodes it rather than showing a picker with nothing to
+// choose (same idea as Genshin/HSR's hidden "asia").
+const BADLANDERS_PACKAGES = [
+  { id: "badlanders-10_coupons", label: "10 Coupons", mmk: [600], thb: [5] },
+  { id: "badlanders-45_coupons", label: "45 Coupons", mmk: [2800], thb: [22] },
+  { id: "badlanders-75_coupons", label: "75 Coupons", mmk: [4700], thb: [37] },
+  { id: "badlanders-105_coupons", label: "105 Coupons", mmk: [6600], thb: [52] },
+  { id: "badlanders-150_coupons", label: "150 Coupons", mmk: [9500], thb: [75] },
+  { id: "badlanders-300_coupons", label: "300 Coupons", mmk: [19000], thb: [150] },
+  { id: "badlanders-450_coupons", label: "450 Coupons", mmk: [28500], thb: [224] },
+  { id: "badlanders-600_coupons", label: "600 Coupons", mmk: [38000], thb: [299] },
+  { id: "badlanders-750_coupons", label: "750 Coupons", mmk: [47500], thb: [374] },
+  { id: "badlanders-1500_coupons", label: "1500 Coupons", mmk: [95000], thb: [748] },
+  { id: "badlanders-2250_coupons", label: "2250 Coupons", mmk: [142500], thb: [1122] },
+  { id: "badlanders-3000_coupons", label: "3000 Coupons", mmk: [190000], thb: [1497] },
+  { id: "badlanders-4500_coupons", label: "4500 Coupons", mmk: [285000], thb: [2245] },
+  { id: "badlanders-7500_coupons", label: "7500 Coupons", mmk: [474900], thb: [3741] },
+];
+
+// ✅ Full FazerCards catalog, 7% margin, 2569-09-05 pricing. Fields:
+// "User ID" + "Platform" -- shown as a picker (Android/Windows/iOS), sent
+// as order.server_id (buildFields() treats "platform" as a generic second
+// field, same slot as Server/Zone).
+const ASPHALT_9_LEGENDS_PACKAGES = [
+  { id: "asphalt_9_legends-token_pack_1_40_tokens", label: "Token Pack 1 (40 tokens)", mmk: [4100], thb: [32] },
+  { id: "asphalt_9_legends-token_pack_2_105_tokens", label: "Token Pack 2 (105 tokens)", mmk: [10200], thb: [80] },
+  { id: "asphalt_9_legends-token_pack_3_220_tokens", label: "Token Pack 3 (220 tokens)", mmk: [19400], thb: [153] },
+  { id: "asphalt_9_legends-token_pack_4_470_tokens", label: "Token Pack 4 (470 tokens)", mmk: [39800], thb: [313] },
+  { id: "asphalt_9_legends-token_pack_5_1275_tokens", label: "Token Pack 5 (1275 tokens)", mmk: [101000], thb: [796] },
+];
+
+// ✅ Full FazerCards catalog for Arena of Valor, region-split like Mobile
+// Legends (EU/ID/TH each a separate FazerCards category). 7% margin,
+// 2569-09-05 pricing. Single "User ID" field.
+const AOV_EU_PACKAGES = [
+  { id: "arena_of_valor_eu-150_vouchers", label: "EU 150 Vouchers", mmk: [5000], thb: [40] },
+  { id: "arena_of_valor_eu-750_vouchers", label: "EU 750 Vouchers", mmk: [21900], thb: [172] },
+  { id: "arena_of_valor_eu-1800_vouchers", label: "EU 1800 Vouchers", mmk: [50400], thb: [397] },
+  { id: "arena_of_valor_eu-3750_vouchers", label: "EU 3750 Vouchers", mmk: [105800], thb: [834] },
+  { id: "arena_of_valor_eu-9750_vouchers", label: "EU 9750 Vouchers", mmk: [273800], thb: [2157] },
+  { id: "arena_of_valor_eu-21000_vouchers", label: "EU 21000 Vouchers", mmk: [587800], thb: [4631] },
+];
+
+const AOV_ID_PACKAGES = [
+  { id: "arena_of_valor_id-40_vouchers", label: "ID 40 Vouchers", mmk: [2200], thb: [17] },
+  { id: "arena_of_valor_id-90_vouchers", label: "ID 90 Vouchers", mmk: [4400], thb: [35] },
+  { id: "arena_of_valor_id-230_vouchers", label: "ID 230 Vouchers", mmk: [11000], thb: [87] },
+  { id: "arena_of_valor_id-470_vouchers", label: "ID 470 Vouchers", mmk: [22100], thb: [174] },
+  { id: "arena_of_valor_id-950_vouchers", label: "ID 950 Vouchers", mmk: [44100], thb: [348] },
+  { id: "arena_of_valor_id-1430_vouchers", label: "ID 1430 Vouchers", mmk: [66200], thb: [521] },
+  { id: "arena_of_valor_id-2390_vouchers", label: "ID 2390 Vouchers", mmk: [110300], thb: [869] },
+  { id: "arena_of_valor_id-4800_vouchers", label: "ID 4800 Vouchers", mmk: [222800], thb: [1755] },
+  { id: "arena_of_valor_id-24050_vouchers", label: "ID 24050 Vouchers", mmk: [1111600], thb: [8757] },
+  { id: "arena_of_valor_id-48200_vouchers", label: "ID 48200 Vouchers", mmk: [2227700], thb: [17549] },
+];
+
+const AOV_TH_PACKAGES = [
+  { id: "arena_of_valor_th-11_coupons", label: "TH 11 Coupons", mmk: [1300], thb: [10] },
+  { id: "arena_of_valor_th-24_coupons", label: "TH 24 Coupons", mmk: [2600], thb: [21] },
+  { id: "arena_of_valor_th-60_coupons", label: "TH 60 Coupons", mmk: [6600], thb: [52] },
+  { id: "arena_of_valor_th-110_coupons", label: "TH 110 Coupons", mmk: [11800], thb: [93] },
+  { id: "arena_of_valor_th-185_coupons", label: "TH 185 Coupons", mmk: [19600], thb: [155] },
+  { id: "arena_of_valor_th-370_coupons", label: "TH 370 Coupons", mmk: [39200], thb: [309] },
+  { id: "arena_of_valor_th-620_coupons", label: "TH 620 Coupons", mmk: [65400], thb: [515] },
+  { id: "arena_of_valor_th-1240_coupons", label: "TH 1240 Coupons", mmk: [130700], thb: [1030] },
 ];
 
 const R6_GLOBAL_PACKAGES = [
@@ -2252,6 +2421,9 @@ export default function MonkeyTopup() {
   const [r6Server, setR6Server] = useState("global");
   const [tftServer, setTftServer] = useState("th");
   const [steamCurrency, setSteamCurrency] = useState("global");
+  const [aovServer, setAovServer] = useState("th");
+  const [azurLaneServer, setAzurLaneServer] = useState("Amagi");
+  const [asphalt9Platform, setAsphalt9Platform] = useState("Android");
   const [telegramTab, setTelegramTab] = useState("stars");
   const [mcServer, setMcServer] = useState("global");
   const [server, setServer] = useState("Global");
@@ -2557,7 +2729,7 @@ export default function MonkeyTopup() {
     try {
       await verifyGameIdFormat(gameId);
       const gName = selectedGameName(selectedPkg);
-      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends", "Call of Duty Mobile (Garena)", "Genshin Impact (Global)", "Honkai: Star Rail", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile", "TFT Mobile", "8 Ball Pool"].includes(gName);
+      const needsServerId = !["PUBG Mobile", "Sausage Man", "Where Winds Meet", "Blood Strike", "Free Fire", "Honor of Kings", "Sky: Children of the Light", "Valorant", "League of Legends", "Call of Duty Mobile (Garena)", "Genshin Impact (Global)", "Honkai: Star Rail", "Honkai Impact 3rd", "Arena Breakout", "Delta Force", "EAFC Mobile", "Identity V", "Lords Mobile", "Stumble Guys", "State of Survival", "Blockman Go", "Growtopia", "Eggy Party", "Rainbow Six Mobile", "TFT Mobile", "8 Ball Pool", "Acecraft", "AFK Journey", "Ballistic Hero VNG", "Badlanders", "Azur Lane", "Asphalt 9: Legends", "Arena of Valor"].includes(gName);
       if (needsServerId && (!serverId || !/^\d+$/.test(serverId))) {
         throw new Error("Server ID ပုံစံ မှားနေပါသည်");
       }
@@ -2569,7 +2741,13 @@ export default function MonkeyTopup() {
           ? "asia"
           : gName === "Identity V"
             ? "Asia"
-            : null;
+            : gName === "Badlanders"
+              ? "global"
+              : gName === "Azur Lane"
+                ? azurLaneServer
+                : gName === "Asphalt 9: Legends"
+                  ? asphalt9Platform
+                  : null;
       const data = await api.verifyPlayer(gameId, hardcodedServerId || (needsServerId ? serverId : undefined), gName, selectedPkg.label || selectedPkg.name);
       if (data.name) {
         setPlayerName(data.name);
@@ -2599,7 +2777,13 @@ export default function MonkeyTopup() {
           ? "asia"
           : gName === "Identity V"
             ? "Asia"
-            : null;
+            : gName === "Badlanders"
+              ? "global"
+              : gName === "Azur Lane"
+                ? azurLaneServer
+                : gName === "Asphalt 9: Legends"
+                  ? asphalt9Platform
+                  : null;
       const order = await api.createOrder({
         telegramId,
         game: gName,
@@ -2671,6 +2855,15 @@ export default function MonkeyTopup() {
     if (GROWTOPIA_PACKAGES.includes(pkg)) return "Growtopia";
     if (EGGY_PARTY_PACKAGES.includes(pkg)) return "Eggy Party";
     if (EIGHT_BALL_POOL_PACKAGES.includes(pkg)) return "8 Ball Pool";
+    if (ACECRAFT_PACKAGES.includes(pkg)) return "Acecraft";
+    if (ACE_RACER_PACKAGES.includes(pkg)) return "Ace Racer";
+    if (AFK_JOURNEY_PACKAGES.includes(pkg)) return "AFK Journey";
+    if (AGE_OF_EMPIRE_MOBILE_PACKAGES.includes(pkg)) return "Age of Empire Mobile";
+    if (BALLISTIC_HERO_VNG_PACKAGES.includes(pkg)) return "Ballistic Hero VNG";
+    if (AZUR_LANE_PACKAGES.includes(pkg)) return "Azur Lane";
+    if (BADLANDERS_PACKAGES.includes(pkg)) return "Badlanders";
+    if (ASPHALT_9_LEGENDS_PACKAGES.includes(pkg)) return "Asphalt 9: Legends";
+    if ([AOV_EU_PACKAGES, AOV_ID_PACKAGES, AOV_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "Arena of Valor";
     if ([R6_GLOBAL_PACKAGES, R6_ID_PACKAGES, R6_MY_PACKAGES, R6_PH_PACKAGES, R6_SG_PACKAGES, R6_TH_PACKAGES, R6_US_PACKAGES].some((arr) => arr.includes(pkg))) return "Rainbow Six Mobile";
     if ([TFT_ID_PACKAGES, TFT_MY_PACKAGES, TFT_PH_PACKAGES, TFT_SG_PACKAGES, TFT_TH_PACKAGES].some((arr) => arr.includes(pkg))) return "TFT Mobile";
     return "Unknown";
@@ -2843,6 +3036,15 @@ export default function MonkeyTopup() {
     if (gameId === "8ballpool") setView("eightBallPoolDetail");
     if (gameId === "r6mobile") setView("r6MobileDetail");
     if (gameId === "tftth") setView("tftThDetail");
+    if (gameId === "acecraft") setView("acecraftDetail");
+    if (gameId === "acerracer") setView("aceRacerDetail");
+    if (gameId === "afkjourney") setView("afkJourneyDetail");
+    if (gameId === "aoempiremobile") setView("aoeMobileDetail");
+    if (gameId === "ballistichero") setView("ballisticHeroDetail");
+    if (gameId === "azurlane") setView("azurLaneDetail");
+    if (gameId === "badlanders") setView("badlandersDetail");
+    if (gameId === "asphalt9") setView("asphalt9Detail");
+    if (gameId === "arenaofvalor") setView("aovDetail");
   }
 
   async function handleSetBanned(banned) {
@@ -5022,6 +5224,326 @@ export default function MonkeyTopup() {
             <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
           </>
         )}
+        {view === "acecraftDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Acecraft" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Diamonds & M-cash" items={ACECRAFT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "aceRacerDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Ace Racer" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Tokens" items={ACE_RACER_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "afkJourneyDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="AFK Journey" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Dragon Crystals" items={AFK_JOURNEY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "aoeMobileDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Age of Empire Mobile" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Gems & Apex Coins" items={AGE_OF_EMPIRE_MOBILE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "ballisticHeroDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Ballistic Hero VNG" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Vouchers" items={BALLISTIC_HERO_VNG_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "badlandersDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Badlanders" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Coupons" items={BADLANDERS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "azurLaneDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Azur Lane" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-white text-xs font-bold mb-1.5 opacity-80">Server ရွေးပါ</div>
+                <div className="flex gap-2 flex-wrap">
+                  {["Amagi", "Avrora", "Lexington", "Little Enterprise", "Sandy", "Washington"].map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setAzurLaneServer(s)}
+                      className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${azurLaneServer === s ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Resources" items={AZUR_LANE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "asphalt9Detail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Asphalt 9: Legends" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-white text-xs font-bold mb-1.5 opacity-80">Platform ရွေးပါ</div>
+                <div className="flex gap-2 flex-wrap">
+                  {["Android", "iOS", "Windows"].map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => setAsphalt9Platform(p)}
+                      className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${asphalt9Platform === p ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <PkgSection num="1" title="Tokens" items={ASPHALT_9_LEGENDS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
+
+        {view === "aovDetail" && (
+          <>
+            <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
+            <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
+              <DetailThumbnail label="Arena of Valor" />
+
+              <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setCurrency("mmk")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                  >
+                    🇲🇲 MMK
+                  </button>
+                  <button
+                    onClick={() => setCurrency("thb")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                  >
+                    🇹🇭 THB
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  ["eu", "🇪🇺 Europe"],
+                  ["id", "🇮🇩 Indonesia"],
+                  ["th", "🇹🇭 Thailand"],
+                ].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setAovServer(key)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${aovServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <PkgSection
+                num="1"
+                title="Vouchers & Coupons"
+                items={
+                  {
+                    eu: AOV_EU_PACKAGES,
+                    id: AOV_ID_PACKAGES,
+                    th: AOV_TH_PACKAGES,
+                  }[aovServer]
+                }
+                currency={currency}
+                discountPercent={resellerDiscountPercent}
+                onPick={openPurchase}
+                wide={!isTelegramContext()}
+              />
+            </div>
+            <BottomNav active="shop" onNavigate={handleNavClick} unreadCount={unreadCount} isAdmin={isAdmin} pendingCount={pendingCount} />
+          </>
+        )}
 
                 {view === "r6MobileDetail" && (
           <>
@@ -5359,11 +5881,18 @@ export default function MonkeyTopup() {
                     gName === "Eggy Party" ||
                     gName === "Rainbow Six Mobile" ||
                     gName === "TFT Mobile" ||
-                    gName === "8 Ball Pool";
+                    gName === "8 Ball Pool" ||
+                    gName === "Acecraft" ||
+                    gName === "AFK Journey" ||
+                    gName === "Ballistic Hero VNG" ||
+                    gName === "Badlanders" ||
+                    gName === "Azur Lane" ||
+                    gName === "Asphalt 9: Legends" ||
+                    gName === "Arena of Valor";
                   const idPlaceholder =
                     gName === "Sausage Man" || gName === "Where Winds Meet"
                       ? "Character Id"
-                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (Garena)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile" || gName === "Identity V" || gName === "Lords Mobile" || gName === "Blockman Go" || gName === "Rainbow Six Mobile"
+                      : gName === "PUBG Mobile" || gName === "Blood Strike" || gName === "Free Fire" || gName === "Honor of Kings" || gName === "Call of Duty Mobile (Garena)" || gName === "Arena Breakout" || gName === "Delta Force" || gName === "EAFC Mobile" || gName === "Identity V" || gName === "Lords Mobile" || gName === "Blockman Go" || gName === "Rainbow Six Mobile" || gName === "Acecraft" || gName === "Badlanders" || gName === "Azur Lane" || gName === "Asphalt 9: Legends" || gName === "Arena of Valor"
                         ? "Player Id"
                         : gName === "Sky: Children of the Light"
                           ? "Sky Id"
@@ -5375,7 +5904,11 @@ export default function MonkeyTopup() {
                                 ? "User Id"
                                 : gName === "Growtopia"
                                   ? "GrowID"
-                                  : "Game Id";
+                                  : gName === "AFK Journey"
+                                    ? "Account Id"
+                                    : gName === "Ballistic Hero VNG"
+                                      ? "Role Id"
+                                      : "Game Id";
                   return (
                     <div className="flex gap-2">
                       <input
