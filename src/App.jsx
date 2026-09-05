@@ -1827,8 +1827,8 @@ function TopBar({ title, onBack, onHome }) {
   if (!isTelegramContext()) {
     return onBack ? (
       <div className="px-1 pb-4">
-        <button onClick={onBack} className="text-[#b7aee0] hover:text-white text-sm font-semibold transition">
-          ← နောက်သို့
+        <button onClick={onBack} className="text-[#8f88ad] hover:text-white text-sm font-medium transition inline-flex items-center gap-1">
+          <NavIcon name="chevronLeft" className="w-4 h-4" /> ဂိမ်းများ
         </button>
       </div>
     ) : null;
@@ -2167,27 +2167,91 @@ function AuthScreen({ onAuthSuccess }) {
 // branch in MonkeyTopup below, which renders the original phone-width app
 // completely unchanged. This is only for someone opening the Vercel URL in
 // a plain desktop/mobile browser.
+// Minimal 1.75px stroke-line icons (no external icon library needed here),
+// replacing the emoji that were standing in for nav icons -- kept
+// deliberately plain so they read as UI chrome, not game flavor.
+function NavIcon({ name, className = "w-[18px] h-[18px]" }) {
+  const common = { className, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round", strokeLinejoin: "round" };
+  switch (name) {
+    case "home":
+      return (
+        <svg {...common}>
+          <path d="M4 11.5 12 4l8 7.5" />
+          <path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9" />
+        </svg>
+      );
+    case "message":
+      return (
+        <svg {...common}>
+          <path d="M4 5h16v11H8l-4 4V5Z" />
+        </svg>
+      );
+    case "spin":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="8" />
+          <path d="M12 8v4l3 2" />
+        </svg>
+      );
+    case "profile":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="8" r="3.2" />
+          <path d="M5 20c1.4-3.6 4.2-5.5 7-5.5s5.6 1.9 7 5.5" />
+        </svg>
+      );
+    case "approve":
+      return (
+        <svg {...common}>
+          <path d="M5 12.5 9.5 17 19 7" />
+        </svg>
+      );
+    case "admin":
+      return (
+        <svg {...common}>
+          <path d="M14.7 6.3a3 3 0 1 1-4.4 4.4L5 16l2 2 5.3-5.3a3 3 0 1 1 4.4-4.4Z" />
+        </svg>
+      );
+    case "wallet":
+      return (
+        <svg {...common}>
+          <rect x="3.5" y="6" width="17" height="12" rx="2" />
+          <path d="M3.5 10h17" />
+          <circle cx="16.5" cy="14" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "chevronLeft":
+      return (
+        <svg {...common}>
+          <path d="M14.5 6 8 12l6.5 6" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, onDeposit, onProfile, onNavigate, unreadCount = 0, isAdmin = false, pendingCount = 0, children }) {
   const navItems = [
-    { key: "shop", label: "Home", icon: "🏠" },
-    { key: "message", label: "Message", icon: "📄", badge: unreadCount },
-    { key: "spin", label: "ကံစမ်းမဲ", icon: "🎡" },
-    { key: "profile", label: "Profile", icon: "👤" },
-    ...(isAdmin ? [{ key: "approve", label: "အတည်ပြုရန်", icon: "✅", badge: pendingCount }] : []),
-    ...(isAdmin ? [{ key: "admin", label: "Admin", icon: "🛠️" }] : []),
+    { key: "shop", label: "ပင်မ", icon: "home" },
+    { key: "message", label: "မက်ဆေ့ချ်", icon: "message", badge: unreadCount },
+    { key: "spin", label: "ကံစမ်းမဲ", icon: "spin" },
+    { key: "profile", label: "အကောင့်", icon: "profile" },
+    ...(isAdmin ? [{ key: "approve", label: "အတည်ပြုရန်", icon: "approve", badge: pendingCount }] : []),
+    ...(isAdmin ? [{ key: "admin", label: "Admin", icon: "admin" }] : []),
   ];
   return (
-    <div className="min-h-screen w-full bg-[#0d0a1f] font-sans">
+    <div className="min-h-screen w-full bg-[#0B0920] font-sans">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
         .mt-display { font-family: 'Sora', sans-serif; }
         @keyframes mtMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       `}</style>
 
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0d0a1f]/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0B0920]/95 backdrop-blur">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <button onClick={onLogo} className="mt-display text-lg font-bold text-white shrink-0">
-            🐒 {APP_NAME}
+            {APP_NAME}
           </button>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -2195,13 +2259,13 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
               <button
                 key={it.key}
                 onClick={() => onNavigate(it.key)}
-                className={`relative px-3 py-1.5 rounded-full text-sm font-semibold transition flex items-center gap-1.5 ${
-                  activeView === it.key ? "bg-white/10 text-white" : "text-[#8f88ad] hover:text-white"
+                className={`relative px-3 py-1.5 rounded-lg text-sm font-semibold transition flex items-center gap-1.5 ${
+                  activeView === it.key ? "bg-[#171330] text-white" : "text-[#8f88ad] hover:text-white"
                 }`}
               >
-                <span>{it.icon}</span> {it.label}
+                <NavIcon name={it.icon} /> {it.label}
                 {it.badge > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[16px] h-[16px] px-1 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-[#15C98A] text-[#0B0920] text-[9px] font-bold rounded-full min-w-[16px] h-[16px] px-1 flex items-center justify-center">
                     {it.badge}
                   </span>
                 )}
@@ -2209,27 +2273,33 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
-            <div className="text-right text-xs leading-tight hidden sm:block">
-              <div className="text-amber-400 font-bold">MMK · {fmt(balance)}</div>
-              <div className="text-amber-400/70 font-semibold">THB · {fmt(balanceThb)}</div>
-            </div>
+          <div className="flex items-center gap-3">
             <button
               onClick={onDeposit}
-              className="w-9 h-9 rounded-full bg-emerald-500 text-white text-xl font-bold flex items-center justify-center hover:brightness-110 transition"
+              className="hidden sm:flex items-center gap-2 rounded-lg bg-[#171330] hover:bg-[#211c47] transition px-3 py-1.5"
+            >
+              <NavIcon name="wallet" className="w-4 h-4 text-[#FFB020]" />
+              <span className="text-xs leading-tight text-left">
+                <span className="block text-[#FFB020] font-bold">{fmt(balance)} MMK</span>
+                <span className="block text-[#8f88ad]">{fmt(balanceThb)} THB</span>
+              </span>
+            </button>
+            <button
+              onClick={onDeposit}
+              className="w-9 h-9 rounded-lg bg-[#15C98A] text-[#0B0920] flex items-center justify-center hover:brightness-110 transition sm:hidden"
               title="ငွေဖြည့်မည်"
             >
-              +
+              <NavIcon name="wallet" className="w-[18px] h-[18px]" />
             </button>
             <button
               onClick={onProfile}
-              className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition overflow-hidden md:hidden"
+              className="w-9 h-9 rounded-lg bg-[#171330] text-white flex items-center justify-center hover:bg-[#211c47] transition overflow-hidden md:hidden"
               title="Profile"
             >
               {telegramUser?.photoUrl ? (
                 <img src={telegramUser.photoUrl} alt="" className="w-full h-full object-cover" />
               ) : (
-                "👤"
+                <NavIcon name="profile" />
               )}
             </button>
           </div>
@@ -2242,13 +2312,13 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
             <button
               key={it.key}
               onClick={() => onNavigate(it.key)}
-              className={`relative shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition flex items-center gap-1 ${
-                activeView === it.key ? "bg-white/10 text-white" : "text-[#8f88ad]"
+              className={`relative shrink-0 px-3 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 ${
+                activeView === it.key ? "bg-[#171330] text-white" : "text-[#8f88ad]"
               }`}
             >
-              <span>{it.icon}</span> {it.label}
+              <NavIcon name={it.icon} className="w-4 h-4" /> {it.label}
               {it.badge > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold rounded-full min-w-[14px] h-[14px] px-1 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#15C98A] text-[#0B0920] text-[9px] font-bold rounded-full min-w-[14px] h-[14px] px-1 flex items-center justify-center">
                   {it.badge}
                 </span>
               )}
@@ -2259,9 +2329,9 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
 
       {children}
 
-      <footer className="border-t border-white/10 bg-[#0a0818] py-8 mt-16">
+      <footer className="border-t border-white/10 bg-[#080615] py-8 mt-16">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-[#6f6790]">
-          <span>🐒 {APP_NAME} — Telegram Mini App ကနေလည်း တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
+          <span>{APP_NAME} — Telegram Mini App ကနေလည်း တိုက်ရိုက် ဝယ်ယူနိုင်ပါတယ်</span>
           <div className="flex items-center gap-5">
             <a
               href="https://t.me/coco279999"
@@ -2301,12 +2371,11 @@ function DesktopGamesHome({ onPickGame }) {
   return (
     <>
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-8 text-center">
-        <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 text-xs font-bold text-[#b7aee0] mb-6">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> LIVE ·{" "}
-          <span className="text-white">24/7 AUTO DELIVERY</span>
+        <div className="inline-flex items-center gap-2 border border-white/15 rounded-full px-4 py-1.5 text-xs font-semibold text-[#b7aee0] mb-6">
+          <span className="w-2 h-2 rounded-full bg-[#15C98A] animate-pulse" /> Live · 24/7 auto delivery
         </div>
         <h1 className="mt-display text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-          ဂိမ်း Diamond/UC ကို <span className="text-amber-400">market ထဲက အသက်သာဆုံးဈေး</span>နဲ့
+          ဂိမ်း Diamond/UC ကို <span className="text-[#6D4AFF]">market ထဲက အသက်သာဆုံးဈေး</span>နဲ့
         </h1>
         <p className="mt-3 text-[#b7aee0] max-w-xl mx-auto">
           Reseller လုပ်ချင်ရင် admin Telegram ကိုလာပြောလို့ရပါတယ်
@@ -2333,7 +2402,7 @@ function DesktopGamesHome({ onPickGame }) {
                 key={g.id}
                 disabled={isComingSoon}
                 onClick={() => onPickGame(g.id)}
-                className={`rounded-2xl overflow-hidden bg-black shadow-lg border border-white/10 text-left transition hover:-translate-y-1 hover:border-[#ff3d9a]/50 ${
+                className={`rounded-2xl overflow-hidden bg-[#171330] shadow-lg border border-white/10 text-left transition hover:-translate-y-1 hover:border-[#6D4AFF]/60 ${
                   isComingSoon ? "opacity-40 grayscale cursor-not-allowed hover:translate-y-0" : ""
                 }`}
               >
@@ -2350,7 +2419,7 @@ function DesktopGamesHome({ onPickGame }) {
                 </div>
                 <div className="p-3">
                   <div className="text-white text-sm font-semibold leading-tight">{g.name}</div>
-                  <div className={`text-xs font-bold mt-0.5 ${isComingSoon ? "text-slate-400" : "text-emerald-400"}`}>
+                  <div className={`text-xs font-bold mt-0.5 ${isComingSoon ? "text-slate-400" : "text-[#15C98A]"}`}>
                     {isComingSoon ? "မကြာမီလာမည်" : g.tag}
                   </div>
                 </div>
@@ -4026,44 +4095,61 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Mobile Legends" images={[PKG_IMAGES.imgThumbMlD, PKG_IMAGES.imgThumbWwmSplash]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2">
                 <button
                   onClick={() => setMlServer("global")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "global" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "global" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${mlServer === "global" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   🌍 Global
                 </button>
                 <button
                   onClick={() => setMlServer("philippines")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "philippines" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "philippines" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${mlServer === "philippines" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   🇵🇭 Philippines
                 </button>
                 <button
                   onClick={() => setMlServer("russia")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "russia" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "russia" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${mlServer === "russia" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   🇷🇺 Russia
                 </button>
                 <button
                   onClick={() => setMlServer("brazil")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "brazil" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${mlServer === "brazil" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${mlServer === "brazil" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   🇧🇷 Brazil
                 </button>
@@ -4106,20 +4192,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Magic Chess GoGo" images={[PKG_IMAGES.imgThumbMcA, PKG_IMAGES.imgThumbMcB]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2">
@@ -4163,20 +4266,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="PUBG Mobile" images={[PKG_IMAGES.imgThumbPubgA, PKG_IMAGES.imgThumbPubgB]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="UC" items={PUBG_UC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4211,20 +4331,37 @@ export default function MonkeyTopup() {
               </div>
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               {(() => {
@@ -4250,20 +4387,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Sausage Man" images={[PKG_IMAGES.imgThumbSmA, PKG_IMAGES.imgThumbSmB]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Candy" items={SAUSAGE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4277,20 +4431,37 @@ export default function MonkeyTopup() {
             <TopBar title={APP_NAME} onBack={() => setView("shop")} onHome={() => setView("shop")} />
             <div className="p-4 flex-1 overflow-y-auto space-y-4 pb-6">
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4303,7 +4474,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setSteamCurrency(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${steamCurrency === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${steamCurrency === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${steamCurrency === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4338,20 +4509,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="CapCut" image={PKG_IMAGES.imgCapcutLogo} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="CapCut Pro" items={CAPCUT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4369,33 +4557,50 @@ export default function MonkeyTopup() {
               <div className="flex gap-2">
                 <button
                   onClick={() => setTelegramTab("stars")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "stars" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "stars" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${telegramTab === "stars" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   ⭐ Stars
                 </button>
                 <button
                   onClick={() => setTelegramTab("premium")}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "premium" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                  className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${telegramTab === "premium" ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${telegramTab === "premium" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                 >
                   🎁 Premium
                 </button>
               </div>
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               {telegramTab === "stars" ? (
@@ -4415,20 +4620,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Honor of Kings" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Tokens" items={HOK_TOKENS} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4445,20 +4667,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Sky: Children of the Light" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Candles & Season Pass" items={SKY_COTL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4474,20 +4713,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Valorant" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4503,7 +4759,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setValorantServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${valorantServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${valorantServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${valorantServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4541,20 +4797,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="League of Legends" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4570,7 +4843,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setLolServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${lolServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${lolServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${lolServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4608,20 +4881,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Call of Duty Mobile (Garena)" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4632,7 +4922,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setCodmServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${codmServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${codmServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${codmServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4668,20 +4958,37 @@ export default function MonkeyTopup() {
               </div>
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Genesis Crystals" items={GENSHIN_GLOBAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4697,20 +5004,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Honkai: Star Rail" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4721,7 +5045,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setHsrServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${hsrServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${hsrServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${hsrServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4754,20 +5078,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Honkai Impact 3rd" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4783,7 +5124,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setHi3rdServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${hi3rdServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${hi3rdServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${hi3rdServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4820,20 +5161,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Arena Breakout" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Bonds & Passes" items={ARENA_BREAKOUT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -4849,20 +5207,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Delta Force" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4874,7 +5249,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setDeltaServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${deltaServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${deltaServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${deltaServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4908,20 +5283,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="EAFC Mobile" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -4934,7 +5326,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setEafcServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${eafcServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${eafcServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${eafcServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -4972,20 +5364,37 @@ export default function MonkeyTopup() {
               </div>
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Echoes & Packages" items={IDENTITY_V_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5001,20 +5410,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Lords Mobile" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Diamonds & Pass" items={LORDS_MOBILE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5030,20 +5456,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Stumble Guys" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Gems & Tokens" items={STUMBLE_GUYS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5058,20 +5501,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="State of Survival" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Diamonds" items={STATE_OF_SURVIVAL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5087,20 +5547,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Watcher of Realms" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="W-Gold & Bundles" items={WATCHER_OF_REALMS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5116,20 +5593,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Blockman Go" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="GCube & Pass" items={BLOCKMAN_GO_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5145,20 +5639,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Growtopia" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Gems & Packs" items={GROWTOPIA_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5174,20 +5685,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Eggy Party" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Egg Coins & Packs" items={EGGY_PARTY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5203,20 +5731,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="8 Ball Pool" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Cash & Coins" items={EIGHT_BALL_POOL_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5231,20 +5776,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Acecraft" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Diamonds & M-cash" items={ACECRAFT_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5260,20 +5822,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Ace Racer" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Tokens" items={ACE_RACER_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5289,20 +5868,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="AFK Journey" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Dragon Crystals" items={AFK_JOURNEY_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5318,20 +5914,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Age of Empire Mobile" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Gems & Apex Coins" items={AGE_OF_EMPIRE_MOBILE_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5347,20 +5960,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Ballistic Hero VNG" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Vouchers" items={BALLISTIC_HERO_VNG_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5376,20 +6006,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Badlanders" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Coupons" items={BADLANDERS_PACKAGES} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5405,20 +6052,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Azur Lane" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -5428,7 +6092,7 @@ export default function MonkeyTopup() {
                     <button
                       key={s}
                       onClick={() => setAzurLaneServer(s)}
-                      className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${azurLaneServer === s ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                      className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${azurLaneServer === s ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${azurLaneServer === s ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                     >
                       {s}
                     </button>
@@ -5449,20 +6113,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Asphalt 9: Legends" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -5472,7 +6153,7 @@ export default function MonkeyTopup() {
                     <button
                       key={p}
                       onClick={() => setAsphalt9Platform(p)}
-                      className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${asphalt9Platform === p ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                      className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${asphalt9Platform === p ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${asphalt9Platform === p ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                     >
                       {p}
                     </button>
@@ -5493,20 +6174,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Arena of Valor" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -5518,7 +6216,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setAovServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${aovServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${aovServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${aovServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -5552,20 +6250,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Rainbow Six Mobile" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -5581,7 +6296,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setR6Server(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${r6Server === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${r6Server === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${r6Server === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -5619,20 +6334,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="TFT Mobile" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-2 flex-wrap">
@@ -5646,7 +6378,7 @@ export default function MonkeyTopup() {
                   <button
                     key={key}
                     onClick={() => setTftServer(key)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition ${tftServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}`}
+                    className={isTelegramContext() ? `px-4 py-1.5 rounded-full text-xs font-bold transition ${tftServer === key ? "bg-white text-[#1a1530]" : "bg-white/20 text-white"}` : `px-3 py-1.5 rounded-lg text-xs font-semibold transition ${tftServer === key ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
                   >
                     {label}
                   </button>
@@ -5683,20 +6415,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Blood Strike" />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="BC" items={BLOODSTRIKE_PACKAGES.filter((it) => /BC$/.test(it.label))} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5714,20 +6463,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="Where Winds Meet" images={[PKG_IMAGES.imgThumbMlSwordsmen, PKG_IMAGES.imgThumbWwmB]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="Echo" items={WWM_ECHO} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -5759,20 +6525,37 @@ export default function MonkeyTopup() {
               </div>
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               {ffServer === "global" ? (
@@ -5798,20 +6581,37 @@ export default function MonkeyTopup() {
               <DetailThumbnail label="PUBG New State" images={[PKG_IMAGES.imgThumbNsA, PKG_IMAGES.imgThumbNsB]} />
 
               <div className="flex justify-end">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCurrency("mmk")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
-                  >
-                    🇲🇲 MMK
-                  </button>
-                  <button
-                    onClick={() => setCurrency("thb")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
-                  >
-                    🇹🇭 THB
-                  </button>
-                </div>
+                {isTelegramContext() ? (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "mmk" ? "bg-white text-[#2196F3]" : "bg-[#2196F3]/40 text-white"}`}
+                    >
+                      🇲🇲 MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${currency === "thb" ? "bg-white text-amber-700" : "bg-amber-700/40 text-white"}`}
+                    >
+                      🇹🇭 THB
+                    </button>
+                  </div>
+                ) : (
+                  <div className="inline-flex rounded-lg bg-[#171330] p-1 border border-white/10">
+                    <button
+                      onClick={() => setCurrency("mmk")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "mmk" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      MMK
+                    </button>
+                    <button
+                      onClick={() => setCurrency("thb")}
+                      className={`px-3 py-1 rounded-md text-xs font-semibold transition ${currency === "thb" ? "bg-[#6D4AFF] text-white" : "text-[#8f88ad] hover:text-white"}`}
+                    >
+                      THB
+                    </button>
+                  </div>
+                )}
               </div>
 
               <PkgSection num="1" title="NC" items={NEWSTATE_NC} currency={currency} discountPercent={resellerDiscountPercent} onPick={openPurchase} wide={!isTelegramContext()} />
@@ -6159,8 +6959,10 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, 
   return (
     <div>
       <div className="flex items-center gap-2 mb-2">
-        <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center">{num}</span>
-        <span className="text-white font-bold drop-shadow">{title}</span>
+        {!wide && (
+          <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center">{num}</span>
+        )}
+        <span className={wide ? "text-white font-bold text-lg" : "text-white font-bold drop-shadow"}>{title}</span>
       </div>
       <div className={wide ? "grid grid-cols-4 lg:grid-cols-5 gap-3" : "grid grid-cols-3 gap-2"}>
         {items.map((it) => {
@@ -6169,8 +6971,40 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, 
           const rawLabel = it.label || it.name;
           const label = displayLabel(rawLabel);
           const showBonusBadge = isBonusLabel(rawLabel);
+          if (wide) {
+            return (
+              <button
+                key={it.id}
+                onClick={() => onPick(it)}
+                className="group relative bg-[#171330] rounded-xl overflow-hidden text-left shadow border border-white/5 transition hover:-translate-y-0.5 hover:border-[#6D4AFF]/50"
+              >
+                {showBonusBadge && (
+                  <span className="absolute top-1.5 right-1.5 z-10 bg-[#c05b58] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md shadow">2X</span>
+                )}
+                {it.image ? (
+                  <img
+                    src={it.image}
+                    alt={label}
+                    className={`w-full h-28 ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
+                  />
+                ) : (
+                  <div className="h-28 bg-[#0f0c22]" />
+                )}
+                <div className="p-3">
+                  <div className="font-semibold leading-tight mb-1 text-sm text-white">{label}</div>
+                  {priceVal < rawPrice && (
+                    <div className="text-[10px] text-rose-400 line-through leading-none mb-0.5">{fmt(rawPrice)} {currencyLabel}</div>
+                  )}
+                  <div className="font-bold text-base text-[#FFB020]">{fmt(priceVal)} {currencyLabel}</div>
+                  <div className="mt-2 rounded-lg bg-[#15C98A] text-[#0B0920] text-xs font-bold text-center py-1.5 transition group-hover:brightness-110">
+                    ဝယ်မည်
+                  </div>
+                </div>
+              </button>
+            );
+          }
           return (
-            <button key={it.id} onClick={() => onPick(it)} className={`relative bg-white rounded-lg overflow-hidden text-center shadow transition ${wide ? "hover:-translate-y-0.5 hover:shadow-lg" : "active:scale-95"}`}>
+            <button key={it.id} onClick={() => onPick(it)} className="relative bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
               {showBonusBadge && (
                 <span className="absolute top-1 right-1 z-10 bg-[#c05b58] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow">2X</span>
               )}
@@ -6178,17 +7012,17 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, 
                 <img
                   src={it.image}
                   alt={label}
-                  className={`w-full ${wide ? "h-28" : "h-20"} ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
+                  className={`w-full h-20 ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
                 />
               ) : (
-                <div className={wide ? "h-28 bg-slate-100" : "h-20 bg-slate-100"} />
+                <div className="h-20 bg-slate-100" />
               )}
-              <div className={wide ? "p-3" : "p-2"}>
-                <div className={`font-bold leading-tight mb-1 ${wide ? "text-sm" : "text-[11px]"}`}>{label}</div>
+              <div className="p-2">
+                <div className="font-bold leading-tight mb-1 text-[11px]">{label}</div>
                 {priceVal < rawPrice && (
                   <div className="text-[10px] text-rose-500 line-through leading-none">{fmt(rawPrice)} {currencyLabel}</div>
                 )}
-                <div className={`font-bold text-amber-500 ${wide ? "text-base" : "text-sm"}`}>{fmt(priceVal)} {currencyLabel}</div>
+                <div className="font-bold text-amber-500 text-sm">{fmt(priceVal)} {currencyLabel}</div>
               </div>
             </button>
           );
