@@ -3233,7 +3233,7 @@ export default function MonkeyTopup() {
       const status = await api.getSpinStatus(telegramId);
       setSpinStatus(status);
     } catch (err) {
-      setSpinStatus({ canSpin: false, spinCredits: 0 });
+      setSpinStatus({ canSpin: false, nextSpinAt: null });
     }
   }
 
@@ -3255,14 +3255,14 @@ export default function MonkeyTopup() {
       window.setTimeout(() => {
         setSpinResult(result.reward);
         setBalance(result.newBalance);
-        setSpinStatus({ canSpin: result.spinCredits > 0, spinCredits: result.spinCredits });
+        setSpinStatus({ canSpin: false, nextSpinAt: result.nextSpinAt });
         setSpinning(false);
         showToast({ type: "ok", msg: `🎉 ${result.reward} MMK ရရှိပါသည်!` });
       }, 3600);
     } catch (err) {
       setSpinning(false);
-      if (err.message === "no_spins_left") {
-        showToast({ type: "error", msg: "ကံစမ်းမဲ ကုပွန် ကုန်သွားပါပြီ — Order အသစ်တင်ပြီး နောက်ထပ် ကံစမ်းခွင့် ရယူပါ" });
+      if (err.message === "already_spun") {
+        showToast({ type: "error", msg: "ဒီနေ့ ကံစမ်းပြီးသားပါ" });
         loadSpinStatus();
       } else {
         showToast({ type: "error", msg: "ကံစမ်းမဲ မအောင်မြင်ပါ — ပြန်စမ်းကြည့်ပါ" });
@@ -3998,26 +3998,23 @@ export default function MonkeyTopup() {
               {spinStatus === null ? (
                 <div className="text-white/80 text-sm">⏳ ရယူနေသည်...</div>
               ) : spinStatus.canSpin ? (
-                <>
-                  <button
-                    onClick={handleSpin}
-                    disabled={spinning}
-                    className="bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-full px-10 py-3 shadow-lg active:scale-95 transition disabled:opacity-60"
-                  >
-                    {spinning ? "လှည့်နေသည်..." : "ကံစမ်းမည်"}
-                  </button>
-                  <div className="text-white/70 text-xs mt-2 text-center">
-                    ကံစမ်းခွင့် {spinStatus.spinCredits} ကြိမ် ကျန်ရှိပါသည်
-                  </div>
-                </>
+                <button
+                  onClick={handleSpin}
+                  disabled={spinning}
+                  className="bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-full px-10 py-3 shadow-lg active:scale-95 transition disabled:opacity-60"
+                >
+                  {spinning ? "လှည့်နေသည်..." : "ကံစမ်းမည်"}
+                </button>
               ) : (
                 <div className="text-center">
                   <div className="bg-white/10 text-white text-sm rounded-lg px-4 py-2">
-                    ကံစမ်းမဲ ကုပွန် ကုန်သွားပါပြီ
+                    ဒီနေ့ ကံစမ်းပြီးသားပါ — နက်ဖြန် ပြန်လာပါ 🙏
                   </div>
-                  <div className="text-white/60 text-xs mt-1">
-                    Order တစ်ခု အောင်မြင်တိုင်း ကံစမ်းခွင့် ၁ ကြိမ် ထပ်ရရှိပါမည်
-                  </div>
+                  {spinStatus.nextSpinAt && (
+                    <div className="text-white/60 text-xs mt-1">
+                      နောက်တစ်ကြိမ်: {new Date(spinStatus.nextSpinAt).toLocaleString()}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
