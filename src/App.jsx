@@ -1720,7 +1720,7 @@ const INITIAL_DEPOSITS = [{ id: 90441, amount: 20000, currency: "mmk", status: "
 const PAYMENT_ACCOUNTS = {
   mmk: [
     { provider: "KPay", available: true, number: "09253847784", name: "Sandar Nyein", note: "shop", color: "bg-white", image: PKG_IMAGES.imgKbzPay },
-    { provider: "WavePay", available: false, color: "bg-white", image: PKG_IMAGES.imgWavePay },
+    { provider: "WavePay", available: true, number: "09253847784", name: "Sandar Nyein", note: "shop", color: "bg-white", image: PKG_IMAGES.imgWavePay },
   ],
   thb: [
     { provider: "K Bank", available: true, number: "1588869616", name: "Myant Ko Ko Khaing", color: "bg-white", image: PKG_IMAGES.imgKBank },
