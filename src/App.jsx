@@ -7004,7 +7004,11 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, 
             );
           }
           return (
-            <button key={it.id} onClick={() => onPick(it)} className="relative bg-white rounded-lg overflow-hidden text-center shadow active:scale-95 transition">
+            <button
+              key={it.id}
+              onClick={() => onPick(it)}
+              className="group relative bg-[#171330] rounded-lg overflow-hidden text-left shadow border border-white/5 active:scale-95 transition"
+            >
               {showBonusBadge && (
                 <span className="absolute top-1 right-1 z-10 bg-[#c05b58] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow">2X</span>
               )}
@@ -7015,14 +7019,17 @@ function PkgSection({ num, title, items, currency, discountPercent = 0, onPick, 
                   className={`w-full h-20 ${it.imgFit === "contain" ? "object-contain bg-[#0a0a0a] p-1" : "object-cover"}`}
                 />
               ) : (
-                <div className="h-20 bg-slate-100" />
+                <div className="h-20 bg-[#0f0c22]" />
               )}
               <div className="p-2">
-                <div className="font-bold leading-tight mb-1 text-[11px]">{label}</div>
+                <div className="font-semibold leading-tight mb-1 text-[11px] text-white">{label}</div>
                 {priceVal < rawPrice && (
-                  <div className="text-[10px] text-rose-500 line-through leading-none">{fmt(rawPrice)} {currencyLabel}</div>
+                  <div className="text-[10px] text-rose-400 line-through leading-none">{fmt(rawPrice)} {currencyLabel}</div>
                 )}
-                <div className="font-bold text-amber-500 text-sm">{fmt(priceVal)} {currencyLabel}</div>
+                <div className="font-bold text-sm text-[#FFB020]">{fmt(priceVal)} {currencyLabel}</div>
+                <div className="mt-1.5 rounded-md bg-[#15C98A] text-[#0B0920] text-[10px] font-bold text-center py-1 transition group-active:brightness-110">
+                  ဝယ်မည်
+                </div>
               </div>
             </button>
           );
