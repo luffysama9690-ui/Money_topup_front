@@ -4046,6 +4046,7 @@ export default function MonkeyTopup() {
                     {telegramUser.username && (
                       <div className="text-[#90CAF9] text-sm">@{telegramUser.username}</div>
                     )}
+                    <div className="text-white/60 text-xs mt-1">Telegram ID: {telegramId}</div>
                   </div>
                 </div>
 
