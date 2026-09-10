@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { api, getTelegramId, getTelegramUser, saveWebSession, logoutWeb, isTelegramContext } from "./api.js";
 import { uploadImage } from "./upload.js";
+import FallingStars from "./FallingStars.jsx";
 
 // Flat app-wide discount % applied to every price for users marked as a
 // reseller (see the Admin Panel's "Reseller" box). Change it any time in
@@ -2239,13 +2240,16 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
     ...(isAdmin ? [{ key: "admin", label: "Admin", icon: "admin" }] : []),
   ];
   return (
-    <div className="min-h-screen w-full bg-[#0B0920] font-sans">
+    <div className="min-h-screen w-full bg-[#0B0920] font-sans relative">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap');
         .mt-display { font-family: 'Sora', sans-serif; }
         @keyframes mtMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       `}</style>
 
+      <FallingStars count={100} color="#ffffff" speed={0.8} />
+
+      <div className="relative z-10">
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0B0920]/95 backdrop-blur">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <button onClick={onLogo} className="mt-display text-lg font-bold text-white shrink-0">
@@ -2357,6 +2361,7 @@ function DesktopChrome({ balance, balanceThb, telegramUser, activeView, onLogo, 
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
