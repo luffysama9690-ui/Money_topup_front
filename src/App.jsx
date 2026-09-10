@@ -141,7 +141,7 @@ const PKG_IMAGES = {
 const ML_PASSES_GLOBAL = [
   { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3500], thb: [28], resellerPrice: { mmk: [3200], thb: [26] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg14", label: "Global Weekly Pass", mmk: [6600], thb: [52], resellerPrice: { mmk: [6300], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [17000], thb: [134], resellerPrice: { mmk: [15800], thb: [129] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg22", label: "Global Monthly Epic Bundle", mmk: [17000], thb: [134], resellerPrice: { mmk: [15800], thb: [129] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg29", label: "Global Twilight Pass", mmk: [36000], thb: [284], resellerPrice: { mmk: [32600], thb: [257] }, image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
