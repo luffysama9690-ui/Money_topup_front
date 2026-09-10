@@ -3329,7 +3329,7 @@ export default function MonkeyTopup() {
   }
 
   const appShell = (
-    <div className={`w-full mx-auto ${isTelegramContext() ? "max-w-sm" : "max-w-none sm:max-w-3xl lg:max-w-5xl px-4 sm:px-6 py-8"} bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456] min-h-screen flex flex-col relative`}>
+    <div className={`w-full mx-auto ${isTelegramContext() ? "max-w-sm bg-gradient-to-b from-[#3f3272] via-[#352a63] to-[#2d2456]" : "max-w-none sm:max-w-3xl lg:max-w-5xl px-4 sm:px-6 py-8 bg-[#0B0920]"} min-h-screen flex flex-col relative`}>
       <style>{`
           @keyframes marqueeScroll {
             from { transform: translateX(0); }
