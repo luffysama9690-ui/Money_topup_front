@@ -2546,6 +2546,7 @@ export default function MonkeyTopup() {
   const [adjustCurrency, setAdjustCurrency] = useState("mmk");
   const [adjustReason, setAdjustReason] = useState("");
   const [adjustSaving, setAdjustSaving] = useState(false);
+  const [backfillRunning, setBackfillRunning] = useState(false);
   const [respinTargetId, setRespinTargetId] = useState("");
   const [respinSaving, setRespinSaving] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
@@ -3148,6 +3149,22 @@ export default function MonkeyTopup() {
       showToast({ type: "error", msg: err.message || "လုပ်ဆောင်ခြင်း မအောင်မြင်ပါ" });
     } finally {
       setAdjustSaving(false);
+    }
+  }
+
+  async function handleBackfillProfit() {
+    if (backfillRunning) return;
+    setBackfillRunning(true);
+    try {
+      const result = await api.backfillProfit(telegramId);
+      showToast({
+        type: "ok",
+        msg: `Order ${result.updated} ခု Profit ရေးထည့်ပြီးပါပြီ (${result.skippedNoCost} ခု cost ရှာမတွေ့ခဲ့ပါ)`,
+      });
+    } catch (err) {
+      showToast({ type: "error", msg: err.message || "Backfill မအောင်မြင်ပါ" });
+    } finally {
+      setBackfillRunning(false);
     }
   }
 
@@ -3910,6 +3927,20 @@ export default function MonkeyTopup() {
                   className="w-full bg-amber-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
                 >
                   {adjustSaving ? "..." : "Balance ပြင်မည်"}
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-3 shadow space-y-2">
+                <h2 className="font-bold text-slate-800">🧮 Profit Backfill (Google Sheet)</h2>
+                <p className="text-xs text-slate-500">
+                  "success" ဖြစ်ပေမယ့် Profit မရေးရသေးတဲ့ Order အဟောင်းတွေအတွက် FazerCards cost ကို ပြန်ရှာပြီး Sheet ထဲကို တစ်ခါတည်း ရေးထည့်ပေးပါလိမ့်မယ်။
+                </p>
+                <button
+                  onClick={handleBackfillProfit}
+                  disabled={backfillRunning}
+                  className="w-full bg-indigo-600 text-white font-bold rounded-lg py-2 text-sm disabled:opacity-50 active:scale-[0.98] transition"
+                >
+                  {backfillRunning ? "လုပ်ဆောင်နေသည်..." : "Backfill စလုပ်မည်"}
                 </button>
               </div>
 

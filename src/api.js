@@ -82,6 +82,13 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ telegramId, targetTelegramId }),
     }),
+  // One-time maintenance: fills in Profit MMK/THB for past "success" orders
+  // in the Orders sheet that never got a figure logged.
+  backfillProfit: (telegramId) =>
+    request(`/admin/backfill-profit`, {
+      method: "POST",
+      body: JSON.stringify({ telegramId }),
+    }),
 
   // Lucky Spin (ကံစမ်းမဲ) — once every 24h, random MMK cashback.
   getSpinStatus: (telegramId) => request(`/spin/status/${telegramId}`),
