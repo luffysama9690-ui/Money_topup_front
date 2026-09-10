@@ -139,17 +139,17 @@ const PKG_IMAGES = {
 // category to buy from (see relayFazercards.js resolveMlCategory).
 
 const ML_PASSES_GLOBAL = [
-  { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3400], thb: [27], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg14", label: "Global Weekly Pass", mmk: [6500], thb: [52], resellerPrice: { mmk: [6400], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [16800], thb: [132], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg29", label: "Global Twilight Pass", mmk: [34300], thb: [270], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg10", label: "Global Weekly Elite Pack", mmk: [3400], thb: [27], resellerPrice: { mmk: [3200], thb: [26] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg14", label: "Global Weekly Pass", mmk: [6500], thb: [52], resellerPrice: { mmk: [6300], thb: [50] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg22", label: "Global Monthly Elite Pack", mmk: [16800], thb: [132], resellerPrice: { mmk: [15800], thb: [129] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg29", label: "Global Twilight Pass", mmk: [34300], thb: [270], resellerPrice: { mmk: [32600], thb: [257] }, image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
 const ML_BONUS_GLOBAL = [
-  { id: "mlg9", label: "Global 50 + 50 Diamonds (First Top-Up Bonus)", mmk: [3300], thb: [26], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg16", label: "Global 150 + 150 Diamonds (First Top-Up Bonus)", mmk: [10000], thb: [79], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg21", label: "Global 250 + 250 Diamonds (First Top-Up Bonus)", mmk: [16000], thb: [126], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg28", label: "Global 500 + 500 Diamonds (First Top-Up Bonus)", mmk: [32900], thb: [259], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg9", label: "Global 50 + 50 Diamonds (First Top-Up Bonus)", mmk: [3300], thb: [26], resellerPrice: { mmk: [3200], thb: [25] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg16", label: "Global 150 + 150 Diamonds (First Top-Up Bonus)", mmk: [10000], thb: [79], resellerPrice: { mmk: [9650], thb: [75] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg21", label: "Global 250 + 250 Diamonds (First Top-Up Bonus)", mmk: [16000], thb: [126], resellerPrice: { mmk: [15500], thb: [120] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg28", label: "Global 500 + 500 Diamonds (First Top-Up Bonus)", mmk: [32900], thb: [259], resellerPrice: { mmk: [31600], thb: [246] }, image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
 // ✅ Replaced 2569-09-09: switched from FazerCards' full raw Global tier
@@ -162,23 +162,27 @@ const ML_BONUS_GLOBAL = [
 // services/relay/relayFazercards.js), so pricing here is the sum of the
 // real USD cost of each component, same 7% margin as everything else.
 const ML_DIAMONDS_GLOBAL = [
-  { id: "mlg-86", label: "Global 86 Diamonds", mmk: [5200], thb: [41], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-172", label: "Global 172 Diamonds", mmk: [10400], thb: [82], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-257", label: "Global 257 Diamonds", mmk: [15100], thb: [119], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-343", label: "Global 343 Diamonds", mmk: [20300], thb: [160], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-429", label: "Global 429 Diamonds", mmk: [25500], thb: [201], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-514", label: "Global 514 Diamonds", mmk: [30200], thb: [238], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-600", label: "Global 600 Diamonds", mmk: [35400], thb: [279], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-706", label: "Global 706 Diamonds", mmk: [40800], thb: [321], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-878", label: "Global 878 Diamonds", mmk: [51200], thb: [403], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-963", label: "Global 963 Diamonds", mmk: [55900], thb: [440], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-1049", label: "Global 1049 Diamonds", mmk: [61100], thb: [481], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-1135", label: "Global 1135 Diamonds", mmk: [66300], thb: [522], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-1412", label: "Global 1412 Diamonds", mmk: [81600], thb: [643], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-2195", label: "Global 2195 Diamonds", mmk: [123400], thb: [972], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-3688", label: "Global 3688 Diamonds", mmk: [206000], thb: [1623], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-5532", label: "Global 5532 Diamonds", mmk: [311000], thb: [2450], image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-9288", label: "Global 9288 Diamonds", mmk: [516600], thb: [4069], image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-14", label: "Global 14 Diamonds", mmk: [1000], thb: [8], resellerPrice: { mmk: [950], thb: [8] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-28", label: "Global 28 Diamonds", mmk: [2300], thb: [18], resellerPrice: { mmk: [2185], thb: [17] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-42", label: "Global 42 Diamonds", mmk: [3200], thb: [25], resellerPrice: { mmk: [3040], thb: [24] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-70", label: "Global 70 Diamonds", mmk: [5800], thb: [46], resellerPrice: { mmk: [5510], thb: [44] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-86", label: "Global 86 Diamonds", mmk: [5200], thb: [41], resellerPrice: { mmk: [5100], thb: [39] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-172", label: "Global 172 Diamonds", mmk: [10400], thb: [82], resellerPrice: { mmk: [10100], thb: [78] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-257", label: "Global 257 Diamonds", mmk: [15100], thb: [119], resellerPrice: { mmk: [14700], thb: [113] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-343", label: "Global 343 Diamonds", mmk: [20300], thb: [160], resellerPrice: { mmk: [19800], thb: [152] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-429", label: "Global 429 Diamonds", mmk: [25500], thb: [201], resellerPrice: { mmk: [24800], thb: [191] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-514", label: "Global 514 Diamonds", mmk: [30200], thb: [238], resellerPrice: { mmk: [29400], thb: [226] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-600", label: "Global 600 Diamonds", mmk: [35400], thb: [279], resellerPrice: { mmk: [34500], thb: [265] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-706", label: "Global 706 Diamonds", mmk: [40800], thb: [321], resellerPrice: { mmk: [39750], thb: [305] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-878", label: "Global 878 Diamonds", mmk: [51200], thb: [403], resellerPrice: { mmk: [49800], thb: [383] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-963", label: "Global 963 Diamonds", mmk: [55900], thb: [440], resellerPrice: { mmk: [54400], thb: [418] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-1049", label: "Global 1049 Diamonds", mmk: [61100], thb: [481], resellerPrice: { mmk: [59550], thb: [457] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-1135", label: "Global 1135 Diamonds", mmk: [66300], thb: [522], resellerPrice: { mmk: [64550], thb: [496] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-1412", label: "Global 1412 Diamonds", mmk: [81600], thb: [643], resellerPrice: { mmk: [79500], thb: [611] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-2195", label: "Global 2195 Diamonds", mmk: [123400], thb: [972], resellerPrice: { mmk: [120200], thb: [923] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-3688", label: "Global 3688 Diamonds", mmk: [206000], thb: [1623], resellerPrice: { mmk: [200550], thb: [1542] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-5532", label: "Global 5532 Diamonds", mmk: [311000], thb: [2450], resellerPrice: { mmk: [302800], thb: [2328] }, image: PKG_IMAGES.imgDiamondTier1 },
+  { id: "mlg-9288", label: "Global 9288 Diamonds", mmk: [516600], thb: [4069], resellerPrice: { mmk: [502900], thb: [3866] }, image: PKG_IMAGES.imgDiamondTier1 },
 ];
 
 const ML_PASSES_PH = [
