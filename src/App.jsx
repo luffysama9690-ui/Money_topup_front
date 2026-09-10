@@ -165,7 +165,6 @@ const ML_DIAMONDS_GLOBAL = [
   { id: "mlg-14", label: "Global 14 Diamonds", mmk: [1000], thb: [8], resellerPrice: { mmk: [950], thb: [8] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg-28", label: "Global 28 Diamonds", mmk: [2300], thb: [18], resellerPrice: { mmk: [2185], thb: [17] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg-42", label: "Global 42 Diamonds", mmk: [3200], thb: [25], resellerPrice: { mmk: [3040], thb: [24] }, image: PKG_IMAGES.imgDiamondTier1 },
-  { id: "mlg-70", label: "Global 70 Diamonds", mmk: [5800], thb: [46], resellerPrice: { mmk: [5510], thb: [44] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg-86", label: "Global 86 Diamonds", mmk: [5200], thb: [41], resellerPrice: { mmk: [5100], thb: [39] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg-172", label: "Global 172 Diamonds", mmk: [10400], thb: [82], resellerPrice: { mmk: [10100], thb: [78] }, image: PKG_IMAGES.imgDiamondTier1 },
   { id: "mlg-257", label: "Global 257 Diamonds", mmk: [15100], thb: [119], resellerPrice: { mmk: [14700], thb: [113] }, image: PKG_IMAGES.imgDiamondTier1 },
