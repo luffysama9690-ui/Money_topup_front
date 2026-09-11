@@ -570,7 +570,7 @@ const FF_THAILAND_PASSES = [
 const STEAM_PACKAGES = [
   [5, 24000, 189], [10, 47500, 374], [20, 95000, 748], [25, 119000, 937],
   [30, 136000, 1071], [50, 234000, 1843], [100, 470000, 3701], [200, 940000, 7402],
-].map(([usd, mmk, thb]) => ({ id: "steam" + usd, label: `Steam Global ${usd} USD`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" }));
+].map(([usd, mmk, thb]) => ({ id: "steam" + usd, label: `Steam ${usd} USD`, mmk: [mmk], thb: [thb], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" }));
 
 // ✅ Steam wallet top-up-by-login also supports RUB/UAH/KZT (confirmed via
 // GET /steam-topup/rates, 2569-09-05 — USD/RUB/UAH/KZT are the only 4
@@ -579,36 +579,36 @@ const STEAM_PACKAGES = [
 // number; MMK/THB priced the same as Global (7% margin on the USD-
 // equivalent tier) since that's still the underlying wholesale cost basis.
 const STEAM_RUB_PACKAGES = [
-  { id: "steam-rub-5", label: "Steam RUB 430 RUB", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-10", label: "Steam RUB 860 RUB", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-20", label: "Steam RUB 1730 RUB", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-25", label: "Steam RUB 2160 RUB", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-30", label: "Steam RUB 2590 RUB", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-50", label: "Steam RUB 4320 RUB", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-100", label: "Steam RUB 8640 RUB", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-rub-200", label: "Steam RUB 17280 RUB", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-5", label: "Steam 430 RUB", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-10", label: "Steam 860 RUB", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-20", label: "Steam 1730 RUB", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-25", label: "Steam 2160 RUB", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-30", label: "Steam 2590 RUB", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-50", label: "Steam 4320 RUB", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-100", label: "Steam 8640 RUB", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-rub-200", label: "Steam 17280 RUB", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
 ];
 
 const STEAM_UAH_PACKAGES = [
-  { id: "steam-uah-5", label: "Steam UAH 220 UAH", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-10", label: "Steam UAH 450 UAH", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-20", label: "Steam UAH 890 UAH", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-25", label: "Steam UAH 1110 UAH", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-30", label: "Steam UAH 1340 UAH", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-50", label: "Steam UAH 2230 UAH", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-100", label: "Steam UAH 4450 UAH", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-uah-200", label: "Steam UAH 8910 UAH", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-5", label: "Steam 220 UAH", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-10", label: "Steam 450 UAH", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-20", label: "Steam 890 UAH", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-25", label: "Steam 1110 UAH", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-30", label: "Steam 1340 UAH", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-50", label: "Steam 2230 UAH", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-100", label: "Steam 4450 UAH", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-uah-200", label: "Steam 8910 UAH", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
 ];
 
 const STEAM_KZT_PACKAGES = [
-  { id: "steam-kzt-5", label: "Steam KZT 2300 KZT", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-10", label: "Steam KZT 4600 KZT", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-20", label: "Steam KZT 9100 KZT", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-25", label: "Steam KZT 11400 KZT", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-30", label: "Steam KZT 13700 KZT", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-50", label: "Steam KZT 22800 KZT", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-100", label: "Steam KZT 45600 KZT", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
-  { id: "steam-kzt-200", label: "Steam KZT 91200 KZT", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-5", label: "Steam 2300 KZT", mmk: [22400], thb: [177], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-10", label: "Steam 4600 KZT", mmk: [44900], thb: [353], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-20", label: "Steam 9100 KZT", mmk: [89700], thb: [707], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-25", label: "Steam 11400 KZT", mmk: [112200], thb: [884], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-30", label: "Steam 13700 KZT", mmk: [134600], thb: [1060], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-50", label: "Steam 22800 KZT", mmk: [224300], thb: [1767], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-100", label: "Steam 45600 KZT", mmk: [448700], thb: [3534], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
+  { id: "steam-kzt-200", label: "Steam 91200 KZT", mmk: [897300], thb: [7068], image: PKG_IMAGES.imgSteamLogo, imgFit: "contain" },
 ];
 
 // ---- CapCut ----
